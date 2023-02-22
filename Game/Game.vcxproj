@@ -19,10 +19,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ApplicationManager.h" />
+    <ClInclude Include="Common.h" />
+    <ClInclude Include="MenuState.h" />
+    <ClInclude Include="IGameState.h" />
     <ClInclude Include="Play.h" />
+    <ClInclude Include="PlayState.h" />
+    <ClInclude Include="VirtualKeys.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ApplicationManager.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="MenuState.cpp" />
+    <ClCompile Include="PlayState.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

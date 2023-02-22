@@ -1,9 +1,13 @@
 #define PLAY_IMPLEMENTATION
 #include "Play.h"
 
+#include "ApplicationManager.h"
+
 int DISPLAY_WIDTH = 1280;
 int DISPLAY_HEIGHT = 720;
 int DISPLAY_SCALE = 1;
+
+ApplicationManager g_applicationManager;
 
 void MainGameEntry(PLAY_IGNORE_COMMAND_LINE)
 {
@@ -14,7 +18,9 @@ void MainGameEntry(PLAY_IGNORE_COMMAND_LINE)
 
 bool MainGameUpdate(float elapsedTime)
 {
-	Play::DrawBackground();
+	g_applicationManager.Update();
+	g_applicationManager.Draw();
+
 	Play::PresentDrawingBuffer();
 
 	return Play::KeyDown(VK_ESCAPE);
