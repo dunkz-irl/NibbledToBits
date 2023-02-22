@@ -1,13 +1,32 @@
 #include "MenuState.h"
 #include "ApplicationManager.h"
 
+ApplicationManager* ApplicationManager::s_pInstance = nullptr;
+
 ApplicationManager::ApplicationManager()
 {
+	s_pInstance = this;
+
 	m_pGameState = new MenuState();
 	m_pGameState->OnEnter();
 }
 
 ApplicationManager::~ApplicationManager()
+{
+	s_pInstance = nullptr;
+}
+
+ApplicationManager& ApplicationManager::Instance()
+{
+	if (!s_pInstance)
+	{
+		s_pInstance = new ApplicationManager;
+	}
+
+	return *s_pInstance;
+}
+
+void ApplicationManager::Destroy()
 {
 
 }

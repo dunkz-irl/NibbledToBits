@@ -7,8 +7,6 @@ int DISPLAY_WIDTH = 1280;
 int DISPLAY_HEIGHT = 720;
 int DISPLAY_SCALE = 1;
 
-ApplicationManager g_applicationManager;
-
 void MainGameEntry(PLAY_IGNORE_COMMAND_LINE)
 {
 	Play::CreateManager(DISPLAY_WIDTH, DISPLAY_HEIGHT, DISPLAY_SCALE, Play::ANTICLOCKWISE_ZERO_RIGHT, Play::XRIGHT_YUP);
@@ -18,8 +16,8 @@ void MainGameEntry(PLAY_IGNORE_COMMAND_LINE)
 
 bool MainGameUpdate(float elapsedTime)
 {
-	g_applicationManager.Update();
-	g_applicationManager.Draw();
+	ApplicationManager::Instance().Update();
+	ApplicationManager::Instance().Draw();
 
 	Play::PresentDrawingBuffer();
 
