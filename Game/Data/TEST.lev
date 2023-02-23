@@ -10,11 +10,11 @@ MiceIn,0
 MiceOut,0
 Rate,0
 Theme,0
-single ,0
-tube ,0
+single ,4
+tube ,1
 tube_one_way ,0
-tube_two_way ,0
-tube_three_way ,0
+tube_two_way ,2
+tube_three_way ,3
 tube_cross ,0
 tube_end ,0
 corner_cross ,0
@@ -25,21 +25,21 @@ timer ,0
 tick ,0
 plus ,0
 minus ,0
-hamsterball ,0
+hamsterball ,5
 heart ,0
 brie ,0
-edam ,0
-emmental ,0
+edam ,1
+emmental ,1
 parmesan ,0
 swiss ,0
-carrot ,0
+carrot ,1
 cherry ,0
 grape ,0
 raspberry ,0
 strawberry ,0
 cornkernel ,0
 sunflowerseed ,0
-trap_01_notset ,0
+trap_01_notset ,1
 trap_01_set ,0
 trap_02_notset ,0
 trap_02_set ,0

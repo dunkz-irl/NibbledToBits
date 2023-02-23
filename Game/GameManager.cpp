@@ -101,6 +101,11 @@ void GameManager::LoadLevel(const char * levelName)
 		
 		tokens.clear();
 		tokens = TokeniseStringByComma(line);
+
+		if (std::stoi(tokens[1]) == 0) // If no items of type in inventory
+		{
+			continue;
+		}
 			
 		InventoryPair invPair{tokens[0], std::stoi(tokens[1])};
 		m_vInventoryPairs.push_back(invPair);
