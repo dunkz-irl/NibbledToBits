@@ -127,6 +127,30 @@ void GameManager::LoadLevel(const char * levelName)
 		InventoryPair invPair{tokens[0], std::stoi(tokens[1])};
 		m_vInventoryPairs.push_back(invPair);
 	}
+
+	std::vector<ObjectCSV> v_CSVobjects = ReadObjectsCSV();
+	std::vector<ObjectCSV> v_inventory;
+
+	// Populate inventory
+	for (ObjectCSV object : v_CSVobjects)
+	{
+		// Check ID (string) of each item in the GM inventory, which has already read from the level file
+		for (InventoryPair invPair : m_vInventoryPairs)
+		{
+			// First character is capital and needs to be changed
+			std::string str_objNameLower = object.name;        // #TODO ~ What nonsense is this pray tell! ~
+			char c = std::tolower(str_objNameLower[0]);
+			str_objNameLower.front() = c;
+			std::erase(invPair.first, ' ');
+
+			if (invPair.first == str_objNameLower)
+			{
+				v_inventory.push_back(object);
+			}
+		}
+	}
+
+	m_panel = Panel(v_inventory);
 }
 
 std::vector<std::string> GameManager::TokeniseStringByComma(std::string line)

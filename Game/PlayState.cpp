@@ -24,7 +24,7 @@ void PlayState::OnEnter()
 {
 	// Load level
 	objects = ReadObjectsCSV();
-	GameManager::Instance().LoadLevel("TEST.lev");
+	GM_INST.LoadLevel("TEST.lev");
 }
 
 void PlayState::OnExit()
@@ -46,4 +46,5 @@ void PlayState::OnDraw()
 {
 	Play::DrawBackground();
 	GM_INST.m_gameArea.DrawGameArea();
+	GM_INST.m_panel.Draw();
 }
