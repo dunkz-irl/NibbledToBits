@@ -16,14 +16,14 @@
 #define GM_INST GameManager::Instance()
 
 // #TODO: Not a great place to include these
-extern std::vector<ObjectCSV> objects;
-extern std::map<std::string, int> idMap;
-extern std::vector<std::string> idToString;
+extern std::vector<ObjectCSV> g_vObjects;
+extern std::map<std::string, int> g_idMap;
+extern std::vector<std::string> g_v_idToStringTable;
 
 void PlayState::OnEnter()
 {
 	// Load level
-	objects = ReadObjectsCSV();
+	g_vObjects = ReadObjectsCSV();
 	GM_INST.LoadLevel("TEST.lev");
 }
 

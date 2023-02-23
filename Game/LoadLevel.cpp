@@ -1,6 +1,6 @@
 #include "Play.h"
 #include "..\..\MouseEditor\ReadCSV.h"
 
-std::vector<ObjectCSV> objects;
-std::map<std::string, int> idMap;
-std::vector<std::string> idToString;
+std::vector<ObjectCSV> g_vObjects;
+std::map<std::string, int> g_idMap;
+std::vector<std::string> g_v_idToStringTable;

@@ -9,7 +9,7 @@
 #include "GameManager.h"
 
 GameManager* GameManager::s_pInstance = nullptr;
-extern std::map<std::string, int> idMap;
+extern std::map<std::string, int> g_idMap;
 
 GameManager::GameManager()
 {
@@ -69,7 +69,7 @@ void GameManager::LoadLevel(const char * levelName)
 	// Populate objects in the level
 
 	// Temp thingy
-	GameAreaObject objects[16][13]; // To put in m_GameArea
+	GameAreaObject gameAreaObjects[16][13]; // To put in m_GameArea
 
 	while (levelFile)
 	{
@@ -89,24 +89,22 @@ void GameManager::LoadLevel(const char * levelName)
 			break;
 		}
 
-		
-
 		// Make an object out of the current line
 		GameAreaObject obj
 		{
-			idMap[tokens[0]],								// String ID -- const char * is a pointer so when obj is destroyed that memory becomes nonsense! Can't take a copy as with string
+			g_idMap[tokens[0]],								// String ID -- const char * is a pointer so when obj is destroyed that memory becomes nonsense! Can't take a copy as with string
 			std::stoi(tokens[1]),							// X position
 			std::stoi(tokens[2]),							// Y position
 			std::stoi(tokens[3]),							// Rotation (not an angle but in 90 degrees ness)
 			std::stoi(tokens[4])							// Misc variable
 		};
 
-		objects[obj.posx][obj.posy] = obj;
+		gameAreaObjects[obj.posx][obj.posy] = obj;
 		GameManager::Instance().m_vGameAreaObjects.push_back(obj);
 	}
 
 	// Add object to GameArea objects (only do this once)
-	m_gameArea.SetGameAreaObjects(objects);
+	m_gameArea.SetGameAreaObjects(gameAreaObjects);
 	
 	// Populate player inventory
 	while (levelFile)
