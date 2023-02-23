@@ -19,6 +19,9 @@
     <Filter Include="Game States\Headers">
       <UniqueIdentifier>{28862c87-0dac-46ed-81b1-3aa10af97fe9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Editor Files">
+      <UniqueIdentifier>{602ea217-5f14-4b84-9dd2-9e15fc518260}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Play.h">
@@ -42,6 +45,9 @@
     <ClInclude Include="PlayState.h">
       <Filter>Game States\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainGame.cpp">
@@ -55,6 +61,15 @@
     </ClCompile>
     <ClCompile Include="PlayState.cpp">
       <Filter>Game States</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MouseEditor\ReadCSV.cpp">
+      <Filter>Editor Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadLevel.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

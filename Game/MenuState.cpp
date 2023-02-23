@@ -28,7 +28,7 @@ IGameState* MenuState::OnUpdate()
 void MenuState::OnDraw()
 {
 	Play::ClearDrawingBuffer(Play::cBlack);
-	Play::DrawDebugText({DISPLAY_WIDTH / 2.f, DISPLAY_HEIGHT * 0.75f}, "Menu", Play::cWhite);
+	Play::DrawSprite("title", { DISPLAY_WIDTH / 2.f, DISPLAY_HEIGHT * 0.6f }, 0);
 	Play::DrawDebugText(CENTRE_POINT, DEBUG_TEXT(m_testCounter), Play::cWhite);
 	Play::DrawDebugText({ DISPLAY_WIDTH / 2.f, DISPLAY_HEIGHT * 0.25f }, "Press P to Play", Play::cWhite);
 }

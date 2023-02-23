@@ -20,7 +20,6 @@ bool MainGameUpdate(float elapsedTime)
 	ApplicationManager::Instance().Draw();
 
 	Play::PresentDrawingBuffer();
-
 	return Play::KeyDown(VK_ESCAPE);
 }
 

@@ -28,7 +28,7 @@ ApplicationManager& ApplicationManager::Instance()
 
 void ApplicationManager::Destroy()
 {
-
+	
 }
 
 void ApplicationManager::Update()
