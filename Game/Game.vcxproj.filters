@@ -19,10 +19,7 @@
     <Filter Include="Game States\Headers">
       <UniqueIdentifier>{28862c87-0dac-46ed-81b1-3aa10af97fe9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Editor Files">
-      <UniqueIdentifier>{602ea217-5f14-4b84-9dd2-9e15fc518260}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Editor Files %28Copied%29">
+    <Filter Include="Editor Files %28Copied and Edited%29">
       <UniqueIdentifier>{e89f28da-fa26-4026-8eb8-5b6511e4d0ad}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -48,23 +45,23 @@
     <ClInclude Include="PlayState.h">
       <Filter>Game States\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="GameManager.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameArea.h">
-      <Filter>Editor Files %28Copied%29</Filter>
+      <Filter>Editor Files %28Copied and Edited%29</Filter>
     </ClInclude>
     <ClInclude Include="Panel.h">
-      <Filter>Editor Files %28Copied%29</Filter>
+      <Filter>Editor Files %28Copied and Edited%29</Filter>
     </ClInclude>
     <ClInclude Include="Button.h">
-      <Filter>Editor Files %28Copied%29</Filter>
+      <Filter>Editor Files %28Copied and Edited%29</Filter>
     </ClInclude>
     <ClInclude Include="PanelItem.h">
-      <Filter>Editor Files %28Copied%29</Filter>
+      <Filter>Editor Files %28Copied and Edited%29</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\MouseEditor\ReadCSV.h">
-      <Filter>Editor Files %28Copied%29</Filter>
+    <ClInclude Include="ReadCSV.h">
+      <Filter>Editor Files %28Copied and Edited%29</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -87,19 +84,19 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameArea.cpp">
-      <Filter>Editor Files %28Copied%29</Filter>
+      <Filter>Editor Files %28Copied and Edited%29</Filter>
     </ClCompile>
     <ClCompile Include="Panel.cpp">
-      <Filter>Editor Files %28Copied%29</Filter>
+      <Filter>Editor Files %28Copied and Edited%29</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\MouseEditor\ReadCSV.cpp">
-      <Filter>Editor Files %28Copied%29</Filter>
+    <ClCompile Include="ReadCSV.cpp">
+      <Filter>Editor Files %28Copied and Edited%29</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\MouseEditor\Button.cpp">
-      <Filter>Editor Files %28Copied%29</Filter>
+    <ClCompile Include="PanelItem.cpp">
+      <Filter>Editor Files %28Copied and Edited%29</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\MouseEditor\PanelItem.cpp">
-      <Filter>Editor Files %28Copied%29</Filter>
+    <ClCompile Include="Button.cpp">
+      <Filter>Editor Files %28Copied and Edited%29</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

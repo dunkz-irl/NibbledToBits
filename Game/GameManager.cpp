@@ -129,7 +129,7 @@ void GameManager::LoadLevel(const char * levelName)
 	std::vector<ObjectCSV> v_CSVobjects = ReadObjectsCSV();
 	std::vector<ObjectCSV> v_inventory;
 
-	// Populate inventory
+	// Remove inventory items of which player has none, for constructing the game panel with
 	for (ObjectCSV object : v_CSVobjects)
 	{
 		// Check ID (string) of each item in the GM inventory, which has already read from the level file
@@ -148,7 +148,23 @@ void GameManager::LoadLevel(const char * levelName)
 		}
 	}
 
+	// Make all objects have the category INVENTORY so they appear on the same page
+	for (ObjectCSV& object : v_inventory)
+	{
+		object.group = ItemType::INVENTORY;
+	}
+
 	m_panel = Panel(v_inventory);
+
+	// UGH create a vector that can be used by the below panel function to set the correct quantities of items
+	std::vector<std::tuple<int, int>> v_tempInventory;
+	for (InventoryPair invPair : m_vInventoryPairs)
+	{
+		std::tuple<int, int> t = { g_idMap[invPair.first], invPair.second };
+		v_tempInventory.push_back(t);
+	}
+
+	m_panel.SetPlayerInventory(v_tempInventory);
 }
 
 std::vector<std::string> GameManager::TokeniseStringByComma(std::string line)

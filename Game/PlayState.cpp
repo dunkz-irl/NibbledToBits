@@ -17,8 +17,6 @@
 
 // #TODO: Not a great place to include these
 extern std::vector<ObjectCSV> g_vObjects;
-extern std::map<std::string, int> g_idMap;
-extern std::vector<std::string> g_v_idToStringTable;
 
 void PlayState::OnEnter()
 {
@@ -38,6 +36,9 @@ IGameState* PlayState::OnUpdate()
 	{
 		return new MenuState();
 	}
+
+	GM_INST.m_gameArea.Update();
+	GM_INST.m_panel.Update();
 
 	return nullptr;
 }

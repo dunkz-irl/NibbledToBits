@@ -1,8 +1,10 @@
+#include "Play.h"
+#include "PanelItem.h"
 #include "ReadCSV.h"
 
-extern std::vector<ObjectCSV> objects;
-extern std::map<std::string, int> idMap;
-extern std::vector<std::string> idToString;
+extern std::vector<ObjectCSV> g_vObjects;
+extern std::map<std::string, int> g_idMap;
+extern std::vector<std::string> g_v_idToStringTable;
 
 std::vector<ObjectCSV> ReadObjectsCSV() {
     // Open the objects csv file
@@ -68,15 +70,15 @@ std::vector<ObjectCSV> ReadObjectsCSV() {
         objects.push_back(std::move(obj));
 
         // Update idToString and idMap
-        idToString.push_back(tokens[3]);
-        idMap[tokens[3]] = obj.id;
+        g_v_idToStringTable.push_back(tokens[3]);
+        g_idMap[tokens[3]] = obj.id;
     }
 
     return objects;
 }
 
 int GetSpriteIDFromObjectID(int objID, int rot) {
-	for (ObjectCSV objCSV : objects) {
+	for (ObjectCSV objCSV : g_vObjects) {
 		if (objCSV.id == objID) {
 			return objCSV.spriteID[rot];
 		}

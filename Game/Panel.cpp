@@ -11,11 +11,13 @@ Panel::Panel()
 
 Panel::Panel(std::vector<ObjectCSV> objects)
 {
-	m_type = ItemType::ENVIRONMENT;
+	m_type = ItemType::INVENTORY;
 
 	Play::Vector2D sideButtonSize = Play::Vector2D(64, 64);
-	m_leftButton = Button(Play::GetSpriteId("arrow_left_UI"), Play::Point2D(25, HEIGHT - 90), sideButtonSize);
-	m_rightButton = Button(Play::GetSpriteId("arrow_right_UI"), Play::Point2D(WIDTH - 90, HEIGHT - 90), sideButtonSize);
+
+	// Don't draw the left n right buttons please
+	//m_leftButton = Button(Play::GetSpriteId("arrow_left_UI"), Play::Point2D(25, HEIGHT - 90), sideButtonSize);
+	//m_rightButton = Button(Play::GetSpriteId("arrow_right_UI"), Play::Point2D(WIDTH - 90, HEIGHT - 90), sideButtonSize);
 
 	Play::Vector2D verticalButtonSize = Play::Vector2D(64, 32);
 	m_upButton = Button(Play::GetSpriteId("arrow_up_UI"), Play::Point2D(WIDTH / 2 - 32, HEIGHT - 145), verticalButtonSize);
@@ -87,11 +89,11 @@ void Panel::Draw(Play::Point2D pos)
 
 	if (!(m_type <= 0))
 	{
-		m_leftButton.Draw();
+		//m_leftButton.Draw();
 	}
 	if (!(m_type >= ItemType::COUNT-1))
 	{
-		m_rightButton.Draw();
+		//m_rightButton.Draw();
 	}
 
 	int numScrolls = NumScrolls();

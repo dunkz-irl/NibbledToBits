@@ -7,6 +7,7 @@ enum ItemType {
 	PROTECTIVE,
 	REWARD,
 	HAZARD,
+	INVENTORY,
 	COUNT
 };
 

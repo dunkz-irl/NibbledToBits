@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\MouseEditor\ReadCSV.h" />
     <ClInclude Include="ApplicationManager.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Common.h" />
@@ -31,20 +30,21 @@
     <ClInclude Include="PanelItem.h" />
     <ClInclude Include="Play.h" />
     <ClInclude Include="PlayState.h" />
+    <ClInclude Include="ReadCSV.h" />
     <ClInclude Include="VirtualKeys.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\MouseEditor\Button.cpp" />
-    <ClCompile Include="..\..\MouseEditor\PanelItem.cpp" />
-    <ClCompile Include="..\..\MouseEditor\ReadCSV.cpp" />
     <ClCompile Include="ApplicationManager.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="GameArea.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="LoadLevel.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="Panel.cpp" />
+    <ClCompile Include="PanelItem.cpp" />
     <ClCompile Include="PlayState.cpp" />
+    <ClCompile Include="ReadCSV.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

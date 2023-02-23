@@ -70,8 +70,8 @@ void PanelItem::Draw()
 	{
 		Play::DrawSprite(Play::GetSpriteId("infinity_ui"), { m_pos.x + m_size.x/2, m_pos.y - 48}, 0);
 	}
-	m_subtractButton.Draw();
-	m_addButton.Draw();
+	//m_subtractButton.Draw();
+	//m_addButton.Draw();
 }
 
 
@@ -90,6 +90,7 @@ std::string PanelItem::ItemTypeName(int i)
 		case REWARD:		return "Reward";
 		case HAZARD:		return "Hazard";
 		case CONFIGURATION: return "Configuration";
+		case INVENTORY:		return "Inventory";
 		default:			return "Invalid";
 	}
 }
@@ -117,8 +118,8 @@ void PanelItem::SetPos(Play::Point2D pos_)
 
 	int yOffset = -37 ;
 
-	m_subtractButton.SetPos(m_pos + Play::Point2D(0, yOffset - m_subtractButton.GetSize().y));
-	m_addButton.SetPos(m_pos + Play::Point2D(m_size.x - m_addButton.GetSize().x, yOffset - m_addButton.GetSize().y));
+	//m_subtractButton.SetPos(m_pos + Play::Point2D(0, yOffset - m_subtractButton.GetSize().y));
+	//m_addButton.SetPos(m_pos + Play::Point2D(m_size.x - m_addButton.GetSize().x, yOffset - m_addButton.GetSize().y));
 }
 
 void PanelItem::SetID(int id)
