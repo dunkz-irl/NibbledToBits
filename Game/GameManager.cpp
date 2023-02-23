@@ -1,6 +1,11 @@
 #include "Play.h"
+
 #include "MenuState.h"
 #include "GameArea.h"
+
+#include "PanelItem.h"
+#include "Panel.h"
+
 #include "GameManager.h"
 
 GameManager* GameManager::s_pInstance = nullptr;

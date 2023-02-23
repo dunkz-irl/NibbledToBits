@@ -40,16 +40,13 @@ private:
 	GameManager& operator=(const GameManager) = delete;
 	GameManager(const GameManager&) = delete;
 	//////////////////
-
 	
-	//Panel m_panel;
-
-	// Level loadereeny
 	// Functerinos
 	std::vector<std::string> TokeniseStringByComma(std::string);
 
 	// Variablamos
 	GameArea m_gameArea{};
+	Panel m_panel;
 
 	GridPoint m_entrancePosition{ -2, -2 }; // -1 can be valid
 	GridPoint m_exitPosition{ -2, -2 };
@@ -57,4 +54,3 @@ private:
 	std::vector<GameAreaObject> m_vGameAreaObjects;
 	std::vector<InventoryPair> m_vInventoryPairs;
 };
-

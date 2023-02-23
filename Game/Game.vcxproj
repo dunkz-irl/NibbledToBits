@@ -19,17 +19,23 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\MouseEditor\ReadCSV.h" />
     <ClInclude Include="ApplicationManager.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="GameArea.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="IGameState.h" />
+    <ClInclude Include="Panel.h" />
+    <ClInclude Include="PanelItem.h" />
     <ClInclude Include="Play.h" />
     <ClInclude Include="PlayState.h" />
     <ClInclude Include="VirtualKeys.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\MouseEditor\Button.cpp" />
+    <ClCompile Include="..\..\MouseEditor\PanelItem.cpp" />
     <ClCompile Include="..\..\MouseEditor\ReadCSV.cpp" />
     <ClCompile Include="ApplicationManager.cpp" />
     <ClCompile Include="GameArea.cpp" />
@@ -37,6 +43,7 @@
     <ClCompile Include="LoadLevel.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="MenuState.cpp" />
+    <ClCompile Include="Panel.cpp" />
     <ClCompile Include="PlayState.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

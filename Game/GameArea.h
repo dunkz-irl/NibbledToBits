@@ -1,5 +1,5 @@
 #pragma once
-#include "..\..\MouseEditor\ReadCSV.h"
+#include "ReadCSV.h"
 
 struct GridPos {
 	int x{ 0 };

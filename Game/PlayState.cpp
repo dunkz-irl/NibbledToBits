@@ -1,11 +1,16 @@
 #include "Play.h"
 
+#include "Common.h"
+#include "VirtualKeys.h"
+
 #include "PlayState.h"
 #include "MenuState.h"
-#include "VirtualKeys.h"
-#include "Common.h"
-#include "..\..\MouseEditor\ReadCSV.h"
+
+#include "ReadCSV.h"
 #include "GameArea.h"
+#include "PanelItem.h"
+#include "Panel.h"
+
 #include "GameManager.h"
 
 #define GM_INST GameManager::Instance()

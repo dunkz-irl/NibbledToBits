@@ -1,3 +1,4 @@
+#include "Play.h"
 #include "GameArea.h"
 
 using namespace Play;
