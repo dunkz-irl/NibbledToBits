@@ -28,6 +28,8 @@ public:
 	GridPoint GetEntrancePosition();
 	GridPoint GetExitPosition();
 
+	friend class PlayState;
+
 private:
 
 	// Singleton /////	
@@ -39,7 +41,7 @@ private:
 	GameManager(const GameManager&) = delete;
 	//////////////////
 
-	//GameArea m_gameArea;
+	
 	//Panel m_panel;
 
 	// Level loadereeny
@@ -47,9 +49,12 @@ private:
 	std::vector<std::string> TokeniseStringByComma(std::string);
 
 	// Variablamos
+	GameArea m_gameArea{};
+
 	GridPoint m_entrancePosition{ -2, -2 }; // -1 can be valid
 	GridPoint m_exitPosition{ -2, -2 };
-	std::vector<LevelObject> m_vLevelObjects;
+
+	std::vector<GameAreaObject> m_vGameAreaObjects;
 	std::vector<InventoryPair> m_vInventoryPairs;
 };
 

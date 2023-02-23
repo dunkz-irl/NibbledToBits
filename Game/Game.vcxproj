@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="ApplicationManager.h" />
     <ClInclude Include="Common.h" />
+    <ClInclude Include="GameArea.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="IGameState.h" />
@@ -31,6 +32,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\MouseEditor\ReadCSV.cpp" />
     <ClCompile Include="ApplicationManager.cpp" />
+    <ClCompile Include="GameArea.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="LoadLevel.cpp" />
     <ClCompile Include="MainGame.cpp" />

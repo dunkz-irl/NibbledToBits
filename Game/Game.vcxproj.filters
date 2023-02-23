@@ -22,6 +22,9 @@
     <Filter Include="Editor Files">
       <UniqueIdentifier>{602ea217-5f14-4b84-9dd2-9e15fc518260}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Editor Files %28Copied%29">
+      <UniqueIdentifier>{e89f28da-fa26-4026-8eb8-5b6511e4d0ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Play.h">
@@ -48,6 +51,9 @@
     <ClInclude Include="GameManager.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameArea.h">
+      <Filter>Editor Files %28Copied%29</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainGame.cpp">
@@ -70,6 +76,9 @@
     </ClCompile>
     <ClCompile Include="LoadLevel.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameArea.cpp">
+      <Filter>Editor Files %28Copied%29</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

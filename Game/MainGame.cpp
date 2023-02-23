@@ -9,7 +9,7 @@ int DISPLAY_SCALE = 1;
 
 void MainGameEntry(PLAY_IGNORE_COMMAND_LINE)
 {
-	Play::CreateManager(DISPLAY_WIDTH, DISPLAY_HEIGHT, DISPLAY_SCALE, Play::ANTICLOCKWISE_ZERO_RIGHT, Play::XRIGHT_YUP);
+	Play::CreateManager(DISPLAY_WIDTH, DISPLAY_HEIGHT, DISPLAY_SCALE);
 	Play::LoadBackground("Data\\Backgrounds\\Background.png");
 	Play::CentreAllSpriteOrigins();
 }

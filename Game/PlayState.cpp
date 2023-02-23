@@ -5,7 +5,10 @@
 #include "VirtualKeys.h"
 #include "Common.h"
 #include "..\..\MouseEditor\ReadCSV.h"
+#include "GameArea.h"
 #include "GameManager.h"
+
+#define GM_INST GameManager::Instance()
 
 // #TODO: Not a great place to include these
 extern std::vector<ObjectCSV> objects;
@@ -37,4 +40,5 @@ IGameState* PlayState::OnUpdate()
 void PlayState::OnDraw()
 {
 	Play::DrawBackground();
+	GM_INST.m_gameArea.DrawGameArea();
 }
