@@ -23,7 +23,7 @@
 #ifndef PLAYPCH_H
 #define PLAYPCH_H
 
-#define PLAY_VERSION	"1.1.23.02.23"
+#define PLAY_VERSION	"1.1.23.02.09"
 
 #include <cstdint>
 #include <cstdlib>
@@ -40,24 +40,13 @@
 #include <thread>
 #include <future>
 
-// Exclude rarely-used content from the Windows headers
-#ifndef WIN32_LEAN_AND_MEAN
-#define WIN32_LEAN_AND_MEAN 
-#endif
-
-// Stop windows macros defining their own min and max macros
-#ifndef NOMINMAX
-#define NOMINMAX
-#endif
+#define WIN32_LEAN_AND_MEAN // Exclude rarely-used content from the Windows headers
+#define NOMINMAX // Stop windows macros defining their own min and max macros
 
 // Windows Header Files
 #include <windows.h>
 #include <windowsx.h>
 #include <mmsystem.h>
-
-#ifdef _DEBUG
-#include <DbgHelp.h>
-#endif
 
 // Includes the GDI plus headers.
 // These are only needed by internal parts of the library.
@@ -92,9 +81,6 @@ void DebugOutput( std::string s );
 #define PLAY_ASSERT_MSG(x,y) if(!(x)){ AssertFailMessage(y, __FILE__, __LINE__); }
 #endif // _DEBUG
 
-// Suppress warning for an unused argument or variable
-#define PLAY_UNUSED(x) ((void)x)
-
 // Global constants such as PI
 constexpr float PLAY_PI	= 3.14159265358979323846f;   // pi
 
@@ -108,20 +94,25 @@ constexpr float PLAY_PI	= 3.14159265358979323846f;   // pi
 //********************************************************************************************************************************
 #ifdef _DEBUG
 	// Prints out all the currently allocated memory to the debug output
-namespace Play
-{
-	void PrintAllocations(const char* tagText);
-}; // namespace Play
-	void* operator new  (std::size_t sizeBytes);
-	void* operator new[](std::size_t sizeBytes);
+	void PrintAllocations( const char* tagText );
 
-	void operator delete  (void* ptr) noexcept;
-	void operator delete[](void* ptr) noexcept;
+	// Allocate some memory with a known origin
+	void* operator new(size_t size, const char* file, int line);
+	// Allocate some memory with a known origin
+	void* operator new[](size_t size, const char* file, int line); 
+	// Allocate some memory without a known origin
+	void* operator new[](size_t size);
+
+	// Free some memory 
+	void operator delete[](void* p);
+	// Free some memory (matching allocator for exceptions )
+	void operator delete(void* p, const char* file, int line);
+	// Free some memory (matching allocator for exceptions )
+	void operator delete[](void* p, const char* file, int line); 
+
+	#define new new( __FILE__ , __LINE__ )
 #else
-namespace Play
-{ 
-	inline void PrintAllocations(const char*) {};
-} // namespace Play
+	#define PrintAllocations( x )
 #endif
 
 #endif // PLAY_PLAYMEMORY_H
@@ -723,8 +714,6 @@ namespace Play
 		bool AboutEqualTo(const Matrix2D& rhs, const float tolerance) const;
 		// Inverts this matrix (makes it perform the opposite operation)
 		void Inverse();
-		// Reverses the direction of rotation
-		Matrix2D MatrixReverse(const Matrix2D& m);
 	};
 
 	// Matrix addition
@@ -818,8 +807,8 @@ namespace Play
 		float s = sin(theta);
 
 		return Matrix2D(
-			Vector3f(c, s, 0),
-			Vector3f(-s, c, 0),
+			Vector3f(c, -s, 0),
+			Vector3f(s, c, 0),
 			Vector3f(0, 0, 1)
 		);
 	}
@@ -841,15 +830,6 @@ namespace Play
 			Vector3f(1, 0, 0),
 			Vector3f(0, 1, 0),
 			Vector3f(x, y, 1)
-		);
-	}
-
-	inline Matrix2D MatrixReverse(const Matrix2D& m)
-	{
-		return Matrix2D(
-			Vector3f( m.row[0].x, m.row[1].x, m.row[0].w ),
-			Vector3f( m.row[0].y, m.row[1].y, m.row[1].w ),
-			Vector3f( m.row[2].x, m.row[2].y, m.row[2].w )
 		);
 	}
 
@@ -1421,10 +1401,10 @@ namespace Play::Render
 	//********************************************************************************************************************************
 	template< typename TBlend > void TransformPixels(const PixelData& srcPixelData, int srcFrameOffset, int srcDrawWidth, int srcDrawHeight, const Point2f& srcOrigin, const Matrix2D& transform, BlendColour globalMultiply)
 	{
-		// We flip the y screen coordinate and reverse the rotatation to be consistant with a right-handed Cartesian co-ordinate system 
+		// We flip the y screen coordinate and rotate to be consistant with a right-handed Cartesian co-ordinate system 
 		Matrix2D right;
-		right.row[0] = { transform.row[0].x, transform.row[1].x, 0.0f };
-		right.row[1] = { transform.row[0].y, transform.row[1].y, 0.0f };
+		right.row[0] = transform.row[1];
+		right.row[1] = -transform.row[0];
 		right.row[2] = { transform.row[2].x, m_pRenderTarget->height - transform.row[2].y, 1.0f };
 
 		static float inf = std::numeric_limits<float>::infinity();
@@ -1780,6 +1760,10 @@ namespace Play::Input
 
 #define TRANSFORM_SPACE( p )  (drawSpace == DrawingSpace::WORLD ? p - cameraPos : p)
 #define TRANSFORM_MATRIX_SPACE( t ) (drawSpace == DrawingSpace::WORLD ? (MatrixTranslation( -cameraPos.x, -cameraPos.y ) * t) : t)
+#define TRANSFORM_AXIS_ROT( r ) (axisRotation == AxisRotation::CLOCKWISE_ZERO_UP ? -r+(PLAY_PI/2) : r)
+#define TRANSFORM_MATRIX_ROT( t ) (axisRotation == AxisRotation::CLOCKWISE_ZERO_UP ? (t * MatrixRotation( PLAY_PI/2 )) : t)
+#define TRANSFORM_Y( pos ) (coordSys == CoordSys::XRIGHT_YDOWN ? Point2D( pos.x, Play::Window::GetHeight()-pos.y ) : pos)
+#define TRANSFORM_MATRIX_Y( t ) (coordSys == CoordSys::XRIGHT_YDOWN ? (MatrixTranslation( 0, Play::Window::GetHeight()-(t.row[2].y*2) ) * t) : t)
 
 namespace Play
 {
@@ -1804,6 +1788,18 @@ namespace Play
 		SCREEN,
 	};
 
+	enum AxisRotation
+	{
+		CLOCKWISE_ZERO_UP = 0,
+		ANTICLOCKWISE_ZERO_RIGHT = 1
+	};
+
+	enum CoordSys
+	{
+		XRIGHT_YDOWN = 0,
+		XRIGHT_YUP = 1
+	};
+
 	enum BlendMode
 	{
 		BLEND_NORMAL = 0,
@@ -1824,12 +1820,14 @@ namespace Play
 	extern int frameCount;
 	extern Point2f cameraPos;
 	extern DrawingSpace drawSpace;
+	extern AxisRotation axisRotation;
+	extern CoordSys coordSys;
 
 	// Manager creation and deletion
 	//**************************************************************************************************
 
 	// Initialises the managers and creates a window of the required dimensions
-	void CreateManager( int width, int height, int scale );
+	void CreateManager( int width, int height, int scale, AxisRotation aRot = AxisRotation::CLOCKWISE_ZERO_UP, CoordSys coSys = CoordSys::XRIGHT_YDOWN );
 	// Shuts down the managers and closes the window
 	void DestroyManager();
 
@@ -2093,10 +2091,12 @@ namespace Play
 //********************************************************************************************************************************
 //* File:			PlayMemory.cpp
 //* Platform:		Independent
-//* Description:	Implementation of a simple memory tracker to prevent leaks. 
+//* Description:	Implementation of a simple memory tracker to prevent leaks. Uses #define new which looks neat and tidy
+//*                 (especially for new C++ programmers), but doesn't work for placement new, so you are likely to get compile 
+//*                 errors if you start including it in your own header files.  
 //*                 Avoids use of STL or anything else which allocates memory as this could create infinite loops!
 //* Notes:          This is a simple approach to support your understanding of overriding the new operator.
-//*                 See below for alternative approaches:
+//*                 See below for more advanced approaches:
 //*                 1) The CRT Debug Heap Library (a more advanced version of this approach)
 //*                 https://docs.microsoft.com/en-us/visualstudio/debugger/crt-debug-heap-details?view=vs-2019
 //*                 2) Heap Profiling in the debugger 
@@ -2104,208 +2104,215 @@ namespace Play
 //********************************************************************************************************************************
 
 
-#pragma comment(lib, "DbgHelp.lib")
-
 #ifdef _DEBUG
 
-namespace Play
+// Undefine 'new' in this compilation unit only.
+#pragma push_macro("new")
+#undef new
+
+constexpr int MAX_ALLOCATIONS = 8192 * 4;
+constexpr int MAX_FILENAME = 1024;
+
+unsigned int g_allocId = 0;
+
+// A structure to store data on each memory allocation
+struct ALLOC
 {
+	void* address = 0;
+	char file[MAX_FILENAME] = { 0 };
+	int line = 0;
+	size_t size = 0;
+	int id = 0;
 
-	constexpr int MAX_ALLOCATIONS = 8192 * 4;
-	constexpr int MAX_FILENAME = 1024;
-	constexpr int STACKTRACE_OFFSET = 2;
-	constexpr int STACKTRACE_DEPTH = 1;
+	ALLOC( void* a, const char* fn, int l, size_t s ) { address = a; line = l; size = s; id = g_allocId++; strcpy_s( file, fn ); };
+	ALLOC( void ) {};
+};
 
-	static unsigned int g_allocId = 0;
+ALLOC g_allocations[MAX_ALLOCATIONS];
+unsigned int g_allocCount = 0;
+void* g_allocDeleted = nullptr;
 
-	// A structure to store data on each memory allocation
-	struct ALLOC
-	{
-		void* address = 0;
-		size_t sizeBytes = 0;
-		int id = 0;
-		void* stack[STACKTRACE_DEPTH];
-		int frames;
-	};
 
-	ALLOC g_allocations[MAX_ALLOCATIONS];
-	unsigned int g_allocCount = 0;
-	int g_id = -1;
-	void* g_allocDeleted = nullptr;
-
-	CRITICAL_SECTION g_allocCritSec;
-
-	// A method for printing out all the memory allocation immediately before program exit (or as close as you can get)
-	// This is achieved by creating a class as a static object before the first memory allocation, which stays in scope until
-	// after everything else is destroyed. When it is cleaned up its destructor prints the allocations to show us any leaks!
-	class DestroyedLast
-	{
-	public:
-		DestroyedLast()
-		{
-			InitializeCriticalSectionAndSpinCount(&g_allocCritSec, 64);
-
-#ifdef _DEBUG
-			HANDLE process = GetCurrentProcess();
-			SymInitialize(process, NULL, TRUE);
-			SymSetOptions(SYMOPT_LOAD_LINES);
-#endif
-
-			PrintAllocations("<STARTUP>");
-		}
-		~DestroyedLast()
-		{
-			if (g_allocCount > 0)
-			{
-				PrintAllocations("<MEMORY LEAK>");
-			}
-			else
-			{
-				DebugOutput("**************************************************\n");
-				DebugOutput("NO MEMORY LEAKS!\n");
-				DebugOutput("**************************************************\n");
-			}
-
-			DeleteCriticalSection(&g_allocCritSec);
-		}
-	};
-
-	void CreateStaticObject(void)
-	{
-		static DestroyedLast last;
-	}
-
-	void TrackAllocation(void* ptr, std::size_t sizeBytes)
-	{
-		CreateStaticObject();
-
-		EnterCriticalSection(&g_allocCritSec);
-
-		PLAY_ASSERT(g_allocCount < MAX_ALLOCATIONS);
-		ALLOC& rAlloc(g_allocations[g_allocCount++]);
-		rAlloc.address = ptr;
-		rAlloc.sizeBytes = sizeBytes;
-		rAlloc.frames = RtlCaptureStackBackTrace(STACKTRACE_OFFSET, STACKTRACE_DEPTH, rAlloc.stack, NULL);
-
-		LeaveCriticalSection(&g_allocCritSec);
-	}
-
-	void UntrackAllocation(void* ptr)
-	{
-		EnterCriticalSection(&g_allocCritSec);
-		g_allocDeleted = ptr;
-
-		for (unsigned int i = 0; i < g_allocCount; i++)
-		{
-			if (g_allocations[i].address == ptr)
-			{
-				if (g_allocations[i].id == g_id)
-					g_allocations[i].id = g_id;
-
-				g_allocations[i] = g_allocations[g_allocCount - 1];
-				g_allocations[g_allocCount - 1].address = nullptr;
-				g_allocCount--;
-
-				// Early out
-				LeaveCriticalSection(&g_allocCritSec);
-				return;
-			}
-		}
-		LeaveCriticalSection(&g_allocCritSec);
-	}
-
-	//********************************************************************************************************************************
-	// Printing allocations
-	//********************************************************************************************************************************
-
-	void PrintAllocation(const char* tagText, const ALLOC& rAlloc)
-	{
-		char buffer[MAX_FILENAME * 2] = { 0 };
-
-		if (rAlloc.address != nullptr)
-		{
-			HANDLE process = GetCurrentProcess();
-
-			DWORD  dwDisplacement;
-
-			IMAGEHLP_LINE64 line;
-			constexpr size_t MAX_SYM_NAME_LENGTH = 255;
-			SYMBOL_INFO* symbol = (SYMBOL_INFO*)malloc(sizeof(SYMBOL_INFO) + MAX_SYM_NAME_LENGTH + 1);
-			symbol->MaxNameLen = MAX_SYM_NAME_LENGTH;
-			symbol->SizeOfStruct = sizeof(SYMBOL_INFO);
-
-			sprintf_s(buffer, "%s 0x%02p %d bytes [%d]: \n", tagText, rAlloc.address, static_cast<int>(rAlloc.sizeBytes), rAlloc.id);
-			DebugOutput(buffer);
-			for (int i = 0; i < rAlloc.frames; ++i)
-			{
-				SymFromAddr(process, (DWORD64)(rAlloc.stack[i]), 0, symbol);
-				SymGetLineFromAddr64(process, (DWORD64)rAlloc.stack[i], &dwDisplacement, &line);
-
-				// Format in such a way that VS can double click to jump to the allocation.
-				sprintf_s(buffer, "%s(%d): %s\n", line.FileName, line.LineNumber, symbol->Name);
-
-				DebugOutput(buffer);
-			}
-
-			free(symbol);
-		}
-	}
-
-	void PrintAllocations(const char* tagText)
-	{
-		EnterCriticalSection(&g_allocCritSec);
-
-		int bytes = 0;
-		char buffer[MAX_FILENAME * 2] = { 0 };
-		DebugOutput("****************************************************\n");
-		DebugOutput("MEMORY ALLOCATED\n");
-		DebugOutput("****************************************************\n");
-		for (unsigned int n = 0; n < g_allocCount; n++)
-		{
-			ALLOC& a = g_allocations[n];
-			PrintAllocation(tagText, a);
-			bytes += static_cast<int>(a.sizeBytes);
-		}
-		sprintf_s(buffer, "%s Total = %d bytes\n", tagText, bytes);
-		DebugOutput(buffer);
-		DebugOutput("**************************************************\n");
-
-		LeaveCriticalSection(&g_allocCritSec);
-	}
-
-} // namespace Play
+void CreateStaticObject( void );
+void PrintAllocation( const char* tagText, ALLOC& a );
 
 //********************************************************************************************************************************
-// Overrides for new operator (x2)
+// Overrides for new operator (x4)
 //********************************************************************************************************************************
-void* operator new  (std::size_t sizeBytes)
+
+// The file and line are passed through using the macro defined in PlayMemory.h which redefines new. This will only happen if 
+// PlayMemory.h has been parsed in advance of the use of new in the relevant code. This approach is problematic for classes 
+// the safest approach. The two definitions of new without the file and line pick up any other memory allocations for completeness.
+void* operator new( size_t size, const char* file, int line )
 {
-	void* ptr = malloc(sizeBytes);
-	Play::TrackAllocation(ptr, sizeBytes);
-	return ptr;
+	PLAY_ASSERT( g_allocCount < MAX_ALLOCATIONS );
+	CreateStaticObject();
+	void* p = malloc( size );
+	g_allocations[g_allocCount++] = ALLOC{ p, file, line, size };
+	return p;
 }
 
-void* operator new[](std::size_t sizeBytes)
+void* operator new[]( size_t size, const char* file, int line )
 {
-	void* ptr = malloc(sizeBytes);
-	Play::TrackAllocation(ptr, sizeBytes);
-	return ptr;
+	PLAY_ASSERT( g_allocCount < MAX_ALLOCATIONS );
+	CreateStaticObject();
+	void* p = malloc( size );
+	g_allocations[g_allocCount++] = ALLOC{ p, file, line, size };
+	return p;
+}
+
+void* operator new( size_t size )
+{
+	PLAY_ASSERT( g_allocCount < MAX_ALLOCATIONS );
+	CreateStaticObject();
+	void* p = malloc( size );
+	g_allocations[g_allocCount++] = ALLOC{ p, "Unknown", 0, size };
+	return p;
+}
+
+void* operator new[]( size_t size )
+{
+	PLAY_ASSERT( g_allocCount < MAX_ALLOCATIONS );
+	CreateStaticObject();
+	void* p = malloc( size );
+	g_allocations[g_allocCount++] = ALLOC{ p, "Unknown", 0, size };
+	return p;
 }
 
 //********************************************************************************************************************************
-// Overrides for delete operator (x2)
+// Overrides for delete operator (x4)
 //********************************************************************************************************************************
-void operator delete  (void* ptr) noexcept
+
+// The definitions with file and line are only included for exception handling, where it looks for a form of delete that matches 
+// the new that was used to allocate it.
+void operator delete( void* p, const char* file, int line )
 {
-	Play::UntrackAllocation(ptr);
-	free(ptr);
+	g_allocDeleted = p;
+	UNREFERENCED_PARAMETER( line );
+	UNREFERENCED_PARAMETER( file );
+	operator delete( p );
 }
 
-void operator delete[](void* ptr) noexcept
+int g_id = -1;
+
+void operator delete( void* p )
 {
-	Play::UntrackAllocation(ptr);
-	free(ptr);
+	g_allocDeleted = p;
+
+	for( unsigned int a = 0; a < g_allocCount; a++ )
+	{
+		if( g_allocations[a].address == p )
+		{
+			if( g_allocations[a].id == g_id )
+				g_allocations[a].id = g_id;
+
+			g_allocations[a] = g_allocations[g_allocCount - 1];
+			g_allocations[g_allocCount - 1].address = nullptr;
+			g_allocCount--;
+		}
+	}
+	free( p );
 }
+
+void operator delete[]( void* p, const char* file, int line )
+{
+	g_allocDeleted = p;
+	UNREFERENCED_PARAMETER( line );
+	UNREFERENCED_PARAMETER( file );
+	operator delete[]( p );
+}
+
+void operator delete[]( void* p )
+{
+	g_allocDeleted = p;
+	for( unsigned int a = 0; a < g_allocCount; a++ )
+	{
+		if( g_allocations[a].address == p )
+		{
+			if( g_allocations[a].id == g_id )
+				g_allocations[a].id = g_id;
+
+			g_allocations[a] = g_allocations[g_allocCount - 1];
+			g_allocations[g_allocCount - 1].address = nullptr;
+			g_allocCount--;
+		}
+	}
+	free( p );
+}
+
+//********************************************************************************************************************************
+// Printing allocations
+//********************************************************************************************************************************
+
+// A method for printing out all the memory allocation immediately before program exit (or as close as you can get)
+// This is achieved by creating a class as a static object before the first memory allocation, which stays in scope until
+// after everything else is destroyed. When it is cleaned up its destructor prints the allocations to show us any leaks!
+class DestroyedLast
+{
+public:
+	DestroyedLast()
+	{
+		PrintAllocations( "<STARTUP>" );
+	}
+	~DestroyedLast()
+	{
+		if( g_allocCount > 0 )
+		{
+			PrintAllocations( "<MEMORY LEAK>" );
+		}
+		else
+		{
+			DebugOutput( "**************************************************\n" );
+			DebugOutput( "NO MEMORY LEAKS!\n" );
+			DebugOutput( "**************************************************\n" );
+		}
+
+	}
+};
+
+void CreateStaticObject( void )
+{
+	static DestroyedLast last;
+}
+
+void PrintAllocation( const char* tagText, ALLOC& a )
+{
+	char buffer[MAX_FILENAME * 2] = { 0 };
+
+	if( a.address != nullptr )
+	{
+		char* lastSlash = strrchr( a.file, '\\' );
+		if( lastSlash )
+		{
+			strcpy_s( buffer, lastSlash + 1 );
+			strcpy_s( a.file, buffer );
+		}
+		// Format in such a way that VS can double click to jump to the allocation.
+		sprintf_s( buffer, "%s %s(%d): 0x%02X %d bytes [%d]\n", tagText, a.file, a.line, static_cast<int>( reinterpret_cast<long long>( a.address ) ), static_cast<int>( a.size ), a.id );
+		DebugOutput( buffer );
+	}
+}
+
+void PrintAllocations( const char* tagText )
+{
+	int bytes = 0;
+	char buffer[MAX_FILENAME * 2] = { 0 };
+	DebugOutput( "****************************************************\n" );
+	DebugOutput( "MEMORY ALLOCATED\n" );
+	DebugOutput( "****************************************************\n" );
+	for( unsigned int n = 0; n < g_allocCount; n++ )
+	{
+		ALLOC& a = g_allocations[n];
+		PrintAllocation( tagText, a );
+		bytes += static_cast<int>(a.size);
+	}
+	sprintf_s( buffer, "%s Total = %d bytes\n", tagText, bytes );
+	DebugOutput( buffer );
+	DebugOutput( "**************************************************\n" );
+
+}
+
+#pragma pop_macro("new")
 
 #endif
 
@@ -4170,17 +4177,21 @@ namespace Play
 	Point2f cameraPos{ 0.0f, 0.0f };
 	// Spaces and co-ordinate systems
 	DrawingSpace drawSpace = DrawingSpace::WORLD;
+	AxisRotation axisRotation = AxisRotation::CLOCKWISE_ZERO_UP;
+	CoordSys coordSys = CoordSys::XRIGHT_YDOWN;
 
 	//**************************************************************************************************
 	// Manager creation and deletion
 	//**************************************************************************************************
 
-	void CreateManager( int displayWidth, int displayHeight, int displayScale )
+	void CreateManager( int displayWidth, int displayHeight, int displayScale, AxisRotation aRot, CoordSys coSys )
 	{
 		Play::Graphics::CreateManager( displayWidth, displayHeight, "Data\\Sprites\\" );
 		Play::Window::CreateManager( Play::Graphics::GetDrawingBuffer(), displayScale );
 		Play::Window::RegisterMouse( Play::Input::CreateManager() );
 		Play::Audio::CreateManager( "Data\\Audio\\" );
+		axisRotation = aRot;
+		coordSys = coSys;
 		// Seed the game's random number generator based on the time
 		srand( (int)time( NULL ) );
 	}
@@ -4231,7 +4242,7 @@ namespace Play
 
 	void DrawDebugText( Point2D pos, const char* text, Colour c, bool centred )
 	{
-		Play::Graphics::DrawDebugString( TRANSFORM_SPACE( pos ), text, { c.red * 2.55f, c.green * 2.55f, c.blue * 2.55f }, centred );
+		Play::Graphics::DrawDebugString( TRANSFORM_SPACE( TRANSFORM_Y( pos ) ), text, { c.red * 2.55f, c.green * 2.55f, c.blue * 2.55f }, centred );
 	}
 
 	void PresentDrawingBuffer()
@@ -4270,7 +4281,7 @@ namespace Play
 
 	Point2D GetMousePos()
 	{
-		return Play::Input::GetMousePos();
+		return TRANSFORM_Y( Play::Input::GetMousePos() );
 	}
 
 	bool GetMouseButton( Align button )
@@ -4301,9 +4312,9 @@ namespace Play
 	// Camera functions
 	//**************************************************************************************************
 
-	void SetCameraPosition( Point2f pos ) { cameraPos = pos; }
+	void SetCameraPosition( Point2f pos ) { cameraPos = TRANSFORM_Y( pos ); }
 
-	Point2f GetCameraPosition(void) { return cameraPos; }
+	Point2f GetCameraPosition( void ) { return TRANSFORM_Y( cameraPos ); }
 
 	void SetDrawingSpace( DrawingSpace space ) { drawSpace = space;	}
 
@@ -4422,12 +4433,12 @@ namespace Play
 
 	void DrawSprite( const char* spriteName, Point2D pos, int frameIndex )
 	{
-		Play::Graphics::Draw( Play::Graphics::GetSpriteId( spriteName ), TRANSFORM_SPACE( pos ), frameIndex );
+		Play::Graphics::Draw( Play::Graphics::GetSpriteId( spriteName ), TRANSFORM_SPACE( TRANSFORM_Y( pos ) ), frameIndex );
 	}
 
 	void DrawSprite( int spriteID, Point2D pos, int frameIndex )
 	{
-		Play::Graphics::Draw( spriteID, TRANSFORM_SPACE( pos ), frameIndex );
+		Play::Graphics::Draw( spriteID, TRANSFORM_SPACE(TRANSFORM_Y( pos ) ), frameIndex );
 	}
 
 	void DrawSpriteTransparent(const char* spriteName, Point2D pos, int frameIndex, float opacity, Colour colour)
@@ -4442,32 +4453,32 @@ namespace Play
 
 	void DrawSpriteRotated( const char* spriteName, Point2D pos, int frameIndex, float angle, float scale, float opacity, Colour colour)
 	{
-		Play::Graphics::DrawRotated( Play::Graphics::GetSpriteId( spriteName ), TRANSFORM_SPACE( pos ), frameIndex, angle, scale, { opacity, colour.red / 100.0f, colour.green / 100.0f, colour.blue / 100.0f });
+		Play::Graphics::DrawRotated( Play::Graphics::GetSpriteId( spriteName ), TRANSFORM_SPACE( TRANSFORM_Y( pos ) ), frameIndex, TRANSFORM_AXIS_ROT( angle ), scale, { opacity, colour.red / 100.0f, colour.green / 100.0f, colour.blue / 100.0f });
 	}
 
 	void DrawSpriteRotated( int spriteID, Point2D pos, int frameIndex, float angle, float scale, float opacity, Colour colour )
 	{
-		Play::Graphics::DrawRotated( spriteID, TRANSFORM_SPACE( pos ), frameIndex, angle, scale, { opacity, colour.red / 100.0f, colour.green / 100.0f, colour.blue / 100.0f });
+		Play::Graphics::DrawRotated( spriteID, TRANSFORM_SPACE( TRANSFORM_Y( pos ) ), frameIndex, TRANSFORM_AXIS_ROT( angle ), scale, { opacity, colour.red / 100.0f, colour.green / 100.0f, colour.blue / 100.0f });
 	}
 
 	void DrawSpriteTransformed( int spriteID, const Matrix2D& transform, int frameIndex, float opacity, Colour colour )
 	{
-		Play::Graphics::DrawTransformed( spriteID, TRANSFORM_MATRIX_SPACE( transform ), frameIndex, { opacity, colour.red / 100.0f, colour.green / 100.0f, colour.blue / 100.0f });
+		Play::Graphics::DrawTransformed( spriteID, TRANSFORM_MATRIX_SPACE( TRANSFORM_MATRIX_ROT(TRANSFORM_MATRIX_Y( transform ) ) ), frameIndex, { opacity, colour.red / 100.0f, colour.green / 100.0f, colour.blue / 100.0f });
 	}
 
 	void DrawLine( Point2f start, Point2f end, Colour c )
 	{
-		return Play::Graphics::DrawLine( TRANSFORM_SPACE( start), TRANSFORM_SPACE( end ), { c.red * 2.55f, c.green * 2.55f, c.blue * 2.55f }  );
+		return Play::Graphics::DrawLine( TRANSFORM_SPACE( TRANSFORM_Y( start ) ), TRANSFORM_SPACE( TRANSFORM_Y( end ) ), { c.red * 2.55f, c.green * 2.55f, c.blue * 2.55f }  );
 	}
 
 	void DrawCircle( Point2D pos, int radius, Colour c )
 	{
-		Play::Graphics::DrawCircle( TRANSFORM_SPACE( pos ), radius, { c.red * 2.55f, c.green * 2.55f, c.blue * 2.55f } );
+		Play::Graphics::DrawCircle( TRANSFORM_SPACE( TRANSFORM_Y( pos ) ), radius, { c.red * 2.55f, c.green * 2.55f, c.blue * 2.55f } );
 	}
 
 	void DrawRect( Point2D topLeft, Point2D bottomRight, Colour c, bool fill )
 	{
-		Play::Graphics::DrawRect( TRANSFORM_SPACE( topLeft ), TRANSFORM_SPACE( bottomRight ), { c.red * 2.55f, c.green * 2.55f, c.blue * 2.55f }, fill );
+		Play::Graphics::DrawRect( TRANSFORM_SPACE( TRANSFORM_Y( topLeft ) ), TRANSFORM_SPACE( TRANSFORM_Y( bottomRight ) ), { c.red * 2.55f, c.green * 2.55f, c.blue * 2.55f }, fill );
 	}
 
 	void DrawSpriteLine( Point2f startPos, Point2f endPos, const char* penSprite, Colour c )
@@ -4534,7 +4545,7 @@ namespace Play
 		int spriteId = Play::Graphics::GetSpriteId( penSprite );
 		ColourSprite( penSprite, c );
 
-		pos = TRANSFORM_SPACE( pos );
+		pos = TRANSFORM_SPACE( TRANSFORM_Y( pos ) );
 
 		int ox = 0, oy = radius;
 		int d = 3 - 2 * radius;
@@ -4578,12 +4589,12 @@ namespace Play
 		}
 
 		pos.x += Play::Graphics::GetSpriteOrigin( font ).x;
-		Play::Graphics::DrawString( font, TRANSFORM_SPACE( pos ), text );
+		Play::Graphics::DrawString( font, TRANSFORM_SPACE( TRANSFORM_Y( pos ) ), text );
 	}
 
 	void DrawPixel(Point2D pos, Colour c)
 	{
-		return Play::Graphics::DrawPixel(TRANSFORM_SPACE( pos ), { c.red * 2.55f, c.green * 2.55f, c.blue * 2.55f });
+		return Play::Graphics::DrawPixel(TRANSFORM_SPACE(TRANSFORM_Y(pos)), { c.red * 2.55f, c.green * 2.55f, c.blue * 2.55f });
 	}
 
 	void BeginTimingBar( Colour c )
@@ -4864,8 +4875,20 @@ namespace Play
 
 		obj.rotation = angle;
 
-		obj.velocity.x = speed * cos(obj.rotation);
-		obj.velocity.y = speed * sin(obj.rotation);
+		switch (axisRotation)
+		{
+		case CLOCKWISE_ZERO_UP:
+			obj.velocity.x = speed * sin(obj.rotation);
+			obj.velocity.y = speed * cos(obj.rotation);
+			break;
+		case ANTICLOCKWISE_ZERO_RIGHT:
+			obj.velocity.x = speed * cos(obj.rotation);
+			obj.velocity.y = speed * sin(obj.rotation);
+			break;
+		}
+
+		if (coordSys == XRIGHT_YDOWN)
+			obj.velocity.y = -obj.velocity.y;
 	}
 
 	void PointGameObject(GameObject& obj, int targetX, int targetY)
@@ -4875,7 +4898,18 @@ namespace Play
 		float xdiff = targetX - obj.pos.x;
 		float ydiff = targetY - obj.pos.y;
 
-		obj.rotation = atan2( ydiff, xdiff );
+		if (coordSys == XRIGHT_YDOWN)
+			ydiff = -ydiff;
+
+		switch (axisRotation)
+		{
+			case CLOCKWISE_ZERO_UP:
+				obj.rotation = atan2( xdiff, ydiff );
+				break;
+			case ANTICLOCKWISE_ZERO_RIGHT:
+				obj.rotation = atan2( ydiff, xdiff );
+				break;
+		}
 	}
 
 	void SetSprite(GameObject& obj, const char* spriteName, float animSpeed)
@@ -4891,19 +4925,19 @@ namespace Play
 	void DrawObject(GameObject& obj)
 	{
 		if (obj.type == -1) return; // Don't draw noObject
-		Play::Graphics::Draw(obj.spriteId, TRANSFORM_SPACE( obj.pos ), obj.frame);
+		Play::Graphics::Draw(obj.spriteId, TRANSFORM_SPACE( TRANSFORM_Y( obj.pos ) ), obj.frame);
 	}
 
 	void DrawObjectTransparent(GameObject& obj, float opacity)
 	{
 		if (obj.type == -1) return; // Don't draw noObject
-		Play::Graphics::DrawTransparent(obj.spriteId, TRANSFORM_SPACE( obj.pos ), obj.frame, { opacity, 1.0f, 1.0f, 1.0f });
+		Play::Graphics::DrawTransparent(obj.spriteId, TRANSFORM_SPACE( TRANSFORM_Y( obj.pos )), obj.frame, { opacity, 1.0f, 1.0f, 1.0f });
 	}
 
 	void DrawObjectRotated(GameObject& obj, float opacity)
 	{
 		if (obj.type == -1) return; // Don't draw noObject
-		Play::Graphics::DrawRotated(obj.spriteId, TRANSFORM_SPACE( obj.pos ), obj.frame, obj.rotation, obj.scale, { opacity, 1.0f, 1.0f, 1.0f });
+		Play::Graphics::DrawRotated(obj.spriteId, TRANSFORM_SPACE( TRANSFORM_Y( obj.pos ) ), obj.frame, TRANSFORM_AXIS_ROT( obj.rotation ), obj.scale, { opacity, 1.0f, 1.0f, 1.0f });
 	}
 
 	void DrawGameObjectsDebug()
