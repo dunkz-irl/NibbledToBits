@@ -21,6 +21,8 @@ struct GameAreaObject {
 	int misc{ 0 };
 	bool mouseHole{ false };
 	bool vis{ true };
+	bool pickupable{ true };
+	bool rotatable{ true };
 };
 
 using namespace Play;

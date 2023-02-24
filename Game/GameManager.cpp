@@ -92,12 +92,15 @@ void GameManager::LoadLevel(const char * levelName)
 		// Make an object out of the current line
 		GameAreaObject obj
 		{
-			g_idMap[tokens[0]],								// String ID -- const char * is a pointer so when obj is destroyed that memory becomes nonsense! Can't take a copy as with string
-			std::stoi(tokens[1]),							// X position
-			std::stoi(tokens[2]),							// Y position
-			std::stoi(tokens[3]),							// Rotation (not an angle but in 90 degrees ness)
-			std::stoi(tokens[4])							// Misc variable
+			g_idMap[tokens[0]],		// String ID -- const char * is a pointer so when obj is destroyed that memory becomes nonsense! Can't take a copy as with string
+			std::stoi(tokens[1]),	// X position
+			std::stoi(tokens[2]),	// Y position
+			std::stoi(tokens[3]),	// Rotation (not an angle but in 90 degrees ness)
+			std::stoi(tokens[4]),	// Misc variable
 		};
+
+		obj.pickupable = false;		// Level items shouldn't be pickupable 
+		obj.rotatable = false;		// or rotatable
 
 		gameAreaObjects[obj.posx][obj.posy] = obj;
 		GameManager::Instance().m_vGameAreaObjects.push_back(obj);

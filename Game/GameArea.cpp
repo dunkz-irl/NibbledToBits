@@ -40,10 +40,16 @@ void GameArea::Update() {
 		if (mouseGridPos.x < 0 || mouseGridPos.y < 0 || mouseGridPos.x > GRID_WIDTH || mouseGridPos.y > GRID_HEIGHT) {
 			return;
 		}
-		int& rotation = GetGameAreaObject(mouseGridPos).rot;
-		rotation += 1;
-		if (rotation > 3) {
-			rotation = 0;
+
+		GameAreaObject& ga_obj = GetGameAreaObject(mouseGridPos);
+
+		if (ga_obj.rotatable)
+		{
+			int& rotation = ga_obj.rot;
+			rotation += 1;
+			if (rotation > 3) {
+				rotation = 0;
+			}
 		}
 	}
 }
@@ -163,6 +169,11 @@ FloatingObject GameArea::GetObject() {
 
 	//If within the game area and the grid location contains a valid object return it
 	GameAreaObject tmpGameAreaObject = m_gameAreaObjects[mouseGridPos.x][mouseGridPos.y];
+	if (!tmpGameAreaObject.pickupable)
+	{
+		return { -1, 0 };
+	}
+
 	m_gameAreaObjects[mouseGridPos.x][mouseGridPos.y].id = -1;
 
 	if (tmpGameAreaObject.id != -1) {
