@@ -22,7 +22,7 @@ void PlayState::OnEnter()
 {
 	// Load level
 	g_vObjects = ReadObjectsCSV();
-	GM_INST.LoadLevel("TEST.lev");
+	GM_INST.LoadLevel("TEST2.lev");
 }
 
 void PlayState::OnExit()
@@ -37,6 +37,8 @@ IGameState* PlayState::OnUpdate()
 		return new MenuState();
 	}
 
+	GM_INST.ManageInput();
+
 	GM_INST.m_gameArea.Update();
 	GM_INST.m_panel.Update();
 
@@ -46,6 +48,7 @@ IGameState* PlayState::OnUpdate()
 void PlayState::OnDraw()
 {
 	Play::DrawBackground();
+	GM_INST.DrawHeldItem();
 	GM_INST.m_gameArea.DrawGameArea();
 	GM_INST.m_panel.Draw();
 }

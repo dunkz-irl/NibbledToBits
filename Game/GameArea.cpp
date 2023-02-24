@@ -18,7 +18,10 @@ GameArea::GameArea() {
 }
 
 void GameArea::Update() {
+	// #Duncan Don't want players to be able to do this
+	//
 	//Increase and decrease the misc variable of the last selected object when up and down arrors are pressed
+	/*
 	if (m_lastSelected.x != -1 && m_lastSelected.y != -1) {
 		if (Play::KeyPressed(VK_UP)) {
 			GameAreaObject& gameAreaObject = GetGameAreaObject(m_lastSelected);
@@ -29,6 +32,7 @@ void GameArea::Update() {
 			gameAreaObject.misc -= 1;
 		}
 	}
+	*/
 
 	//Rotate object if the right mouse button is pressed
 	if (Play::KeyPressed(VK_RBUTTON)) {
@@ -73,7 +77,7 @@ void GameArea::DrawGameArea() {
 		const GameAreaObject& lastSelectedObject = GetGameAreaObject(m_lastSelected);
 		const Play::Point2D worldPos = GameToWorld({ m_lastSelected.x * SQUARE_SIZE + SQUARE_SIZE / 2, m_lastSelected.y * SQUARE_SIZE + SQUARE_SIZE / 2 });
 		const Play::Point2D textPos = worldPos + Play::Point2D{ 0, SQUARE_SIZE };
-		Play::DrawFontText("fontui64px", std::to_string(lastSelectedObject.misc), textPos, Play::CENTRE);
+		// Play::DrawFontText("fontui64px", std::to_string(lastSelectedObject.misc), textPos, Play::CENTRE);
 	}
 }
 
@@ -137,7 +141,9 @@ void GameArea::PlaceObject(const FloatingObject& obj) {
 
 FloatingObject GameArea::GetObject() {
 	GridPos mouseGridPos = GetMouseGridPos();
-	
+	// #Duncan Player shouldn't be able to move entrance and exit
+	//
+	/*
 	//Return a mouse hole object
 	if (mouseGridPos.x == m_holeEntry.posx && mouseGridPos.y == m_holeEntry.posy) {
 		m_holeEntry.vis = false;
@@ -149,6 +155,7 @@ FloatingObject GameArea::GetObject() {
 		m_lastSelected = { -1, -1 };
 		return { m_holeExit.id, 0, 0, true };
 	}
+	*/
 
 	if (mouseGridPos.x < 0 || mouseGridPos.y < 0 || mouseGridPos.x >= GRID_WIDTH || mouseGridPos.y >= GRID_HEIGHT) {
 		return { -1, 0 };

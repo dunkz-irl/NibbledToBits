@@ -24,6 +24,8 @@ public:
 
 	void Update();
 	void LoadLevel(const char* levelName);
+	void ManageInput();
+	void DrawHeldItem();
 
 	GridPoint GetEntrancePosition();
 	GridPoint GetExitPosition();
@@ -47,6 +49,7 @@ private:
 	// Variablamos
 	GameArea m_gameArea{};
 	Panel m_panel;
+	FloatingObject m_currentHeld;
 
 	GridPoint m_entrancePosition{ -2, -2 }; // -1 can be valid
 	GridPoint m_exitPosition{ -2, -2 };

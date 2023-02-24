@@ -1,0 +1,50 @@
+ID, x pos, y pos, rotation, Misc variable
+0,-1
+15,13
+tube_end ,1,5,0,0
+tube_end ,3,9,0,0
+tube_end ,5,2,0,0
+tube_end ,6,7,0,0
+tube_end ,7,6,0,0
+tube_end ,10,8,0,0
+tube_end ,11,2,0,0
+tube_end ,11,9,0,0
+tube_end ,14,5,0,0
+Inventory
+MiceIn,0
+MiceOut,0
+Rate,0
+Theme,0
+single ,2
+tube ,3
+tube_one_way ,5
+tube_two_way ,3
+tube_three_way ,1
+tube_cross ,0
+tube_end ,2
+corner_cross ,3
+bridge ,5
+leaf ,3
+pen ,1
+timer ,0
+tick ,2
+plus ,3
+minus ,5
+hamsterball ,1
+heart ,2
+brie ,2
+edam ,2
+emmental ,0
+parmesan ,2
+swiss ,0
+carrot ,0
+cherry ,2
+grape ,2
+raspberry ,0
+strawberry ,2
+cornkernel ,0
+sunflowerseed ,0
+trap_01_notset ,0
+trap_01_set ,0
+trap_02_notset ,0
+trap_02_set ,0
