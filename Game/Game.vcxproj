@@ -24,6 +24,7 @@
     <ClInclude Include="Common.h" />
     <ClInclude Include="GameArea.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="LoadLevel.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="IGameState.h" />
     <ClInclude Include="Panel.h" />

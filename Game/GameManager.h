@@ -2,8 +2,6 @@
 
 struct GridPoint { int x; int y; };
 
-typedef std::pair<std::string, int> InventoryPair;
-
 struct LevelObject
 {
 	std::string id{ "" };
@@ -31,6 +29,7 @@ public:
 	GridPoint GetExitPosition();
 
 	friend class PlayState;
+	friend class LevelLoader;
 
 private:
 
@@ -52,5 +51,5 @@ private:
 	FloatingObject m_currentHeld;
 
 	//std::vector<GameAreaObject> m_vGameAreaObjects; // I think m_gameArea.m_gameAreaObjects does this job, but I'll see for a bit
-	std::vector<InventoryPair> m_vInventoryPairs; 
+
 };
