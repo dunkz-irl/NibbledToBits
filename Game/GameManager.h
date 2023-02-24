@@ -51,9 +51,6 @@ private:
 	Panel m_panel;
 	FloatingObject m_currentHeld;
 
-	GridPoint m_entrancePosition{ -2, -2 }; // -1 can be valid
-	GridPoint m_exitPosition{ -2, -2 };
-
-	std::vector<GameAreaObject> m_vGameAreaObjects;
-	std::vector<InventoryPair> m_vInventoryPairs;
+	//std::vector<GameAreaObject> m_vGameAreaObjects; // I think m_gameArea.m_gameAreaObjects does this job, but I'll see for a bit
+	std::vector<InventoryPair> m_vInventoryPairs; 
 };
