@@ -58,13 +58,15 @@ void GameManager::LoadLevel(const char * levelName)
 	std::getline(levelFile, line);
 	tokens.clear();
 	tokens = TokeniseStringByComma(line);
-	m_entrancePosition = { std::stoi(tokens[0]), std::stoi(tokens[1]) };
-
+	m_gameArea.m_holeEntry.posx = std::stoi(tokens[0]);
+	m_gameArea.m_holeEntry.posy = std::stoi(tokens[1]);
+	
 	// Line 2 is exit(?)
 	std::getline(levelFile, line);
 	tokens.clear();
 	tokens = TokeniseStringByComma(line);
-	m_exitPosition = { std::stoi(tokens[0]), std::stoi(tokens[1]) };
+	m_gameArea.m_holeExit.posx = std::stoi(tokens[0]);
+	m_gameArea.m_holeExit.posy = std::stoi(tokens[1]);
 
 	// Populate objects in the level
 
@@ -186,9 +188,9 @@ std::vector<std::string> GameManager::TokeniseStringByComma(std::string line)
 
 GridPoint GameManager::GetEntrancePosition()
 {
-	if (!(m_entrancePosition.x < -1) && !(m_entrancePosition.y < -1))
+	if (!(m_gameArea.m_holeEntry.posx < -1) && !(m_gameArea.m_holeEntry.posy < -1))
 	{
-		return m_entrancePosition;
+		return { m_gameArea.m_holeEntry.posx, m_gameArea.m_holeEntry.posy };
 	}
 	else
 	{
@@ -199,9 +201,9 @@ GridPoint GameManager::GetEntrancePosition()
 
 GridPoint GameManager::GetExitPosition()
 {
-	if (!(m_exitPosition.x < -1) && !(m_exitPosition.y < -1))
+	if (!(m_gameArea.m_holeExit.posx < -1) && !(m_gameArea.m_holeExit.posy < -1))
 	{
-		return m_exitPosition;
+		return { m_gameArea.m_holeExit.posx, m_gameArea.m_holeExit.posy };
 	}
 	else
 	{

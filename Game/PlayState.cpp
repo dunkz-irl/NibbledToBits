@@ -22,7 +22,7 @@ void PlayState::OnEnter()
 {
 	// Load level
 	g_vObjects = ReadObjectsCSV();
-	GM_INST.LoadLevel("TEST2.lev");
+	GM_INST.LoadLevel("LEVEL1.lev");
 }
 
 void PlayState::OnExit()
