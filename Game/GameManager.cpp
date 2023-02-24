@@ -101,11 +101,16 @@ void GameManager::LoadLevel(const char * levelName)
 			std::stoi(tokens[4]),	// Misc variable
 		};
 
-		obj.pickupable = false;		// Level items shouldn't be pickupable 
-		obj.rotatable = false;		// or rotatable
+		obj.pickupable = false;		// Level items shouldn't be pickupable
+
+		// Using the misc variable to allow the player to rotate certain level-placed items
+		if (obj.misc != 1) // #TODO: Magic number, maybe make an enum?
+		{
+			obj.rotatable = false;		// or rotatable
+		}
 
 		gameAreaObjects[obj.posx][obj.posy] = obj;
-		GameManager::Instance().m_vGameAreaObjects.push_back(obj);
+		// GameManager::Instance().m_vGameAreaObjects.push_back(obj);
 	}
 
 	// Add object to GameArea objects (only do this once)
