@@ -7,7 +7,7 @@ struct GridPos {
 };
 
 struct FloatingObject {
-	int id{ 0 };
+	int id{ -1 };
 	int rot{ 0 };
 	int misc{ 0 };
 	bool mouseHole{ false };
