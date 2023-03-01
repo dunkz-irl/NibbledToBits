@@ -25,6 +25,9 @@ public:
 	void ManageInput();
 	void DrawHeldItem();
 
+	void UpdateStartButton();
+	void DrawStartButton();
+
 	GridPoint GetEntrancePosition();
 	GridPoint GetExitPosition();
 
@@ -49,6 +52,9 @@ private:
 	GameArea m_gameArea{};
 	Panel m_panel;
 	FloatingObject m_currentHeld;
+
+	// Start/stop UI
+	Button m_startButton;
 
 	//std::vector<GameAreaObject> m_vGameAreaObjects; // I think m_gameArea.m_gameAreaObjects does this job, but I'll see for a bit
 

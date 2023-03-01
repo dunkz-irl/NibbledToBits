@@ -75,6 +75,7 @@ namespace Gdiplus
 }
 #include <GdiPlus.h>
 #pragma warning(pop)
+#include <widemath.h>
 
 // Macros for Assertion and Tracing
 void TracePrintf(const char* file, int line, const char* fmt, ...);
@@ -1285,6 +1286,77 @@ namespace Play::Render
 
 			// Put ARGB components back together again
 			*destPixels = (destAlpha << 24) | (blendRed << 16) | (blendGreen << 8) | blendBlue;
+		}
+	};
+
+	class SubtractBlendPolicy
+	{
+	public:
+
+		static inline void BlendSkip(uint32_t*& srcPixels, uint32_t*& destPixels, BlendColour globalMultiply, const uint32_t* destRowEnd)
+		{
+			if (Blend(srcPixels, destPixels, globalMultiply))
+				srcPixels++, destPixels++;
+			else
+				Skip(srcPixels, destPixels, destRowEnd);
+		}
+
+		static inline void BlendFastSkip(uint32_t*& srcPixels, uint32_t*& destPixels, const uint32_t* destRowEnd)
+		{
+			if (Blend(srcPixels, destPixels, { 1.0f, 1.0f, 1.0f, 1.0f }))
+				srcPixels++, destPixels++;
+			else
+				Skip(srcPixels, destPixels, destRowEnd);
+		}
+
+		// *******************************************************************************************************************************************************
+		// A basic approach which separates the channels and performs an additive blending operation: (src * srcAlpha)+(dest * destAlpha)
+		// Has the advantage that a global alpha multiplication can be easily added over the top, so we use this method when a global multiply is required
+		// Notes: Requires a source buffer which has the source alpha pre-multiplied
+		// *******************************************************************************************************************************************************
+		static inline bool Blend(uint32_t*& srcPixels, uint32_t*& destPixels, BlendColour globalMultiply)
+		{
+			if (*srcPixels > 0xFF000000) return false; // No pixels to draw( fully transparent )
+
+			uint32_t src = *srcPixels;
+			uint32_t dest = *destPixels;
+
+			// Source pixels
+			uint32_t srcAlpha = src >> 24;
+			uint32_t srcRed = (src >> 16) & 0xFF;
+			uint32_t srcGreen = (src >> 8) & 0xFF;
+			uint32_t srcBlue = src & 0xFF;
+
+			// Scale source alpha by global alpha
+			//srcAlpha = static_cast<int>(srcAlpha * invGlobalAlpha);
+			//uint32_t blendAlpha = srcAlpha & 0xFF;
+			// uint32_t invSrcAlpha = 0xFF - srcAlpha;
+
+			// Destination pixels
+			uint32_t destAlpha = dest >> 24;
+			uint32_t destRed = (dest >> 16) & 0xFF;
+			uint32_t destGreen = (dest >> 8) & 0xFF;
+			uint32_t destBlue = dest & 0xFF;
+
+			// #TODO
+			// I wanted to add scaling the opacity here but couldn't work out how
+
+			// Alpha must work the other way around in this framework
+			destAlpha *= srcAlpha;
+			destRed *= srcAlpha;
+			destGreen *= srcAlpha;
+			destBlue *= srcAlpha;
+
+			// >> 8 puts the value in the correct range (>> 8 is a bit like divide by 256?? or 2^8 - also chops off the remainder?)
+			destAlpha >>= 8;
+			destRed >>= 8;
+			destGreen >>= 8;
+			destBlue >>= 8;
+
+			// Put ARGB components back together again
+			*destPixels = (destAlpha << 24) | (destRed << 16) | (destGreen << 8) | destBlue;
+
+			return true;
 		}
 	};
 
@@ -3300,6 +3372,9 @@ namespace Play::Graphics
 			break;
 		case BLEND_MULTIPLY:
 			Render::TransformPixels<Render::MultiplyBlendPolicy>(spr.preMultAlpha, frameOffset, spr.width, spr.height, origin, trans, globalMultiply);
+			break;
+		case BLEND_SUBTRACT:
+			Render::TransformPixels<Render::SubtractBlendPolicy>(spr.preMultAlpha, frameOffset, spr.width, spr.height, origin, trans, globalMultiply);
 			break;
 		default:
 			PLAY_ASSERT_MSG(false, "Unsupported blend mode in DrawTransparent")

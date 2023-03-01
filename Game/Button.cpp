@@ -98,3 +98,8 @@ Play::Vector2D Button::GetSize()
 {
 	return m_size;
 }
+
+Play::Vector2D Button::GetPosition()
+{
+	return m_pos;
+}

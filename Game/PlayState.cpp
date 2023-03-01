@@ -51,4 +51,5 @@ void PlayState::OnDraw()
 	GM_INST.DrawHeldItem();
 	GM_INST.m_gameArea.DrawGameArea();
 	GM_INST.m_panel.Draw();
+	GM_INST.DrawStartButton();
 }

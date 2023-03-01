@@ -1,4 +1,5 @@
 #include "Play.h"
+#include "Common.h"
 
 #include "MenuState.h"
 #include "GameArea.h"
@@ -15,6 +16,9 @@ GameManager* GameManager::s_pInstance = nullptr;
 GameManager::GameManager()
 {
 	s_pInstance = this;
+
+	// Initialise Start Button
+	m_startButton = Button(Play::GetSpriteId("tick_panel"), {DISPLAY_WIDTH * 0.875f, DISPLAY_HEIGHT * 0.1f}, Play::Vector2f{ 100, 100 });
 }
 
 GameManager::~GameManager()
@@ -119,4 +123,18 @@ void GameManager::DrawHeldItem()
 			Play::DrawSprite(spriteID, mousePos, 0);
 		}
 	}
+}
+
+void GameManager::DrawStartButton()
+{
+	// Little background
+	Play::SetDrawingBlendMode(BLEND_SUBTRACT);
+	Play::DrawSpriteRotated("tick_panel_blurred", m_startButton.GetPosition() + Vector2D{m_startButton.GetSize().x / 2.f, m_startButton.GetSize().y / 2.f}, 0, 0, 1.f, 0.5f);
+	Play::SetDrawingBlendMode(BLEND_NORMAL);
+	m_startButton.Draw();
+}
+
+void GameManager::UpdateStartButton()
+{
+	m_startButton.Update(); // Currently doesn't do anything
 }
