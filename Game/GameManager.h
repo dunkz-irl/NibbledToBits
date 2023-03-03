@@ -2,7 +2,7 @@
 
 class GameArea;
 class Panel;
-class Button;
+class GoButton;
 struct FloatingObject;
 class IGameState;
 
@@ -39,6 +39,8 @@ public:
 	void UpdateStartButton();
 	void DrawStartButton();
 
+	void SetGameState(IGameState* state);
+
 	GameObject* GetGameObject(int id);
 
 	GridPoint GetEntrancePosition();
@@ -71,7 +73,7 @@ private:
 
 	// #TODO Maybe a UI manager class makes more sense for this.
 	// Start/stop UI
-	Button* m_startButton = nullptr;
+	GoButton* m_goButton = nullptr;
 
 	IGameState* m_pGameState = nullptr;
 

@@ -9,6 +9,9 @@ public:
 	void OnExit() override;
 	IGameState* OnUpdate() override;
 	void OnDraw() override;
+	void ToGoState();
 
+private:
+	bool m_proceedToGoState{ false };
 };
 

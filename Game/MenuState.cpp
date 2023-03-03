@@ -11,6 +11,7 @@
 
 void MenuState::OnEnter()
 {
+	m_debugStateName = "Menu";
 	Play::CentreAllSpriteOrigins();
 
 	TitleTextGraphic* titleTextGraphic = new TitleTextGraphic{ { DISPLAY_WIDTH / 2.f, DISPLAY_HEIGHT * 0.6f }, Play::GetSpriteId("title")};

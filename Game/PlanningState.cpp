@@ -1,5 +1,6 @@
 #include "Play.h"
 #include "PlanningState.h"
+#include "GoState.h"
 
 void PlanningState::OnEnter()
 {
@@ -13,10 +14,20 @@ void PlanningState::OnExit()
 
 IGameState* PlanningState::OnUpdate()
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	if (m_proceedToGoState)
+	{
+		return new GoState();
+	}
+
+	return nullptr;
 }
 
 void PlanningState::OnDraw()
 {
 	throw std::logic_error("The method or operation is not implemented.");
+}
+
+void PlanningState::ToGoState()
+{
+	m_proceedToGoState = true;
 }

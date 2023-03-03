@@ -13,7 +13,7 @@ void GoState::OnExit()
 
 IGameState* GoState::OnUpdate()
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	return nullptr;
 }
 
 void GoState::OnDraw()

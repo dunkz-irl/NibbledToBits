@@ -6,6 +6,7 @@
 
 #include "PanelItem.h"
 #include "Panel.h"
+#include "GoButton.h"
 
 #include "PlanningState.h"
 
@@ -23,7 +24,7 @@ GameManager::GameManager()
 	m_currentHeld = new FloatingObject;
 
 	// Initialise Start Button
-	m_startButton = new Button(Play::GetSpriteId("tick_panel"), {DISPLAY_WIDTH * 0.875f, DISPLAY_HEIGHT * 0.1f}, Play::Vector2f{ 100, 100 });
+	m_goButton = new GoButton(Play::GetSpriteId("tick_panel"), {DISPLAY_WIDTH * 0.875f, DISPLAY_HEIGHT * 0.1f}, Play::Vector2f{ 100, 100 });
 
 	m_pGameState = new PlanningState();
 	m_pGameState->OnEnter();
@@ -48,11 +49,13 @@ GameManager& GameManager::Instance()
 
 void GameManager::Destroy()
 {
-
+	delete s_pInstance;
 }
 
 void GameManager::Update()
 {
+	UpdateStartButton(); // #TODO: Move this somewhere more sensible
+
 	// Call OnUpdate of current state, which returns either a new state or nullptr
 	IGameState* pNewState = m_pGameState->OnUpdate();
 
@@ -151,14 +154,26 @@ void GameManager::DrawStartButton()
 {
 	// Little background
 	Play::SetDrawingBlendMode(BLEND_SUBTRACT);
-	Play::DrawSpriteRotated("tick_panel_blurred", m_startButton->GetPosition() + Vector2D{m_startButton->GetSize().x / 2.f, m_startButton->GetSize().y / 2.f}, 0, 0, 1.f, 0.5f);
+	Play::DrawSpriteRotated("tick_panel_blurred", m_goButton->GetPosition() + Vector2D{m_goButton->GetSize().x / 2.f, m_goButton->GetSize().y / 2.f}, 0, 0, 1.f, 0.5f);
 	Play::SetDrawingBlendMode(BLEND_NORMAL);
-	m_startButton->Draw();
+	m_goButton->Draw();
+}
+
+void GameManager::SetGameState(IGameState* state)
+{
+	if (state)
+	{
+		m_pGameState = state;
+	}
+	else
+	{
+		PLAY_ASSERT_MSG(false, "Tried to set GameManager's GameState to nullptr");
+	}
 }
 
 void GameManager::UpdateStartButton()
 {
-	m_startButton->Update(); // Currently doesn't do anything
+	m_goButton->Update(); // Currently doesn't do anything
 }
 
 GameObject* GameManager::GetGameObject(int id)

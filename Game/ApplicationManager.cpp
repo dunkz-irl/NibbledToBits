@@ -58,13 +58,16 @@ void ApplicationManager::Draw()
 
 	if (m_DebugMode)
 	{
+		Play::DrawDebugText({ DISPLAY_WIDTH * 0.025f, DISPLAY_HEIGHT * 0.15f }, "App State:", Play::cRed, false);
+		Play::DrawDebugText({ DISPLAY_WIDTH * 0.135f, DISPLAY_HEIGHT * 0.15f }, m_pGameState->m_debugStateName.c_str(), Play::cRed, false);
+
 		// Couldn't get this to work with the rectangle being filled in
 		//Play::DrawRect({ DISPLAY_WIDTH * 0.01f, DISPLAY_HEIGHT * 0.06f }, { DISPLAY_WIDTH * 0.2f, DISPLAY_HEIGHT * 0.01f }, Play::cGrey, false);
 
 		Play::DrawDebugText({ DISPLAY_WIDTH * 0.025f, DISPLAY_HEIGHT * 0.05f }, "Overall Time:", Play::cRed, false);
 		Play::DrawDebugText({ DISPLAY_WIDTH * 0.135f, DISPLAY_HEIGHT * 0.05f }, DEBUG_TEXT(Time::m_overallTime), Play::cRed, false);
 
-		Play::DrawDebugText({ DISPLAY_WIDTH * 0.025f, DISPLAY_HEIGHT * 0.1f }, "State Time:", Play::cRed, false);
+		Play::DrawDebugText({ DISPLAY_WIDTH * 0.025f, DISPLAY_HEIGHT * 0.1f }, "App State Time:", Play::cRed, false);
 		Play::DrawDebugText({ DISPLAY_WIDTH * 0.135f, DISPLAY_HEIGHT * 0.1f }, DEBUG_TEXT(m_pGameState->m_stateTime), Play::cRed, false);
 	}
 }

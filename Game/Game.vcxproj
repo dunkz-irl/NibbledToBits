@@ -27,6 +27,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectFactory.h" />
     <ClInclude Include="EasingFunctions.h" />
+    <ClInclude Include="GoButton.h" />
     <ClInclude Include="GoState.h" />
     <ClInclude Include="IGameState.h" />
     <ClInclude Include="LoadLevel.h" />
@@ -54,6 +55,7 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectFactory.cpp" />
+    <ClCompile Include="GoButton.cpp" />
     <ClCompile Include="GoState.cpp" />
     <ClCompile Include="LoadLevel.cpp" />
     <ClCompile Include="MainGame.cpp" />

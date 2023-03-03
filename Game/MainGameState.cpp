@@ -19,6 +19,8 @@ extern std::vector<ObjectCSV> g_vObjects;
 
 void MainGameState::OnEnter()
 {
+	m_debugStateName = "Main Game";
+
 	// Load level
 	g_vObjects = ReadObjectsCSV();
 	GM_INST.LoadLevel("LEVEL1.lev");
@@ -29,7 +31,7 @@ void MainGameState::OnEnter()
 
 void MainGameState::OnExit()
 {
-
+	GM_INST.Destroy();
 }
 
 IApplicationState* MainGameState::OnUpdate()
@@ -39,10 +41,14 @@ IApplicationState* MainGameState::OnUpdate()
 		return new MenuState();
 	}
 
-	GM_INST.ManageInput();
+	GM_INST.ManageInput(); // #TODO: Should buttons/UI be in here?
 
+	// Fagin/Abdullah's stuff
 	GM_INST.m_gameArea->Update();
 	GM_INST.m_panel->Update();
+
+	// My stuff
+	GM_INST.Update();
 
 	return nullptr;
 }
