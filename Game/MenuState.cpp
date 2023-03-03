@@ -1,11 +1,13 @@
 #include "Play.h"
+#include "Common.h"
+#include "VirtualKeys.h"
+
 #include "MenuState.h"
-#include "PlayState.h"
+#include "MainGameState.h"
+
 #include "MouseGraphic.h"
 #include "TitleTextGraphic.h"
 #include "EasingFunctions.h"
-#include "Common.h"
-#include "VirtualKeys.h"
 
 void MenuState::OnEnter()
 {
@@ -26,7 +28,7 @@ void MenuState::OnExit()
 	}
 }
 
-IGameState* MenuState::OnUpdate()
+IApplicationState* MenuState::OnUpdate()
 {
 	for (SimpleGraphic* pGraphic : m_vSimpleGraphics)
 	{
@@ -35,7 +37,7 @@ IGameState* MenuState::OnUpdate()
 
 	if (Play::KeyPressed(VK_P))
 	{
-		return new PlayState();
+		return new MainGameState();
 	}
 
 	m_testCounter++;

@@ -39,10 +39,8 @@ void ApplicationManager::Update(float elapsedTime)
 	m_pGameState->m_stateTime += elapsedTime;
 	Time::m_overallTime += elapsedTime;
 
-
-
 	// Call OnUpdate of current state, which returns either a new state or nullptr
-	IGameState* pNewState = m_pGameState->OnUpdate();
+	IApplicationState* pNewState = m_pGameState->OnUpdate();
 
 	if (pNewState != nullptr)
 	{

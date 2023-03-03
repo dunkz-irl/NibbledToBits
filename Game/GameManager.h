@@ -43,7 +43,7 @@ public:
 	GridPoint GetEntrancePosition();
 	GridPoint GetExitPosition();
 
-	friend class PlayState;
+	friend class MainGameState;
 	friend class LevelLoader;
 	friend class GameObjectFactory;
 

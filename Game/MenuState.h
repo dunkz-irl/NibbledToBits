@@ -1,15 +1,15 @@
 #pragma once
-#include "IGameState.h"
+#include "IApplicationState.h"
 
 class SimpleGraphic;
 
-class MenuState : public IGameState
+class MenuState : public IApplicationState
 {
 
 public:
 	void OnEnter();
 	void OnExit();
-	IGameState* OnUpdate();
+	IApplicationState* OnUpdate();
 	void OnDraw();
 
 private:

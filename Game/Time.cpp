@@ -1,5 +1,5 @@
 #include "Play.h"
-#include "IGameState.h"
+#include "IApplicationState.h"
 #include "ApplicationManager.h"
 #include "Time.h"
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "IGameState.h"
+#include "IApplicationState.h"
 
 class ApplicationManager
 {
@@ -28,6 +28,6 @@ private:
 	ApplicationManager(const ApplicationManager&) = delete;
 	//		//		//
 
-	IGameState* m_pGameState;
+	IApplicationState* m_pGameState;
 };
 

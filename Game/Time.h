@@ -1,6 +1,6 @@
 #pragma once
 
-class IGameState;
+class IApplicationState;
 
 class Time
 {
@@ -10,6 +10,6 @@ public:
 
 	friend class ApplicationManager;
 private:
-	static inline IGameState* m_pCurrentState;
+	static inline IApplicationState* m_pCurrentState;
 	static inline float m_overallTime{ 0.f };
 };

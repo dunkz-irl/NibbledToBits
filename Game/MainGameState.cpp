@@ -3,7 +3,7 @@
 #include "Common.h"
 #include "VirtualKeys.h"
 
-#include "PlayState.h"
+#include "MainGameState.h"
 #include "MenuState.h"
 
 #include "ReadCSV.h"
@@ -17,7 +17,7 @@
 // #TODO: Not a great place to include these
 extern std::vector<ObjectCSV> g_vObjects;
 
-void PlayState::OnEnter()
+void MainGameState::OnEnter()
 {
 	// Load level
 	g_vObjects = ReadObjectsCSV();
@@ -27,12 +27,12 @@ void PlayState::OnEnter()
 	GameObjectFactory::Create(GameObjectType::TYPE_MOUSE, CENTRE_POINT);
 }
 
-void PlayState::OnExit()
+void MainGameState::OnExit()
 {
 
 }
 
-IGameState* PlayState::OnUpdate()
+IApplicationState* MainGameState::OnUpdate()
 {
 	if (Play::KeyPressed(VK_M))
 	{
@@ -47,7 +47,7 @@ IGameState* PlayState::OnUpdate()
 	return nullptr;
 }
 
-void PlayState::OnDraw()
+void MainGameState::OnDraw()
 {
 	Play::DrawBackground();
 	GM_INST.DrawHeldItem();
