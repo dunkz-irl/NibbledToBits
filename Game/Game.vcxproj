@@ -27,6 +27,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectFactory.h" />
     <ClInclude Include="EasingFunctions.h" />
+    <ClInclude Include="GoState.h" />
     <ClInclude Include="IGameState.h" />
     <ClInclude Include="LoadLevel.h" />
     <ClInclude Include="MenuState.h" />
@@ -35,6 +36,8 @@
     <ClInclude Include="MouseGraphic.h" />
     <ClInclude Include="Panel.h" />
     <ClInclude Include="PanelItem.h" />
+    <ClInclude Include="PauseState.h" />
+    <ClInclude Include="PlanningState.h" />
     <ClInclude Include="Play.h" />
     <ClInclude Include="MainGameState.h" />
     <ClInclude Include="ReadCSV.h" />
@@ -51,6 +54,7 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectFactory.cpp" />
+    <ClCompile Include="GoState.cpp" />
     <ClCompile Include="LoadLevel.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="MenuState.cpp" />
@@ -59,6 +63,8 @@
     <ClCompile Include="Panel.cpp" />
     <ClCompile Include="PanelItem.cpp" />
     <ClCompile Include="MainGameState.cpp" />
+    <ClCompile Include="PauseState.cpp" />
+    <ClCompile Include="PlanningState.cpp" />
     <ClCompile Include="ReadCSV.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="SimpleGraphic.cpp" />

@@ -99,6 +99,15 @@
     <ClInclude Include="IGameState.h">
       <Filter>Game States</Filter>
     </ClInclude>
+    <ClInclude Include="PlanningState.h">
+      <Filter>Game States</Filter>
+    </ClInclude>
+    <ClInclude Include="GoState.h">
+      <Filter>Game States</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseState.h">
+      <Filter>Game States</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainGame.cpp">
@@ -157,6 +166,15 @@
     </ClCompile>
     <ClCompile Include="TitleTextGraphic.cpp">
       <Filter>Source Files\Main Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="PlanningState.cpp">
+      <Filter>Game States</Filter>
+    </ClCompile>
+    <ClCompile Include="GoState.cpp">
+      <Filter>Game States</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseState.cpp">
+      <Filter>Game States</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

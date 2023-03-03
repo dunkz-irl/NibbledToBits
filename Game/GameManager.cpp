@@ -7,6 +7,8 @@
 #include "PanelItem.h"
 #include "Panel.h"
 
+#include "PlanningState.h"
+
 #include "GameManager.h"
 #include "LoadLevel.h"
 
@@ -22,6 +24,9 @@ GameManager::GameManager()
 
 	// Initialise Start Button
 	m_startButton = new Button(Play::GetSpriteId("tick_panel"), {DISPLAY_WIDTH * 0.875f, DISPLAY_HEIGHT * 0.1f}, Play::Vector2f{ 100, 100 });
+
+	m_pGameState = new PlanningState();
+	m_pGameState->OnEnter();
 }
 
 GameManager::~GameManager()
@@ -48,7 +53,16 @@ void GameManager::Destroy()
 
 void GameManager::Update()
 {
+	// Call OnUpdate of current state, which returns either a new state or nullptr
+	IGameState* pNewState = m_pGameState->OnUpdate();
 
+	if (pNewState != nullptr)
+	{
+		m_pGameState->OnExit();
+		delete m_pGameState;
+		m_pGameState = pNewState;
+		m_pGameState->OnEnter();
+	}
 }
 
 void GameManager::LoadLevel(const char* levelName)

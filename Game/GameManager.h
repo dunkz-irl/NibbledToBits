@@ -4,6 +4,7 @@ class GameArea;
 class Panel;
 class Button;
 struct FloatingObject;
+class IGameState;
 
 class GameObject;
 class GameObjectFactory;
@@ -71,5 +72,7 @@ private:
 	// #TODO Maybe a UI manager class makes more sense for this.
 	// Start/stop UI
 	Button* m_startButton = nullptr;
+
+	IGameState* m_pGameState = nullptr;
 
 };
