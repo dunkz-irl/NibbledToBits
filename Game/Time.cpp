@@ -15,3 +15,13 @@ float Time::GetStateTime()
 
 	return m_pCurrentState->GetStateTime();
 }
+
+float Time::GetOverallTime()
+{
+	if (m_overallTime >= 0.f)
+	{
+		PLAY_ASSERT_MSG(false, "Overall application time is less than zero!");
+	}
+
+	return m_overallTime;
+}

@@ -14,6 +14,7 @@ public:
 	void Update(float elapsedTime);
 	void Draw();
 
+	bool m_DebugMode{ true };
 	friend class Time;
 
 private:
