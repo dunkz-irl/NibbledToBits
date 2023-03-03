@@ -10,8 +10,6 @@ std::vector<ObjectCSV> g_vObjects;
 std::map<std::string, int> g_idMap;
 std::vector<std::string> g_v_idToStringTable;
 
-#define GM_INST GameManager::Instance()
-
 std::vector<std::string> LevelLoader::TokeniseStringByComma(std::string line)
 {
 	std::istringstream ss(line);
@@ -43,15 +41,15 @@ void LevelLoader::LoadLevel(const char* levelName)
 	std::getline(levelFile, line);
 	tokens.clear();
 	tokens = TokeniseStringByComma(line);
-	GM_INST.m_gameArea.m_holeEntry.posx = std::stoi(tokens[0]);
-	GM_INST.m_gameArea.m_holeEntry.posy = std::stoi(tokens[1]);
+	GM_INST.m_gameArea->m_holeEntry.posx = std::stoi(tokens[0]);
+	GM_INST.m_gameArea->m_holeEntry.posy = std::stoi(tokens[1]);
 
 	// Line 2 is exit(?)
 	std::getline(levelFile, line);
 	tokens.clear();
 	tokens = TokeniseStringByComma(line);
-	GM_INST.m_gameArea.m_holeExit.posx = std::stoi(tokens[0]);
-	GM_INST.m_gameArea.m_holeExit.posy = std::stoi(tokens[1]);
+	GM_INST.m_gameArea->m_holeExit.posx = std::stoi(tokens[0]);
+	GM_INST.m_gameArea->m_holeExit.posy = std::stoi(tokens[1]);
 
 	// Populate objects in the level
 
@@ -99,7 +97,7 @@ void LevelLoader::LoadLevel(const char* levelName)
 	}
 
 	// Add object to GameArea objects (only do this once)
-	GM_INST.m_gameArea.SetGameAreaObjects(gameAreaObjects);
+	GM_INST.m_gameArea->SetGameAreaObjects(gameAreaObjects);
 
 	// Populate player inventory
 	while (levelFile)
@@ -149,7 +147,7 @@ void LevelLoader::LoadLevel(const char* levelName)
 		object.group = ItemType::INVENTORY;
 	}
 
-	GM_INST.m_panel = Panel(v_inventory);
+	GM_INST.m_panel = new Panel(v_inventory);
 
 	// UGH create a vector that can be used by the below panel function to set the correct quantities of items
 	std::vector<std::tuple<int, int>> v_tempInventory;
@@ -159,5 +157,5 @@ void LevelLoader::LoadLevel(const char* levelName)
 		v_tempInventory.push_back(t);
 	}
 
-	GM_INST.m_panel.SetPlayerInventory(v_tempInventory);
+	GM_INST.m_panel->SetPlayerInventory(v_tempInventory);
 }

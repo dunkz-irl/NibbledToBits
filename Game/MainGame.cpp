@@ -1,11 +1,12 @@
 #define PLAY_IMPLEMENTATION
 #include "Play.h"
+#include "Common.h"
 
 #include "ApplicationManager.h"
 
-int DISPLAY_WIDTH = 1280;
-int DISPLAY_HEIGHT = 720;
-int DISPLAY_SCALE = 1;
+const int DISPLAY_WIDTH = 1280;
+const int DISPLAY_HEIGHT = 720;
+const int DISPLAY_SCALE = 1;
 
 void MainGameEntry(PLAY_IGNORE_COMMAND_LINE)
 {
@@ -16,7 +17,7 @@ void MainGameEntry(PLAY_IGNORE_COMMAND_LINE)
 
 bool MainGameUpdate(float elapsedTime)
 {
-	ApplicationManager::Instance().Update();
+	ApplicationManager::Instance().Update(elapsedTime);
 	ApplicationManager::Instance().Draw();
 
 	Play::PresentDrawingBuffer();

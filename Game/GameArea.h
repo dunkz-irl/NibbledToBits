@@ -33,8 +33,8 @@ extern int SQUARE_SIZE;
 constexpr int GRID_WIDTH{ 16 };
 constexpr int GRID_HEIGHT{ 13 };
 extern int BOARDER_PIXELS;
-extern int DISPLAY_WIDTH;
-extern int DISPLAY_HEIGHT;
+extern const int DISPLAY_WIDTH;
+extern const int DISPLAY_HEIGHT;
 extern int DISPLAY_SCALE;
 
 class GameArea {

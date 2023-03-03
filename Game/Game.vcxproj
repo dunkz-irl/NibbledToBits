@@ -24,28 +24,44 @@
     <ClInclude Include="Common.h" />
     <ClInclude Include="GameArea.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameObjectFactory.h" />
+    <ClInclude Include="EasingFunctions.h" />
     <ClInclude Include="LoadLevel.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="IGameState.h" />
+    <ClInclude Include="Mouse.h" />
+    <ClInclude Include="MouseGraphic.h" />
     <ClInclude Include="Panel.h" />
     <ClInclude Include="PanelItem.h" />
     <ClInclude Include="Play.h" />
     <ClInclude Include="PlayState.h" />
     <ClInclude Include="ReadCSV.h" />
+    <ClInclude Include="Time.h" />
+    <ClInclude Include="SimpleGraphic.h" />
+    <ClInclude Include="TitleTextGraphic.h" />
     <ClInclude Include="VirtualKeys.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationManager.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="EasingFunctions.cpp" />
     <ClCompile Include="GameArea.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameObjectFactory.cpp" />
     <ClCompile Include="LoadLevel.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="MenuState.cpp" />
+    <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="MouseGraphic.cpp" />
     <ClCompile Include="Panel.cpp" />
     <ClCompile Include="PanelItem.cpp" />
     <ClCompile Include="PlayState.cpp" />
     <ClCompile Include="ReadCSV.cpp" />
+    <ClCompile Include="Time.cpp" />
+    <ClCompile Include="SimpleGraphic.cpp" />
+    <ClCompile Include="TitleTextGraphic.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

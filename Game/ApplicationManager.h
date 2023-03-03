@@ -11,8 +11,10 @@ public:
 	static void Destroy();
 	//		//		//
 
-	void Update();
+	void Update(float elapsedTime);
 	void Draw();
+
+	friend class Time;
 
 private:
 
@@ -26,6 +28,5 @@ private:
 	//		//		//
 
 	IGameState* m_pGameState;
-
 };
 

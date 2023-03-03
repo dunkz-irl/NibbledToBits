@@ -1,6 +1,16 @@
 #pragma once
 
+class GameArea;
+class Panel;
+class Button;
+struct FloatingObject;
+
+class GameObject;
+class GameObjectFactory;
+
 struct GridPoint { int x; int y; };
+
+#define GM_INST GameManager::Instance()
 
 struct LevelObject
 {
@@ -28,11 +38,14 @@ public:
 	void UpdateStartButton();
 	void DrawStartButton();
 
+	GameObject* GetGameObject(int id);
+
 	GridPoint GetEntrancePosition();
 	GridPoint GetExitPosition();
 
 	friend class PlayState;
 	friend class LevelLoader;
+	friend class GameObjectFactory;
 
 private:
 
@@ -49,13 +62,14 @@ private:
 	std::vector<std::string> TokeniseStringByComma(std::string);
 
 	// Variablamos
-	GameArea m_gameArea{};
-	Panel m_panel;
-	FloatingObject m_currentHeld;
+	GameArea* m_gameArea = nullptr;
+	Panel* m_panel = nullptr;
+	FloatingObject* m_currentHeld = nullptr;
 
+	std::vector<int> m_vGameObjectIDs;
+
+	// #TODO Maybe a UI manager class makes more sense for this.
 	// Start/stop UI
-	Button m_startButton;
-
-	//std::vector<GameAreaObject> m_vGameAreaObjects; // I think m_gameArea.m_gameAreaObjects does this job, but I'll see for a bit
+	Button* m_startButton = nullptr;
 
 };

@@ -1,3 +1,4 @@
+#include "Play.h"
 #include "MenuState.h"
 #include "ApplicationManager.h"
 
@@ -31,8 +32,10 @@ void ApplicationManager::Destroy()
 	
 }
 
-void ApplicationManager::Update()
+void ApplicationManager::Update(float elapsedTime)
 {
+	m_pGameState->m_stateTime += elapsedTime;
+
 	// Call OnUpdate of current state, which returns either a new state or nullptr
 	IGameState* pNewState = m_pGameState->OnUpdate();
 
@@ -41,6 +44,7 @@ void ApplicationManager::Update()
 		m_pGameState->OnExit();
 		delete m_pGameState;
 		m_pGameState = pNewState;
+		m_pGameState->m_stateTime = 0.f;
 		m_pGameState->OnEnter();
 	}
 }

@@ -22,6 +22,9 @@
     <Filter Include="Editor Files %28Copied and Edited%29">
       <UniqueIdentifier>{e89f28da-fa26-4026-8eb8-5b6511e4d0ad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Main Menu">
+      <UniqueIdentifier>{749acd71-c78a-42e9-a6b8-7283f2f26c23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Play.h">
@@ -66,6 +69,30 @@
     <ClInclude Include="LoadLevel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EasingFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseGraphic.h">
+      <Filter>Source Files\Main Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleGraphic.h">
+      <Filter>Source Files\Main Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleTextGraphic.h">
+      <Filter>Source Files\Main Menu</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainGame.cpp">
@@ -100,6 +127,30 @@
     </ClCompile>
     <ClCompile Include="Button.cpp">
       <Filter>Editor Files %28Copied and Edited%29</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjectFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Mouse.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseGraphic.cpp">
+      <Filter>Source Files\Main Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="EasingFunctions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleGraphic.cpp">
+      <Filter>Source Files\Main Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleTextGraphic.cpp">
+      <Filter>Source Files\Main Menu</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
