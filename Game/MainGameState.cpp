@@ -11,6 +11,7 @@
 #include "PanelItem.h"
 #include "Panel.h"
 
+#include "IGameState.h"
 #include "GameObjectFactory.h"
 #include "GameManager.h"
 
@@ -38,6 +39,7 @@ IApplicationState* MainGameState::OnUpdate()
 {
 	if (Play::KeyPressed(VK_M))
 	{
+		GM_INST.m_pGameState->OnExit();
 		return new MenuState();
 	}
 

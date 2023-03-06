@@ -3,6 +3,11 @@
 #include "Common.h"
 #include "IGameState.h"
 
+void IGameState::OnExit()
+{
+	m_stateTime = { 0.f };
+}
+
 void IGameState::DrawDebugInfo()
 {
 	Play::DrawDebugText({ DISPLAY_WIDTH * 0.025f, DISPLAY_HEIGHT * 0.3f }, "Game State:", Play::cRed, false);

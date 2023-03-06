@@ -8,6 +8,7 @@ void PauseState::OnEnter()
 
 void PauseState::OnExit()
 {
+	IGameState::OnExit();
 	throw std::logic_error("The method or operation is not implemented.");
 }
 

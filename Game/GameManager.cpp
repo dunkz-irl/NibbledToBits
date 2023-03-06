@@ -34,8 +34,6 @@ GameManager::GameManager()
 
 GameManager::~GameManager()
 {
-	delete m_currentHeld;
-	delete m_gameArea;
 	s_pInstance = nullptr;
 }
 
@@ -51,6 +49,12 @@ GameManager& GameManager::Instance()
 
 void GameManager::Destroy()
 {
+	// #TODO: Is this right or necessary?
+	delete GM_INST.m_pGameState;
+	delete GM_INST.m_panel;
+	delete GM_INST.m_gameArea;
+	delete GM_INST.m_currentHeld;
+	delete GM_INST.m_goButton;
 	delete s_pInstance;
 }
 
@@ -172,8 +176,8 @@ void GameManager::DrawHeldItem()
 void GameManager::DrawStartButton()
 {
 	// Little background
-	Play::SetDrawingBlendMode(BLEND_SUBTRACT);
-	Play::DrawSpriteRotated("tick_panel_blurred", m_goButton->GetPosition() + Vector2D{m_goButton->GetSize().x / 2.f, m_goButton->GetSize().y / 2.f}, 0, 0, 1.f, 0.5f);
+	//Play::SetDrawingBlendMode(BLEND_SUBTRACT);
+	//Play::DrawSpriteRotated("tick_panel_blurred", m_goButton->GetPosition() + Vector2D{m_goButton->GetSize().x / 2.f, m_goButton->GetSize().y / 2.f}, 0, 0, 1.f, 0.5f);
 	Play::SetDrawingBlendMode(BLEND_NORMAL);
 	m_goButton->Draw();
 }
@@ -181,6 +185,20 @@ void GameManager::DrawStartButton()
 void GameManager::ToNextState()
 {
 	m_pGameState->m_proceedToNextState = true;
+
+	// Change Button graphic #TODO: Feels like a silly way to do this
+	switch (m_currentGameState)
+	{
+	case GAMESTATE_ENUM::PLANNING:
+		m_goButton->SetSprite("panel_cross");
+		break;
+	case GAMESTATE_ENUM::GO:
+		m_goButton->SetSprite("tick_panel");
+		break;
+	default:
+		break;
+
+	}
 }
 
 void GameManager::UpdateStartButton()

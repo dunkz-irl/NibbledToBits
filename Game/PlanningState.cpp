@@ -9,6 +9,7 @@ void PlanningState::OnEnter()
 
 void PlanningState::OnExit()
 {
+	IGameState::OnExit();
 	throw std::logic_error("The method or operation is not implemented.");
 }
 

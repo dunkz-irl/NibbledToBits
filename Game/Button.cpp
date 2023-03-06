@@ -94,6 +94,11 @@ void Button::SetPos(Play::Point2D pos_)
 	m_pos = pos_;
 }
 
+void Button::SetSprite(const char * spriteName)
+{
+	m_sprite = Play::GetSpriteId(spriteName);
+}
+
 Play::Vector2D Button::GetSize()
 {
 	return m_size;

@@ -13,6 +13,12 @@ struct GridPoint { int x; int y; };
 
 #define GM_INST GameManager::Instance()
 
+enum class GAMESTATE_ENUM
+{
+	PLANNING = 0,
+	GO
+};
+
 struct LevelObject
 {
 	std::string id{ "" };
@@ -46,6 +52,8 @@ public:
 
 	GridPoint GetEntrancePosition();
 	GridPoint GetExitPosition();
+
+	GAMESTATE_ENUM m_currentGameState{GAMESTATE_ENUM::PLANNING};
 
 	friend class MainGameState;
 	friend class LevelLoader;

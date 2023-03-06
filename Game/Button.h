@@ -17,6 +17,8 @@ public:
 
 	virtual void SetPos(Play::Point2D pos);
 
+	void SetSprite(const char * spriteID);
+
 	Play::Vector2D GetSize();
 	Play::Vector2D GetPosition();
 
