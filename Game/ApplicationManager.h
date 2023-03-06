@@ -14,6 +14,7 @@ public:
 	void Update(float elapsedTime);
 	void Draw();
 
+	
 	bool m_DebugMode{ true };
 	friend class Time;
 
@@ -28,6 +29,8 @@ private:
 	ApplicationManager(const ApplicationManager&) = delete;
 	//		//		//
 
-	IApplicationState* m_pGameState;
+	IApplicationState* m_pApplicationState;
+
+	void DrawDebugInfo();
 };
 

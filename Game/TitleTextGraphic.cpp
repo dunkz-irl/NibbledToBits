@@ -10,7 +10,7 @@ void TitleTextGraphic::Update()
 	////////////////////////
 
 	float transitionEndTime = 1.f;
-	float t = Time::GetStateTime();
+	float t = Time::GetAppStateTime();
 	double speed = 7;
 	double squash = 40;
 

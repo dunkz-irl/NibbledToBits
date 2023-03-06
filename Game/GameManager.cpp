@@ -10,7 +10,9 @@
 
 #include "PlanningState.h"
 
+#include "Time.h"
 #include "GameManager.h"
+#include "ApplicationManager.h"
 #include "LoadLevel.h"
 
 GameManager* GameManager::s_pInstance = nullptr;
@@ -56,6 +58,8 @@ void GameManager::Update()
 {
 	UpdateStartButton(); // #TODO: Move this somewhere more sensible
 
+	m_pGameState->m_stateTime += Time::GetElapsedTime();
+
 	// Call OnUpdate of current state, which returns either a new state or nullptr
 	IGameState* pNewState = m_pGameState->OnUpdate();
 
@@ -64,7 +68,22 @@ void GameManager::Update()
 		m_pGameState->OnExit();
 		delete m_pGameState;
 		m_pGameState = pNewState;
+		m_pGameState->m_stateTime = 0.f;
 		m_pGameState->OnEnter();
+	}
+}
+
+void GameManager::Draw()
+{
+	m_gameArea->DrawGameArea();
+	m_panel->Draw();
+
+	DrawHeldItem();
+	DrawStartButton();
+
+	if (ApplicationManager::Instance().m_DebugMode)
+	{
+		m_pGameState->DrawDebugInfo();
 	}
 }
 
@@ -159,16 +178,9 @@ void GameManager::DrawStartButton()
 	m_goButton->Draw();
 }
 
-void GameManager::SetGameState(IGameState* state)
+void GameManager::ToNextState()
 {
-	if (state)
-	{
-		m_pGameState = state;
-	}
-	else
-	{
-		PLAY_ASSERT_MSG(false, "Tried to set GameManager's GameState to nullptr");
-	}
+	m_pGameState->m_proceedToNextState = true;
 }
 
 void GameManager::UpdateStartButton()

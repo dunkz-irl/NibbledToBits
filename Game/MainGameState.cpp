@@ -56,8 +56,5 @@ IApplicationState* MainGameState::OnUpdate()
 void MainGameState::OnDraw()
 {
 	Play::DrawBackground();
-	GM_INST.DrawHeldItem();
-	GM_INST.m_gameArea->DrawGameArea();
-	GM_INST.m_panel->Draw();
-	GM_INST.DrawStartButton();
+	GM_INST.Draw();
 }

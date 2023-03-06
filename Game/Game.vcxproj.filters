@@ -185,5 +185,11 @@
     <ClCompile Include="GoButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="IApplicationState.cpp">
+      <Filter>Application States</Filter>
+    </ClCompile>
+    <ClCompile Include="IGameState.cpp">
+      <Filter>Game States</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

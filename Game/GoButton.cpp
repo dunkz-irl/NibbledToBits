@@ -7,6 +7,6 @@ void GoButton::Update()
 {
 	if (Pressed())
 	{
-		GM_INST.SetGameState(new GoState());
+		GM_INST.ToNextState();
 	}
 }

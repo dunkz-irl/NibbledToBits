@@ -23,8 +23,7 @@ public:
 	friend class ApplicationManager;
 
 protected:
+	virtual void DrawDebugInfo();
 	std::string m_debugStateName{ "" };
 	static inline float m_stateTime{ 0.f }; // #TODO: I have no idea what inline means, but it lets this be static
 };
-
-

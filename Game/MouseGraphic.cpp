@@ -6,7 +6,7 @@
 
 void MouseGraphic::Update()
 {
-	float t = Time::GetStateTime();
+	float t = Time::GetAppStateTime();
 
 	m_matrix.row[2].y = m_pos.y * EaseOutElastic(t / 4.f);
 	m_matrix.row[1].y = EaseOutElastic(t * 1.2f);

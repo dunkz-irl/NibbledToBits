@@ -32,6 +32,7 @@ public:
 	//////////////////
 
 	void Update();
+	void Draw();
 	void LoadLevel(const char* levelName);
 	void ManageInput();
 	void DrawHeldItem();
@@ -39,7 +40,7 @@ public:
 	void UpdateStartButton();
 	void DrawStartButton();
 
-	void SetGameState(IGameState* state);
+	void ToNextState();
 
 	GameObject* GetGameObject(int id);
 
@@ -49,6 +50,7 @@ public:
 	friend class MainGameState;
 	friend class LevelLoader;
 	friend class GameObjectFactory;
+	friend class Time;
 
 private:
 

@@ -57,6 +57,7 @@
     <ClCompile Include="GameObjectFactory.cpp" />
     <ClCompile Include="GoButton.cpp" />
     <ClCompile Include="GoState.cpp" />
+    <ClCompile Include="IApplicationState.cpp" />
     <ClCompile Include="LoadLevel.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="MenuState.cpp" />
@@ -68,6 +69,7 @@
     <ClCompile Include="PauseState.cpp" />
     <ClCompile Include="PlanningState.cpp" />
     <ClCompile Include="ReadCSV.cpp" />
+    <ClCompile Include="IGameState.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="SimpleGraphic.cpp" />
     <ClCompile Include="TitleTextGraphic.cpp" />
