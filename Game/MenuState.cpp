@@ -17,7 +17,8 @@ void MenuState::OnEnter()
 	TitleTextGraphic* titleTextGraphic = new TitleTextGraphic{ { DISPLAY_WIDTH / 2.f, DISPLAY_HEIGHT * 0.6f }, Play::GetSpriteId("title")};
 	m_vSimpleGraphics.push_back(titleTextGraphic);
 
-	MouseGraphic* mouseGraphic = new MouseGraphic({ DISPLAY_WIDTH * 0.8f, DISPLAY_HEIGHT * 0.2f }, Play::GetSpriteId("remi"));
+	// Mouse image #CREDIT: https://pngtree.com/freepng/cute-cartoon-character-mouse_4894958.html
+	MouseGraphic* mouseGraphic = new MouseGraphic({ DISPLAY_WIDTH * 0.8f, DISPLAY_HEIGHT * 0.2f }, Play::GetSpriteId("mousecharacter"));
 	m_vSimpleGraphics.push_back(mouseGraphic);
 }
 
