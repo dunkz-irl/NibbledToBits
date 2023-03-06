@@ -5,6 +5,7 @@ class Panel;
 class GoButton;
 struct FloatingObject;
 class IGameState;
+class PauseState;
 
 class GameObject;
 class GameObjectFactory;
@@ -16,7 +17,8 @@ struct GridPoint { int x; int y; };
 enum class GAMESTATE_ENUM
 {
 	PLANNING = 0,
-	GO
+	GO,
+	PAUSE
 };
 
 struct LevelObject
@@ -86,5 +88,6 @@ private:
 	GoButton* m_goButton = nullptr;
 
 	IGameState* m_pGameState = nullptr;
+	PauseState* m_pauseState;
 
 };

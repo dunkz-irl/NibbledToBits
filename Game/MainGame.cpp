@@ -21,7 +21,13 @@ bool MainGameUpdate(float elapsedTime)
 	ApplicationManager::Instance().Draw();
 
 	Play::PresentDrawingBuffer();
-	return Play::KeyDown(VK_ESCAPE);
+	if (Play::KeyDown(VK_ESCAPE))
+	{
+		ApplicationManager::Instance().Destroy();
+		return 1;
+	}
+
+	return 0;
 }
 
 int MainGameExit(void)

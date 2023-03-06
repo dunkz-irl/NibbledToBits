@@ -1,14 +1,15 @@
 #include "Play.h"
 #include "Common.h"
 
-#include "MenuState.h"
 #include "GameArea.h"
 
 #include "PanelItem.h"
 #include "Panel.h"
 #include "GoButton.h"
 
+#include "MenuState.h"
 #include "PlanningState.h"
+#include "PauseState.h"
 
 #include "Time.h"
 #include "GameManager.h"
@@ -69,10 +70,18 @@ void GameManager::Update()
 
 	if (pNewState != nullptr)
 	{
+		// all the memcpy stuff is me trying to get a copy of the previous gamestate that the next one can refer to if needed (like pause)
+		IGameState* pPrevState = (IGameState*)malloc(sizeof(IGameState));
+		memcpy(pPrevState, m_pGameState, sizeof(IGameState));
+
 		m_pGameState->OnExit();
 		delete m_pGameState;
 		m_pGameState = pNewState;
-		m_pGameState->m_stateTime = 0.f;
+		
+		m_pGameState->m_previousState = pPrevState;
+
+		memcpy(m_pGameState->m_previousState, pPrevState, sizeof(IGameState));
+
 		m_pGameState->OnEnter();
 	}
 }

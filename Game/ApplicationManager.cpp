@@ -3,6 +3,7 @@
 #include "Common.h"
 #include "MainGameState.h"
 #include "ApplicationManager.h"
+#include "GameManager.h"
 
 ApplicationManager* ApplicationManager::s_pInstance = nullptr;
 
@@ -16,6 +17,9 @@ ApplicationManager::ApplicationManager()
 
 ApplicationManager::~ApplicationManager()
 {
+	GM_INST.Destroy();
+
+	delete m_pApplicationState;
 	s_pInstance = nullptr;
 }
 
@@ -31,7 +35,7 @@ ApplicationManager& ApplicationManager::Instance()
 
 void ApplicationManager::Destroy()
 {
-	
+	delete s_pInstance;
 }
 
 void ApplicationManager::Update(float elapsedTime)
