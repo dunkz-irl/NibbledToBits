@@ -11,13 +11,11 @@
 void PlanningState::OnEnter()
 {
 	GM_INST.m_currentGameState = GAMESTATE_ENUM::PLANNING;
-	throw std::logic_error("The method or operation is not implemented.");
 }
 
 void PlanningState::OnExit()
 {
 	IGameState::OnExit();
-	throw std::logic_error("The method or operation is not implemented.");
 }
 
 IGameState* PlanningState::OnUpdate()

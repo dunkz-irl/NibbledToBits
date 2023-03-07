@@ -8,7 +8,7 @@ class IGameState;
 class PauseState;
 
 class GameObject;
-class GameObjectFactory;
+class GameObjectManager;
 
 struct GridPoint { int x; int y; };
 
@@ -48,18 +48,20 @@ public:
 	void UpdateStartButton();
 	void DrawStartButton();
 
+	void UpdateGameObjects();
+
 	void ToNextState();
 
 	GameObject* GetGameObject(int id);
 
-	GridPoint GetEntrancePosition();
+	Play::Point2D GetEntrancePosition();
 	GridPoint GetExitPosition();
 
 	GAMESTATE_ENUM m_currentGameState{GAMESTATE_ENUM::PLANNING};
 
 	friend class MainGameState;
 	friend class LevelLoader;
-	friend class GameObjectFactory;
+	friend class GameObjectManager;
 	friend class Time;
 
 private:

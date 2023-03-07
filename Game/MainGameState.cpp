@@ -12,7 +12,7 @@
 #include "Panel.h"
 
 #include "IGameState.h"
-#include "GameObjectFactory.h"
+#include "GameObjectManager.h"
 #include "GameManager.h"
 
 // #TODO: Not a great place to include these
@@ -25,9 +25,6 @@ void MainGameState::OnEnter()
 	// Load level
 	g_vObjects = ReadObjectsCSV();
 	GM_INST.LoadLevel("LEVEL1.lev");
-
-	// #TODO: Test stuff
-	GameObjectFactory::Create(GameObjectType::TYPE_MOUSE, CENTRE_POINT);
 }
 
 void MainGameState::OnExit()

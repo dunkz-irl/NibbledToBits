@@ -12,6 +12,7 @@
 #include "PauseState.h"
 
 #include "Time.h"
+#include "GameObjectManager.h"
 #include "GameManager.h"
 #include "ApplicationManager.h"
 #include "LoadLevel.h"
@@ -63,6 +64,8 @@ void GameManager::Update()
 {
 	UpdateStartButton(); // #TODO: Move this somewhere more sensible
 
+	GameObjectManager::Instance().UpdateAll();
+
 	m_pGameState->m_stateTime += Time::GetElapsedTime();
 
 	// Call OnUpdate of current state, which returns either a new state or nullptr
@@ -91,6 +94,8 @@ void GameManager::Draw()
 	m_gameArea->DrawGameArea();
 	m_panel->Draw();
 
+	GameObjectManager::Instance().DrawAll();
+
 	DrawHeldItem();
 	DrawStartButton();
 
@@ -106,11 +111,13 @@ void GameManager::LoadLevel(const char* levelName)
 	loader.LoadLevel(levelName);
 }
 
-GridPoint GameManager::GetEntrancePosition()
+Play::Point2D GameManager::GetEntrancePosition()
 {
-	if (!(m_gameArea->m_holeEntry.posx < -1) && !(m_gameArea->m_holeEntry.posy < -1))
+	// #TODO: This only checks if the entry position is not lower than the minimum, doesn't check for maximum
+	if (!(m_gameArea->m_holeEntry.posx < -1) && !(m_gameArea->m_holeEntry.posy < -1)) 
 	{
-		return { m_gameArea->m_holeEntry.posx, m_gameArea->m_holeEntry.posy };
+		Play::Point2D pos = { m_gameArea->m_holeEntry.posx, m_gameArea->m_holeEntry.posy };
+		return GameArea::GameToWorld({ pos });
 	}
 	else
 	{
@@ -189,6 +196,14 @@ void GameManager::DrawStartButton()
 	//Play::DrawSpriteRotated("tick_panel_blurred", m_goButton->GetPosition() + Vector2D{m_goButton->GetSize().x / 2.f, m_goButton->GetSize().y / 2.f}, 0, 0, 1.f, 0.5f);
 	Play::SetDrawingBlendMode(BLEND_NORMAL);
 	m_goButton->Draw();
+}
+
+void GameManager::UpdateGameObjects()
+{
+	for (int objID : m_vGameObjectIDs)
+	{
+		
+	}
 }
 
 void GameManager::ToNextState()

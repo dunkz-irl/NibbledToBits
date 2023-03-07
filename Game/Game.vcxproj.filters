@@ -78,7 +78,7 @@
     <ClInclude Include="GameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameObjectFactory.h">
+    <ClInclude Include="GameObjectManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Mouse.h">
@@ -112,6 +112,9 @@
       <Filter>Game States</Filter>
     </ClInclude>
     <ClInclude Include="GoButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -149,7 +152,7 @@
     <ClCompile Include="Button.cpp">
       <Filter>Editor Files %28Copied and Edited%29</Filter>
     </ClCompile>
-    <ClCompile Include="GameObjectFactory.cpp">
+    <ClCompile Include="GameObjectManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Mouse.cpp">
@@ -190,6 +193,9 @@
     </ClCompile>
     <ClCompile Include="IGameState.cpp">
       <Filter>Game States</Filter>
+    </ClCompile>
+    <ClCompile Include="Singleton.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

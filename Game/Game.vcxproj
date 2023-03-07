@@ -25,7 +25,7 @@
     <ClInclude Include="GameArea.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="GameObjectFactory.h" />
+    <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="EasingFunctions.h" />
     <ClInclude Include="GoButton.h" />
     <ClInclude Include="GoState.h" />
@@ -42,6 +42,7 @@
     <ClInclude Include="Play.h" />
     <ClInclude Include="MainGameState.h" />
     <ClInclude Include="ReadCSV.h" />
+    <ClInclude Include="Singleton.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="SimpleGraphic.h" />
     <ClInclude Include="TitleTextGraphic.h" />
@@ -54,7 +55,7 @@
     <ClCompile Include="GameArea.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="GameObjectFactory.cpp" />
+    <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="GoButton.cpp" />
     <ClCompile Include="GoState.cpp" />
     <ClCompile Include="IApplicationState.cpp" />
@@ -70,6 +71,7 @@
     <ClCompile Include="PlanningState.cpp" />
     <ClCompile Include="ReadCSV.cpp" />
     <ClCompile Include="IGameState.cpp" />
+    <ClCompile Include="Singleton.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="SimpleGraphic.cpp" />
     <ClCompile Include="TitleTextGraphic.cpp" />

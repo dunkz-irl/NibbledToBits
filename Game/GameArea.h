@@ -39,8 +39,6 @@ extern int DISPLAY_SCALE;
 
 class GameArea {
 private:
-	Point2f GameToWorld(Point2f pos);
-	Point2f WorldToGame(Point2f pos);
 	GridPos GetMouseGridPos();
 	GameAreaObject m_gameAreaObjects[GRID_WIDTH][GRID_HEIGHT];
 
@@ -56,4 +54,7 @@ public:
 	void DrawGameArea();
 	void SetGameAreaObjects(GameAreaObject gameAreaObjects[GRID_WIDTH][GRID_HEIGHT]);
 	GameAreaObject& GetGameAreaObject(GridPos pos);
+
+	static Point2f GameToWorld(Point2f pos);
+	static Point2f WorldToGame(Point2f pos);
 };

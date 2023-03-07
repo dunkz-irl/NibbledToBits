@@ -60,7 +60,7 @@ void GameArea::DrawGameArea() {
 		for (int j = 0; j < GRID_HEIGHT; ++j) {
 			const GameAreaObject& obj = m_gameAreaObjects[i][j];
 			if (obj.id != -1) {
-				const Play::Point2D worldPos = GameToWorld({ obj.posx * SQUARE_SIZE + SQUARE_SIZE / 2, obj.posy * SQUARE_SIZE + SQUARE_SIZE / 2 });
+				const Play::Point2D worldPos = GameToWorld({ obj.posx, obj.posy });
 				Play::DrawSprite(GetSpriteIDFromObjectID(obj.id, obj.rot), worldPos, 0);
 			}
 		}
@@ -69,7 +69,7 @@ void GameArea::DrawGameArea() {
 	const auto drawHole = [this](const GameAreaObject& hole, char letter) {
 		if (hole.vis) {
 			const int IDIndex = (hole.posy == GRID_HEIGHT ? 0 : hole.posx == -1 ? 1 : hole.posy == -1 ? 2 : hole.posx == GRID_WIDTH ? 3 : 0);
-			const Play::Point2D worldPos = GameToWorld({ hole.posx * SQUARE_SIZE + SQUARE_SIZE / 2, hole.posy * SQUARE_SIZE + SQUARE_SIZE / 2 });
+			const Play::Point2D worldPos = GameToWorld({ hole.posx, hole.posy });
 			Play::DrawSprite(mouseHoleSpriteIDs[IDIndex], worldPos, 0);
 			const Play::Point2D textPos = worldPos + Play::Point2D{ 0, hole.posy == GRID_HEIGHT ? -SQUARE_SIZE : SQUARE_SIZE };
 			Play::DrawFontText("fontui64px", std::string(1, letter), textPos, Play::CENTRE);
@@ -81,7 +81,7 @@ void GameArea::DrawGameArea() {
 	// Draw the misc variable above the last selected object
 	if (m_lastSelected.x != -1 && m_lastSelected.y != -1) {
 		const GameAreaObject& lastSelectedObject = GetGameAreaObject(m_lastSelected);
-		const Play::Point2D worldPos = GameToWorld({ m_lastSelected.x * SQUARE_SIZE + SQUARE_SIZE / 2, m_lastSelected.y * SQUARE_SIZE + SQUARE_SIZE / 2 });
+		const Play::Point2D worldPos = GameToWorld({ m_lastSelected.x, m_lastSelected.y });
 		const Play::Point2D textPos = worldPos + Play::Point2D{ 0, SQUARE_SIZE };
 		// Play::DrawFontText("fontui64px", std::to_string(lastSelectedObject.misc), textPos, Play::CENTRE);
 	}
@@ -89,6 +89,8 @@ void GameArea::DrawGameArea() {
 
 
 Point2f GameArea::GameToWorld(Point2f pos) {
+	pos.x = pos.x * static_cast<float>(SQUARE_SIZE) + static_cast<float>(SQUARE_SIZE) / 2.f;
+	pos.y = pos.y * static_cast<float>(SQUARE_SIZE) + static_cast<float>(SQUARE_SIZE) / 2.f;
 	Point2f botLeftGrid{ DISPLAY_WIDTH - GAME_AREA_WIDTH + BOARDER_PIXELS, DISPLAY_HEIGHT - GAME_AREA_HEIGHT + BOARDER_PIXELS };
 	return pos + botLeftGrid;
 }
