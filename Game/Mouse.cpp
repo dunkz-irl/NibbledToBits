@@ -1,7 +1,7 @@
 #include "Play.h"
 #include "Mouse.h"
 
-Mouse::Mouse(Play::Point2f pos)
+Mouse::Mouse(Play::Point2f pos) : GameObject::GameObject(GameObjectType::TYPE_MOUSE)
 {
 	m_matrix.row[2].x = pos.x;
 	m_matrix.row[2].y = pos.y;
@@ -12,9 +12,7 @@ Mouse::Mouse(Play::Point2f pos)
 	m_movementSpeed = 2.f;
 
 	// Set sprite to one of three
-	m_spriteID = Play::GetSpriteId(m_spriteNames[Play::RandomRoll(3) - 1]);
-
-	
+	m_spriteID = Play::GetSpriteId(m_spriteNames[Play::RandomRoll(3) - 1]);	
 }
 
 void Mouse::Update()

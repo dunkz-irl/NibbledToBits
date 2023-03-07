@@ -56,3 +56,21 @@ void GameObjectManager::CleanupAll()
 {
 
 }
+
+void GameObjectManager::CleanupAllOfType(GameObjectType type)
+{
+	std::vector<GameObject*>::iterator it;
+	for (it = m_v_pGameObjects.begin(); it != m_v_pGameObjects.end();)
+	{
+		GameObject* obj = *it;
+		if (obj->GetGameObjectType() == type)
+		{
+			delete* it;
+			it = m_v_pGameObjects.erase(it); // #TODO: Does this free memory? Do I need to delete it or not?
+		}
+		else
+		{
+			it++;
+		}
+	}
+}

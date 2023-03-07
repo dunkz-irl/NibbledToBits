@@ -4,10 +4,12 @@
 #include "GameObject.h"
 
 
-GameObject::GameObject()
+GameObject::GameObject(GameObjectType type)
 {
 	static int id;
 	m_id = id++;
+
+	m_type = type;
 }
 
 int GameObject::GetID()

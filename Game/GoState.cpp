@@ -32,6 +32,8 @@ void GoState::OnEnter()
 void GoState::OnExit()
 {
 	IGameState::OnExit();
+	GameObjectManager::Instance().CleanupAllOfType(GameObjectType::TYPE_MOUSE);
+
 	delete m_mouseSpawner;
 }
 

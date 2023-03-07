@@ -10,7 +10,7 @@ enum class GameObjectType
 class GameObject
 {
 public:
-	GameObject();
+	GameObject(GameObjectType type);
 	int GetID();
 
 	virtual void Update() = 0;
@@ -36,6 +36,6 @@ protected:
 
 private:
 	int m_id{ -1 };
-	GameObjectType m_type;
+	GameObjectType m_type{ GameObjectType::COUNT };
 };
 

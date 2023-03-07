@@ -37,6 +37,8 @@ GameManager::GameManager()
 
 GameManager::~GameManager()
 {
+	GameObjectManager::Instance().Destroy();
+
 	s_pInstance = nullptr;
 }
 

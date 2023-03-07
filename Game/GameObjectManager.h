@@ -13,6 +13,7 @@ public:
 	void DrawAll();
 	void CleanupAll();
 
+	void CleanupAllOfType(GameObjectType type);
 	void Register(GameObject* obj) { m_v_pGameObjects.push_back(obj); };
 
 private:
