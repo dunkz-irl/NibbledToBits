@@ -11,6 +11,16 @@ enum class MouseDirection
 	RIGHT
 };
 
+struct GridVector { 
+	
+	int x; int y; 
+
+	friend bool operator==(GridVector rhs, GridVector lhs)
+	{
+		return (rhs.x == lhs.x) && (rhs.y == lhs.y);
+	}
+};
+
 class Mouse : public GameObject
 {
 public:
@@ -20,23 +30,21 @@ public:
 	void Draw() override;
 
 private:
-	void UpdateCurrentGridPos();
-
+	void UpdateGridPosition();
 	void UpdateTrackedGridSquares();
 	void UpdateBehaviour();
 	void UpdateRotation();
 	void UpdateDirection();
 	void ReverseDirection();
-	int m_nextSquareX;
-	int m_nextSquareY;
 private:
 	static std::vector<Mouse> m_vMice;
 	const char* m_spriteNames[3]{ "mouseWhite", "mouseBlue", "mouseGrey" };
-	MouseDirection m_currentDirection{ MouseDirection::UP };
+	GridVector m_currentDirection{ 0, 1 };
+	GridVector m_currentPosition{ -2, -2 };
+	GridVector m_nextPosition{ -2, -2 };
+
 	float m_movementSpeed{ 1.f };
 
-	int m_gridPosX{ -2 };
-	int m_gridPosY{ -2 };
 	GameAreaObject* m_currentGridObj{ nullptr };
 	GameAreaObject* m_nextGridObj{ nullptr };
 
