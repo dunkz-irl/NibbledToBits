@@ -3,6 +3,9 @@
 
 void Debug::DrawBoldText(std::string text, Play::Point2f pos)
 {
+	if (!Debug::s_active)
+		return;
+	
 	Play::DrawDebugText(pos + Play::Point2f{ 2.f, 0.f }, text.c_str(), Play::cWhite);
 	Play::DrawDebugText(pos + Play::Point2f{ 0.f, 2.f }, text.c_str(), Play::cWhite);
 	Play::DrawDebugText(pos + Play::Point2f{ -2.f, 0.f }, text.c_str(), Play::cWhite);

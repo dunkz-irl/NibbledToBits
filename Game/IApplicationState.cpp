@@ -5,7 +5,7 @@
 #include "IApplicationState.h"
 
 void IApplicationState::DrawDebugInfo()
-{
+{	
 	Play::DrawDebugText({ DISPLAY_WIDTH * 0.025f, DISPLAY_HEIGHT * 0.15f }, "App State:", Play::cRed, false);
 	Play::DrawDebugText({ DISPLAY_WIDTH * 0.135f, DISPLAY_HEIGHT * 0.15f }, m_debugStateName.c_str(), Play::cRed, false);
 

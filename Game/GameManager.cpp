@@ -10,6 +10,7 @@
 #include "MenuState.h"
 #include "PlanningState.h"
 #include "PauseState.h"
+#include "Debug.h"
 
 #include "Time.h"
 #include "GameObjectManager.h"
@@ -102,7 +103,7 @@ void GameManager::Draw()
 	DrawHeldItem();
 	DrawStartButton();
 
-	if (ApplicationManager::Instance().m_DebugMode)
+	if (Debug::s_active)
 	{
 		m_pGameState->DrawDebugInfo();
 	}
@@ -140,6 +141,11 @@ GridPoint GameManager::GetExitPosition()
 		PLAY_ASSERT_MSG(false, "Exit position is invalid.")
 		return { -2, -2 };
 	}
+}
+
+GameAreaObject* GameManager::GetEntryObj()
+{
+	return &m_gameArea->m_holeEntry;
 }
 
 std::pair<int, float> GameManager::GetMouseSpawnInfo()

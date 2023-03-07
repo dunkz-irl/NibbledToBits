@@ -4,6 +4,7 @@
 #include "MainGameState.h"
 #include "ApplicationManager.h"
 #include "GameManager.h"
+#include "Debug.h"
 
 ApplicationManager* ApplicationManager::s_pInstance = nullptr;
 
@@ -55,13 +56,18 @@ void ApplicationManager::Update(float elapsedTime)
 		m_pApplicationState->m_stateTime = 0.f;
 		m_pApplicationState->OnEnter();
 	}
+
+	if (Play::KeyPressed(VK_HOME))
+	{
+		Debug::s_active = !Debug::s_active;
+	}
 }
 
 void ApplicationManager::Draw()
 {
 	m_pApplicationState->OnDraw();
 
-	if (m_DebugMode)
+	if (Debug::s_active)
 	{
 		m_pApplicationState->DrawDebugInfo();
 	}

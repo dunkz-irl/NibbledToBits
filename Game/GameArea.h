@@ -40,7 +40,7 @@ extern int DISPLAY_SCALE;
 class GameArea {
 private:
 	GridPos GetMouseGridPos();
-	GameAreaObject m_gameAreaObjects[GRID_WIDTH][GRID_HEIGHT];
+	inline static GameAreaObject m_gameAreaObjects[GRID_WIDTH][GRID_HEIGHT];
 
 public:
 	GameAreaObject m_holeEntry{ 0, 0, -1, 0, 0, true };
@@ -53,7 +53,7 @@ public:
 	FloatingObject GetObject();
 	void DrawGameArea();
 	void SetGameAreaObjects(GameAreaObject gameAreaObjects[GRID_WIDTH][GRID_HEIGHT]);
-	GameAreaObject& GetGameAreaObject(GridPos pos);
+	static GameAreaObject& GetGameAreaObject(GridPos pos);
 
 	static Point2f GameToWorld(Point2f pos);
 	static GridPos WorldToGame(Point2f pos);

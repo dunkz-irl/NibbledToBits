@@ -6,6 +6,7 @@ class GoButton;
 struct FloatingObject;
 class IGameState;
 class PauseState;
+struct GameAreaObject;
 
 class GameObject;
 class GameObjectManager;
@@ -56,6 +57,7 @@ public:
 
 	Play::Point2D GetEntrancePosition();
 	GridPoint GetExitPosition();
+	GameAreaObject* GetEntryObj();
 
 	std::pair<int, float> GetMouseSpawnInfo();
 
