@@ -16,6 +16,7 @@
 #include "GameManager.h"
 #include "ApplicationManager.h"
 #include "LoadLevel.h"
+#include "MouseSpawner.h"
 
 GameManager* GameManager::s_pInstance = nullptr;
 //extern std::map<std::string, int> g_idMap;
@@ -63,7 +64,7 @@ void GameManager::Destroy()
 void GameManager::Update()
 {
 	UpdateStartButton(); // #TODO: Move this somewhere more sensible
-
+	
 	GameObjectManager::Instance().UpdateAll();
 
 	m_pGameState->m_stateTime += Time::GetElapsedTime();
@@ -139,6 +140,11 @@ GridPoint GameManager::GetExitPosition()
 	}
 }
 
+std::pair<int, float> GameManager::GetMouseSpawnInfo()
+{
+	return std::pair<int, float>(m_numLevelMice, m_mouseSpawnRate);
+}
+
 void GameManager::ManageInput()
 {
 	// #CREDIT Fagin and Abdullah
@@ -196,14 +202,6 @@ void GameManager::DrawStartButton()
 	//Play::DrawSpriteRotated("tick_panel_blurred", m_goButton->GetPosition() + Vector2D{m_goButton->GetSize().x / 2.f, m_goButton->GetSize().y / 2.f}, 0, 0, 1.f, 0.5f);
 	Play::SetDrawingBlendMode(BLEND_NORMAL);
 	m_goButton->Draw();
-}
-
-void GameManager::UpdateGameObjects()
-{
-	for (int objID : m_vGameObjectIDs)
-	{
-		
-	}
 }
 
 void GameManager::ToNextState()

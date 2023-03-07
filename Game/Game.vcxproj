@@ -35,6 +35,7 @@
     <ClInclude Include="IApplicationState.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="MouseGraphic.h" />
+    <ClInclude Include="MouseSpawner.h" />
     <ClInclude Include="Panel.h" />
     <ClInclude Include="PanelItem.h" />
     <ClInclude Include="PauseState.h" />
@@ -64,6 +65,7 @@
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="MouseGraphic.cpp" />
+    <ClCompile Include="MouseSpawner.cpp" />
     <ClCompile Include="Panel.cpp" />
     <ClCompile Include="PanelItem.cpp" />
     <ClCompile Include="MainGameState.cpp" />

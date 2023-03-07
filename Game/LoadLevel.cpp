@@ -51,6 +51,13 @@ void LevelLoader::LoadLevel(const char* levelName)
 	GM_INST.m_gameArea->m_holeExit.posx = std::stoi(tokens[0]);
 	GM_INST.m_gameArea->m_holeExit.posy = std::stoi(tokens[1]);
 
+	// Line 3 is number of mice, and mouse spawn rate separated by commas
+	std::getline(levelFile, line);
+	tokens.clear();
+	tokens = TokeniseStringByComma(line);
+	GM_INST.m_numLevelMice = std::stoi(tokens[0]);
+	GM_INST.m_mouseSpawnRate = std::stof(tokens[1]);
+
 	// Populate objects in the level
 
 	// Temp thingy

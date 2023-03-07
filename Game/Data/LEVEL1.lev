@@ -1,6 +1,7 @@
 ID, x pos, y pos, rotation, Misc variable
 4,-1
 -1,3
+10, 2
 single ,0,2,0,0
 single ,0,4,0,0
 single ,1,2,0,0

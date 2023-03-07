@@ -10,24 +10,37 @@
 #include "GameObjectManager.h"
 #include "GameObject.h"
 
+// Other
+#include "MouseSpawner.h"
+
 // Global/helper things
 #include "VirtualKeys.h"
 #include "Common.h"
 
+GoState::GoState()
+{
+	m_debugStateName = "Go State";
+	std::pair<int, float> mouseInfo = GM_INST.GetMouseSpawnInfo();
+	m_mouseSpawner = new MouseSpawner(mouseInfo.first, mouseInfo.second);
+}
+
 void GoState::OnEnter()
 {
 	GM_INST.m_currentGameState = GAMESTATE_ENUM::GO;
-	GameObjectManager::Instance().Create(GameObjectType::TYPE_MOUSE, GameManager::Instance().GetEntrancePosition());
 }
 
 void GoState::OnExit()
 {
 	IGameState::OnExit();
+	delete m_mouseSpawner;
 }
 
 IGameState* GoState::OnUpdate()
 {
-	// Mouse::UpdateAll();
+	if(m_mouseSpawner->Update())
+	{
+		GameObjectManager::Instance().Create(GameObjectType::TYPE_MOUSE, GameManager::Instance().GetEntrancePosition());
+	}
 
 	if (m_proceedToNextState)
 	{
@@ -38,8 +51,6 @@ IGameState* GoState::OnUpdate()
 	{
 		return new PauseState();
 	}
-
-	GM_INST.UpdateGameObjects();
 
 	return nullptr;
 }

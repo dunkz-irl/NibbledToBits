@@ -57,6 +57,8 @@ public:
 	Play::Point2D GetEntrancePosition();
 	GridPoint GetExitPosition();
 
+	std::pair<int, float> GetMouseSpawnInfo();
+
 	GAMESTATE_ENUM m_currentGameState{GAMESTATE_ENUM::PLANNING};
 
 	friend class MainGameState;
@@ -64,13 +66,14 @@ public:
 	friend class GameObjectManager;
 	friend class Time;
 
+	
 private:
 
 	// Singleton /////	
-	GameManager();
-	~GameManager();
+	GameManager();	//
+	~GameManager();	//
 	static GameManager* s_pInstance;
-
+	//				//
 	GameManager& operator=(const GameManager) = delete;
 	GameManager(const GameManager&) = delete;
 	//////////////////
@@ -92,4 +95,6 @@ private:
 	IGameState* m_pGameState = nullptr;
 	PauseState* m_pauseState;
 
+	int m_numLevelMice;
+	float m_mouseSpawnRate;
 };
