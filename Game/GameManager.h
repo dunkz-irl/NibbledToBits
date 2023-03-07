@@ -65,6 +65,7 @@ public:
 	friend class LevelLoader;
 	friend class GameObjectManager;
 	friend class Time;
+	friend class GameArea;
 
 	
 private:

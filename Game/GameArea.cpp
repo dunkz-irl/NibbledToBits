@@ -1,5 +1,6 @@
 #include "Play.h"
 #include "GameArea.h"
+#include "GameManager.h"
 
 using namespace Play;
 
@@ -95,9 +96,24 @@ Point2f GameArea::GameToWorld(Point2f pos) {
 	return pos + botLeftGrid;
 }
 
-Point2f GameArea::WorldToGame(Point2f pos) {
+GridPos GameArea::WorldToGame(Point2f pos) {
 	Point2f botLeftGrid{ DISPLAY_WIDTH - GAME_AREA_WIDTH + BOARDER_PIXELS, DISPLAY_HEIGHT - GAME_AREA_HEIGHT + BOARDER_PIXELS };
-	return pos - botLeftGrid;
+	pos.x -= abs(((int)pos.x) % SQUARE_SIZE);
+	pos.y -= abs(((int)pos.y) % SQUARE_SIZE);
+	pos -= botLeftGrid;
+
+	return{ pos.x >= 0 ? int(pos.x / SQUARE_SIZE) : int(pos.x / SQUARE_SIZE) - 1, pos.y >= 0 ? int(pos.y / SQUARE_SIZE) : int(pos.y / SQUARE_SIZE) - 1 };
+}
+
+GameAreaObject* GameArea::GetObjectAtGridPosition(int x, int y)
+{
+	GameAreaObject& obj = GM_INST.m_gameArea->GetGameAreaObject({x, y});
+	if (obj.id != -1)
+	{
+		return &obj;
+	}
+
+	return nullptr;
 }
 
 void GameArea::PlaceObject(const FloatingObject& obj) {
@@ -187,12 +203,9 @@ FloatingObject GameArea::GetObject() {
 
 GridPos GameArea::GetMouseGridPos() {
 	Point2f mouseWorldPos = Play::GetMousePos();
-	Point2f mouseGamePos = WorldToGame(mouseWorldPos);
-	Point2f mouseSnapPos = mouseGamePos;
-	mouseSnapPos.x -= abs(((int)mouseSnapPos.x) % SQUARE_SIZE);
-	mouseSnapPos.y -= abs(((int)mouseSnapPos.y) % SQUARE_SIZE);
+	GridPos mouseSnapPos = WorldToGame(mouseWorldPos);
 
-	return { mouseSnapPos.x >= 0 ? int(mouseSnapPos.x / SQUARE_SIZE) : int(mouseSnapPos.x / SQUARE_SIZE) - 1, mouseSnapPos.y >= 0 ? int(mouseSnapPos.y / SQUARE_SIZE) : int(mouseSnapPos.y / SQUARE_SIZE) - 1 };
+	return mouseSnapPos;
 }
 
 void GameArea::SetGameAreaObjects(GameAreaObject gameAreaObjects[GRID_WIDTH][GRID_HEIGHT]) {

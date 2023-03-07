@@ -56,5 +56,7 @@ public:
 	GameAreaObject& GetGameAreaObject(GridPos pos);
 
 	static Point2f GameToWorld(Point2f pos);
-	static Point2f WorldToGame(Point2f pos);
+	static GridPos WorldToGame(Point2f pos);
+
+	static GameAreaObject* GetObjectAtGridPosition(int x, int y);
 };
