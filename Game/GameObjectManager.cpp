@@ -1,5 +1,6 @@
 #include "Play.h"
 
+#include "Common.h"
 #include "Mouse.h"
 
 #include "GameManager.h"

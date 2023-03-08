@@ -5,6 +5,8 @@ struct ObjectCSV {
 	int spriteID[5];
 	int group;
 	int id;
+	
+	uint8_t entryDirections;
 };
 
 std::vector<ObjectCSV> ReadObjectsCSV();

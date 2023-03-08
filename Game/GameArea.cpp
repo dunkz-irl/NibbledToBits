@@ -1,6 +1,8 @@
 #include "Play.h"
 #include "GameArea.h"
 #include "GameManager.h"
+#include <array>
+#include "Common.h"
 
 using namespace Play;
 
@@ -9,6 +11,14 @@ int GAME_AREA_WIDTH{ 870 };
 int GAME_AREA_HEIGHT{ 720 };
 int SQUARE_SIZE{ 50 };
 int BOARDER_PIXELS{ 35 };
+
+GridVector g_directionVectors[4]
+{
+	{0, 1},
+	{ 1, 0 },
+	{ 0, -1 },
+	{ -1, 0 }
+};
 
 GameArea::GameArea() {
 	//Get sprite ID's for each mouse hole rotated sprite
@@ -46,6 +56,10 @@ void GameArea::Update() {
 
 		if (ga_obj.rotatable)
 		{
+			// bit shift the valid directions
+			RotateEntryDirections(ga_obj.possibleEntryDirections);
+			ValidateEntryDirections(ga_obj);
+
 			int& rotation = ga_obj.rot;
 			rotation += 1;
 			if (rotation > 3) {
@@ -114,6 +128,85 @@ GameAreaObject* GameArea::GetObjectAtGridPosition(int x, int y)
 	}
 
 	return nullptr;
+}
+
+void GameArea::RotateEntryDirections(uint8_t& entryDirections)
+{
+	// bit shift the valid directions
+	uint8_t frontBit = entryDirections & ~0b00001110; // Chop off all but the first bit (right-most)
+	uint8_t shift = entryDirections >> 1; // Shift 1 bit to the right (we lost the right-most bit)
+	frontBit <<= 3;			// Shift the front bit to the end, wrapping it round
+	uint8_t rotDirs = shift | frontBit; // Combine
+
+	rotDirs &= 0xF; // 1111 in binary - set all other bits to 0
+	entryDirections = rotDirs;
+}
+
+void GameArea::ValidateEntryDirections(GameAreaObject& ga_obj)
+{
+	std::array<bool, 4> dirs = GetBlockPossibleDirections(ga_obj);
+
+	for (int i = 0; i < 4; i++)
+	{
+		if (dirs[i])
+		{
+			GridVector dir;
+
+			switch (i)
+			{
+				case 0: dir = { 0, 1 }; break; // UP
+				case 1: dir = { 1, 0 }; break; // RIGHT
+				case 2: dir = { 0, -1 }; break; // DOWN
+				case 3: dir = { -1, 0 }; break; // LEFT
+			}
+
+			GameAreaObject nextObj = GetGameAreaObject({ ga_obj.posx + dir.x, ga_obj.posy + dir.y });
+
+			if (nextObj.id == 4) // single block
+			{
+				dirs[i] = false;
+			}
+		}
+	}
+
+	uint8_t upBit = dirs[0];
+	uint8_t rightBit = dirs[1];
+	uint8_t downBit = dirs[2];
+	uint8_t leftBit = dirs[3];
+
+	rightBit <<= 1;
+	downBit <<= 2;
+	leftBit <<= 3;
+
+	ga_obj.validEntryDirections = upBit | rightBit | downBit | leftBit;
+}
+
+std::array<bool, 4> GameArea::GetBlockPossibleDirections(GameAreaObject& obj)
+{
+	std::array<bool, 4> possibleDirections;
+	possibleDirections =
+	{
+		static_cast<bool>(obj.possibleEntryDirections & ~0b1110),
+		static_cast<bool>(obj.possibleEntryDirections & ~0b1101),
+		static_cast<bool>(obj.possibleEntryDirections & ~0b1011),
+		static_cast<bool>(obj.possibleEntryDirections & ~0b0111),
+	};
+
+	return possibleDirections;
+}
+
+std::array<bool, 4> GameArea::GetBlockValidDirections(GameAreaObject& obj)
+{
+	std::array<bool, 4> validDirections;
+	validDirections =
+	{
+		static_cast<bool>(obj.validEntryDirections & ~0b1110),
+		static_cast<bool>(obj.validEntryDirections & ~0b1101),
+		static_cast<bool>(obj.validEntryDirections & ~0b1011),
+		static_cast<bool>(obj.validEntryDirections & ~0b0111),
+	};
+
+	return validDirections;
 }
 
 void GameArea::PlaceObject(const FloatingObject& obj) {

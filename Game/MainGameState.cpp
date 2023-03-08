@@ -15,6 +15,8 @@
 #include "GameObjectManager.h"
 #include "GameManager.h"
 
+#include "Debug.h"
+
 // #TODO: Not a great place to include these
 extern std::vector<ObjectCSV> g_vObjects;
 
@@ -56,4 +58,5 @@ void MainGameState::OnDraw()
 {
 	Play::DrawBackground();
 	GM_INST.Draw();
+	Debug::DrawGameAreaObjectDebugInfo();
 }

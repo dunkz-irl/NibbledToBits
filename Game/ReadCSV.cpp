@@ -66,6 +66,40 @@ std::vector<ObjectCSV> ReadObjectsCSV() {
             obj.spriteID[i] = Play::GetSpriteId((baseSprite + "_R" + std::string(1, 'A' + i)).c_str());
         }
 
+		// Set valid entry directions
+		if (tokens[4] != "N")
+		{
+            uint8_t upBit = 0x0;
+            uint8_t rightBit = 0x0;
+            uint8_t downBit = 0x0;
+            uint8_t leftBit = 0x0;
+
+			for (char c : tokens[4])
+			{
+                switch (c)
+                {
+                case 'U': // Up
+                    upBit = 1;
+                    break;
+                case 'R': // Right
+                    rightBit = 1;
+                    break;
+                case 'D': // Down
+                    downBit = 1;
+                    break;
+                case 'L': // Left
+                    leftBit = 1;
+                    break;
+                default:
+                    break;
+                }
+			}
+
+            uint8_t dirs = upBit | rightBit << 1 | downBit << 2 | leftBit << 3;
+
+            obj.entryDirections = dirs;
+		}
+
         obj.id = id++;
         objects.push_back(std::move(obj));
 

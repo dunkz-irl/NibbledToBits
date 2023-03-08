@@ -23,6 +23,9 @@ struct GameAreaObject {
 	bool vis{ true };
 	bool pickupable{ true };
 	bool rotatable{ true };
+
+	uint8_t possibleEntryDirections{ 0x0 };
+	uint8_t validEntryDirections{ 0x0 };
 };
 
 using namespace Play;
@@ -59,4 +62,13 @@ public:
 	static GridPos WorldToGame(Point2f pos);
 
 	static GameAreaObject* GetObjectAtGridPosition(int x, int y);
+	static void RotateEntryDirections(uint8_t& entryDirections);
+
+	friend class Debug;
+	static void ValidateEntryDirections(GameAreaObject& ga_obj);
+	static std::array<bool, 4> GetBlockPossibleDirections(GameAreaObject& obj);
+private:
+	
+public:
+	static std::array<bool, 4> GetBlockValidDirections(GameAreaObject& obj);
 };

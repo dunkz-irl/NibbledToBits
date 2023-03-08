@@ -1,15 +1,15 @@
 #include "Play.h"
 #include "GameArea.h"
-#include "Mouse.h"
-
 #include "Common.h"
+#include "Mouse.h"
+#include <array>
+
 #include "Debug.h"
 #include "GameManager.h"
 
 Mouse::Mouse(Play::Point2f pos) : GameObject::GameObject(GameObjectType::TYPE_MOUSE)
 {	
 	UpdateTrackedGridSquares();
-
 
 	m_matrix.row[2].x = pos.x;
 	m_matrix.row[2].y = pos.y;
@@ -42,8 +42,6 @@ void Mouse::Update()
 	UpdateDirection();
 
 	UpdateRotation();
-
-
 	
 	m_velocity *= m_movementSpeed;
 
@@ -79,6 +77,12 @@ void Mouse::UpdateGridPosition()
 	GridPos gridPos = GameArea::WorldToGame({ m_matrix.row[2].x, m_matrix.row[2].y });
 
 	m_currentPosition = { gridPos.x, gridPos.y };
+
+	if (m_currentPosition == m_nextPosition)
+	{
+		m_enteredNewSquare = true;
+	}
+
 	m_nextPosition = { gridPos.x + m_currentDirection.x, gridPos.y + m_currentDirection.y };
 }
 
@@ -90,18 +94,66 @@ void Mouse::UpdateTrackedGridSquares()
 
 void Mouse::UpdateBehaviour()
 {
+	if (!m_enteredNewSquare)
+		return;	
+
+	// Rotate-y block
+	if (m_currentGridObj->id == 7)
+	{
+		std::array<bool, 4> validDirections = GameArea::GetBlockValidDirections(*m_currentGridObj);
+
+		// Mouse can't go back the way it came
+
+		int directionIndex = static_cast<int>(GetCurrentDirectionEnum());
+		directionIndex += 2; // Get opposite direction
+		directionIndex %= 4; // Wrap around
+
+		validDirections[directionIndex] = false;
+
+		for (int i = 0; i < 4; i++)
+		{
+			if (validDirections[i])
+			{
+				m_currentDirection = m_directionVectors[i];
+				m_matrix.row[2] = GameArea::GameToWorld({ m_currentGridObj->posx, m_currentGridObj->posy } ); // Align mouse
+				UpdateTrackedGridSquares();
+				break;
+			}
+		}
+
+		// Valid exit?
+		bool canExit = false;
+	}
+
+	// Rotate-y block
+	if (m_nextGridObj->id == 7)
+	{
+		// Valid entrance?
+		bool canEnter = CheckBlockForValidEntrance(*m_nextGridObj);
+	
+		// If so move into the square
+	}
+
 	// Single wall
-	if (m_nextGridObj->id == 4)
+	if (m_nextGridObj->id == 4) // #TODO: Magic number
 	{
 		ReverseDirection();
+		UpdateTrackedGridSquares();
 	}
+
+	// Mouse trap
+
+	// Exit
 
 	// Check for entrance mouse hole
 	GameAreaObject* pEntryObj = GM_INST.GetEntryObj();
 	if (m_nextPosition.x == pEntryObj->posx && m_nextPosition.y == pEntryObj->posy)
 	{
 		ReverseDirection();
+		UpdateTrackedGridSquares();
 	}
+
+	m_enteredNewSquare = false;
 }
 
 void Mouse::UpdateRotation()
@@ -129,4 +181,26 @@ void Mouse::UpdateDirection()
 void Mouse::ReverseDirection()
 {
 	m_currentDirection = {m_currentDirection.x * -1, m_currentDirection.y * -1};
+}
+
+bool Mouse::CheckBlockForValidEntrance(const GameAreaObject& gameAreaObj)
+{
+	if (gameAreaObj.id == 7)
+	{
+	}
+	return false;
+}
+
+GridDirection Mouse::GetCurrentDirectionEnum()
+{
+	for (int i = 0; i < 4; i++)
+	{
+		if (m_currentDirection == m_directionVectors[i])
+		{
+			return static_cast<GridDirection>(i);
+		}
+	}
+	
+	PLAY_ASSERT_MSG(false, "GetMouseDirectionEnum failed");
+	return GridDirection::DOWN;
 }

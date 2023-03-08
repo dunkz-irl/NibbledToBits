@@ -68,7 +68,7 @@ public:
 	friend class GameObjectManager;
 	friend class Time;
 	friend class GameArea;
-
+	friend class Debug;
 	
 private:
 

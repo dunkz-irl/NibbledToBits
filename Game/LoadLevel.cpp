@@ -103,9 +103,6 @@ void LevelLoader::LoadLevel(const char* levelName)
 		// GameManager::Instance().m_vGameAreaObjects.push_back(obj);
 	}
 
-	// Add object to GameArea objects (only do this once)
-	GM_INST.m_gameArea->SetGameAreaObjects(gameAreaObjects);
-
 	// Populate player inventory
 	while (levelFile)
 	{
@@ -164,5 +161,30 @@ void LevelLoader::LoadLevel(const char* levelName)
 		v_tempInventory.push_back(t);
 	}
 
+	// Set entry directions for gameAreaObjects
+	for (ObjectCSV& csv_obj : v_CSVobjects)
+	{
+		for (int x = 0; x < 16; x++)
+		{
+			for (int y = 0; y < 13; y++)
+			{
+				GameAreaObject& ga_obj = gameAreaObjects[x][y];
+				if (ga_obj.id == csv_obj.id)
+				{
+					ga_obj.possibleEntryDirections = csv_obj.entryDirections;
+					
+					// Match entryDirections to object rotation value
+					for (int i = 0; i < ga_obj.rot; i++)
+					{
+						GameArea::RotateEntryDirections(ga_obj.possibleEntryDirections);
+						GameArea::ValidateEntryDirections(ga_obj);
+					}
+				}
+			}
+		}
+	}
+
+	// Add object to GameArea objects (only do this once)
+	GM_INST.m_gameArea->SetGameAreaObjects(gameAreaObjects);
 	GM_INST.m_panel->SetPlayerInventory(v_tempInventory);
 }

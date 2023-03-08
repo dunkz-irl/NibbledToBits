@@ -2,24 +2,8 @@
 #include "GameObject.h"
 
 struct GameAreaObject;
-
-enum class MouseDirection
-{
-	UP = 0,
-	DOWN,
-	LEFT,
-	RIGHT
-};
-
-struct GridVector { 
-	
-	int x; int y; 
-
-	friend bool operator==(GridVector rhs, GridVector lhs)
-	{
-		return (rhs.x == lhs.x) && (rhs.y == lhs.y);
-	}
-};
+enum class GridDirection;
+struct GridVector;
 
 class Mouse : public GameObject
 {
@@ -36,7 +20,10 @@ private:
 	void UpdateRotation();
 	void UpdateDirection();
 	void ReverseDirection();
+	bool CheckBlockForValidEntrance(const GameAreaObject& gameAreaObj);
+	GridDirection GetCurrentDirectionEnum();
 private:
+	bool m_enteredNewSquare = false;
 	static std::vector<Mouse> m_vMice;
 	const char* m_spriteNames[3]{ "mouseWhite", "mouseBlue", "mouseGrey" };
 	GridVector m_currentDirection{ 0, 1 };
@@ -49,11 +36,11 @@ private:
 	GameAreaObject* m_nextGridObj{ nullptr };
 
 	// Maps onto enum class MouseDirection
-	Play::Vector2f m_directionVectors[4]
+	GridVector m_directionVectors[4]
 	{
-		{0.f, 1.f},
-		{0.f, -1.f},
-		{-1.f, 0.f},
-		{1.f, 0.f}
+		{0, 1},
+		{1, 0},
+		{0, -1},
+		{-1, 0}
 	};
 };
