@@ -125,13 +125,45 @@ void Mouse::UpdateBehaviour()
 		bool canExit = false;
 	}
 
+	//#TODO: Could make classes for these interactions which might save all the if statements
+
 	// Rotate-y block
 	if (m_nextGridObj->id == 7)
 	{
-		// Valid entrance?
-		bool canEnter = CheckBlockForValidEntrance(*m_nextGridObj);
-	
-		// If so move into the square
+		bool reversed = false;
+
+		std::array<bool, 4> validEntrances = GameArea::GetBlockValidDirections(*m_nextGridObj);
+
+		// Check entrance mouse is facing to see if valid;
+		GridDirection currentDir = GetCurrentDirectionEnum();
+
+		if (!validEntrances[(static_cast<int>(currentDir) + 2) % 4]) // Get opposite entrance to the direction mouse is facing/travelling
+		{
+			if (!reversed)
+			{
+				ReverseDirection();
+				UpdateTrackedGridSquares();
+				reversed = true;
+			}
+		}
+
+		// If only 1 entrance, reverse direction as mouse can't get out.
+		int count = 0;
+		for (bool entr : validEntrances)
+		{
+			if (entr)
+				count++;
+		}
+
+		if (count == 0 || count == 1)
+		{
+			if (!reversed)
+			{
+				ReverseDirection();
+				UpdateTrackedGridSquares();
+				reversed = true;
+			}
+		}
 	}
 
 	// Single wall
