@@ -28,7 +28,12 @@ int GameObject::GetID()
 
 void GameObject::UpdateDestroyed()
 {
-	throw std::logic_error("UpdateDestroyed not implemented in GameObject class");
+	m_opacity -= 0.05f;
+
+	if (m_opacity < 0)
+	{
+		m_type = GameObjectType::TYPE_CLEANUP;
+	}
 }
 
 void GameObject::UpdateAnimation()

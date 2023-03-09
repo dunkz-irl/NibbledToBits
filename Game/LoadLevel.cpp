@@ -5,6 +5,7 @@
 #include "SingleWall.h"
 #include "RotatingBlock.h"
 #include "MouseHoleEntry.h"
+#include "MouseTrap.h"
 
 #include "GameAreaObjects.h"
 
@@ -231,6 +232,9 @@ GameAreaObject* LevelLoader::CreateNewGameAreaObjectOfType(std::vector<std::stri
 			break;
 		case TUBE_TWO_WAY:
 			pGAObj = new RotatingBlock();
+			break;
+		case TRAP_01_SET:
+			pGAObj = new MouseTrap();
 			break;
 		default:
 			pGAObj = new GameAreaObject();

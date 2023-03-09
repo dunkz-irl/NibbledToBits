@@ -43,11 +43,16 @@ GameArea::~GameArea()
 {
 	delete m_holeEntry;
 
+	if (!m_gameAreaObjects)
+	{
+		return;
+	}
+
 	for (int x = 0; x < 16; x++)
 	{
 		for (int y = 0; y < 13; y++)
 		{
-			// If the objects addres is that of the placeholder obj, don't delete it, as we'll delete it once later
+			// If the objects address is that of the placeholder obj, don't delete it, as we'll delete it once later
 			if (&*m_gameAreaObjects[x][y] == g_initObj)
 				continue;
 			else

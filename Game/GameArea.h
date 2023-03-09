@@ -29,6 +29,7 @@ struct GameAreaObject {
 	uint8_t possibleEntryDirections{ 0x0 };
 	uint8_t validEntryDirections{ 0x0 };
 
+	virtual void Update() { };
 	virtual void OnCurrentSquare(void* pObj) { };
 	virtual void OnNextSquare(void* pObj) { };
 };
@@ -79,6 +80,7 @@ public:
 
 	friend class Debug;
 	friend class LevelLoader;
+	friend class GoState;
 
 private:
 	GridPos GetMouseGridPos();

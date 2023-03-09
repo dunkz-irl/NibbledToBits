@@ -51,7 +51,7 @@ void Mouse::Update()
 
 void Mouse::Draw()
 {
-	Play::DrawSpriteTransformed(m_spriteID, m_matrix, m_animFrame);
+	Play::DrawSpriteTransformed(m_spriteID, m_matrix, m_animFrame, m_opacity);
 
 	if (Debug::s_active)
 	{
@@ -109,6 +109,11 @@ void Mouse::UpdateTrackedGridSquares()
 	}
 }
 
+void Mouse::Thwart()
+{
+	m_type = GameObjectType::TYPE_DESTROYED;
+}
+
 void Mouse::UpdateBehaviour()
 {
 	if (!m_enteredNewSquare) // So this function is only called once per square
@@ -117,6 +122,11 @@ void Mouse::UpdateBehaviour()
 	if (m_currentGridObj)
 	{
 		m_currentGridObj->OnCurrentSquare(this);
+	}
+
+	if (m_type == GameObjectType::TYPE_DESTROYED)
+	{
+		return;
 	}
 
 	if (m_nextGridObj)

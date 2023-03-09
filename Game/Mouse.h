@@ -20,6 +20,8 @@ public:
 
 	friend struct RotatingBlock;
 
+	void Thwart();
+
 private:
 	void UpdateGridPosition();
 	void UpdateBehaviour();

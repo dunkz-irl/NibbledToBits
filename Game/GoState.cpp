@@ -14,6 +14,7 @@
 
 // Other
 #include "MouseSpawner.h"
+#include "GameArea.h"
 
 // Global/helper things
 #include "VirtualKeys.h"
@@ -34,7 +35,9 @@ void GoState::OnEnter()
 void GoState::OnExit()
 {
 	IGameState::OnExit();
+
 	GameObjectManager::Instance().CleanupAllOfType(GameObjectType::TYPE_MOUSE);
+	GameObjectManager::Instance().CleanupAllOfType(GameObjectType::TYPE_DESTROYED);
 
 	delete m_mouseSpawner;
 }
@@ -46,6 +49,15 @@ IGameState* GoState::OnUpdate()
 		GameObjectManager::Instance().Create(GameObjectType::TYPE_MOUSE, GameManager::Instance().GetEntrancePosition());
 	}
 
+	// Update GameAreaObjects
+	for (int x = 0; x < 16; x++)
+	{
+		for (int y = 0; y < 13; y++)
+		{
+			GameArea::m_gameAreaObjects[x][y]->Update();
+		}
+	}
+
 	if (m_proceedToNextState)
 	{
 		return new PlanningState();
@@ -55,6 +67,8 @@ IGameState* GoState::OnUpdate()
 	{
 		return new PauseState();
 	}
+
+	GameObjectManager::Instance().CleanupAllOfType(GameObjectType::TYPE_CLEANUP);
 
 	return nullptr;
 }

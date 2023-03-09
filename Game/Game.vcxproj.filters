@@ -138,6 +138,12 @@
     <ClInclude Include="GameAreaObjects.h">
       <Filter>Game Area Objects</Filter>
     </ClInclude>
+    <ClInclude Include="MouseTrap.h">
+      <Filter>Game Area Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseTrapStates.h">
+      <Filter>Game Area Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainGame.cpp">
@@ -231,6 +237,12 @@
       <Filter>Game Area Objects</Filter>
     </ClCompile>
     <ClCompile Include="SingleWall.cpp">
+      <Filter>Game Area Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseTrap.cpp">
+      <Filter>Game Area Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseTrapStates.cpp">
       <Filter>Game Area Objects</Filter>
     </ClCompile>
   </ItemGroup>
