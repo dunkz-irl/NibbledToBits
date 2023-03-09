@@ -9,8 +9,8 @@
 
 MouseTrap::MouseTrap()
 {
-	m_idleState = new IdleState();
-	m_setState = new SetState();
+	m_idleState = new SetState();
+	m_setState = new TrippedState();
 
 	pState = m_idleState;
 }

@@ -11,7 +11,7 @@ public:
 	virtual void OnExit(MouseTrap* pTrap) = 0;
 };
 
-class IdleState : public IMouseTrapState
+class SetState : public IMouseTrapState
 {
 public:
 	virtual void OnEnter(MouseTrap* pTrap) override;
@@ -20,7 +20,7 @@ public:
 
 };
 
-class SetState : public IMouseTrapState
+class TrippedState : public IMouseTrapState
 {
 public:
 	virtual void OnEnter(MouseTrap* pTrap) override;

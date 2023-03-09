@@ -2,8 +2,8 @@
 #include "GameArea.h"
 
 class IMouseTrapState;
-class IdleState;
 class SetState;
+class TrippedState;
 
 class MouseTrap : public GameAreaObject
 {
@@ -16,13 +16,13 @@ public:
 
 	virtual void Update() override;
 
+	friend class TrippedState;
 	friend class SetState;
-	friend class IdleState;
 
 private:
 	IMouseTrapState* pState;
-	IdleState* m_idleState;
-	SetState* m_setState;
+	SetState* m_idleState;
+	TrippedState* m_setState;
 
 	bool m_tripped;
 };

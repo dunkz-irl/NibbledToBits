@@ -32,6 +32,8 @@ struct GameAreaObject {
 	virtual void Update() { };
 	virtual void OnCurrentSquare(void* pObj) { };
 	virtual void OnNextSquare(void* pObj) { };
+
+	Play::Matrix2D m_matrix{ Play::MatrixIdentity() };
 };
 
 using namespace Play;
