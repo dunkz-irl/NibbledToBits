@@ -15,7 +15,7 @@ struct FloatingObject {
 
 struct GameAreaObject {
 
-	GameAreaObject(int id = 0, int posx = 0, int posy = 0, int rot = 0, int misc = 0, bool mouseHole = false);
+	GameAreaObject(int id = -1, int posx = 0, int posy = 0, int rot = 0, int misc = 0, bool mouseHole = false);
 	int id{ -1 };
 	int posx{ -2 };
 	int posy{ -2 };
