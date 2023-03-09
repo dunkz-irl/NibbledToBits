@@ -124,19 +124,6 @@ void Mouse::UpdateBehaviour()
 		m_nextGridObj->OnNextSquare(this);
 	}
 
-	// Single wall
-	if (m_nextGridObj->id == 4) // #TODO: Magic number
-	{
-		ReverseDirection();
-		UpdateTrackedGridSquares();
-	}
-
-	// Mouse trap
-
-	// Exit
-
-	// Check for entrance mouse hole
-
 	m_enteredNewSquare = false; 
 }
 

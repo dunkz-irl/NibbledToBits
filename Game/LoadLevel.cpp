@@ -18,7 +18,7 @@ std::vector<ObjectCSV> g_vObjects;
 std::map<std::string, int> g_idMap;
 std::vector<std::string> g_v_idToStringTable;
 
-GameAreaObject* g_initObj = new GameAreaObject();
+GameAreaObject* g_initObj = nullptr;
 
 std::vector<std::string> LevelLoader::TokeniseStringByComma(std::string line)
 {
@@ -74,6 +74,8 @@ void LevelLoader::LoadLevel(const char* levelName)
 	GameAreaObject* gameAreaObjects[16][13]; // To put in m_GameArea
 
 	// Initialise GAObjs
+	g_initObj = new GameAreaObject();
+
 	for (int x = 0; x < 16; x++)
 	{
 		for (int y = 0; y < 13; y++)
@@ -186,7 +188,6 @@ void LevelLoader::LoadLevel(const char* levelName)
 	// Add object to GameArea objects (only do this once)
 	GM_INST.m_gameArea->SetGameAreaObjects(gameAreaObjects);
 	GM_INST.m_panel->SetPlayerInventory(v_tempInventory);
-
 
 	// Have to do this after the GameArea member array has been copied into
 	for (int x = 0; x < 16; x++)

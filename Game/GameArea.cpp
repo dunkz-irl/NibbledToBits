@@ -8,6 +8,7 @@
 #include <array>
 #include "Mouse.h"
 
+#include "GameAreaObjects.h"
 
 
 using namespace Play;
@@ -154,12 +155,12 @@ GameAreaObject* GameArea::GetObjectAtGridPosition(int x, int y)
 void GameArea::RotateEntryDirections(uint8_t& entryDirections)
 {
 	// bit shift the valid directions
-	uint8_t frontBit = entryDirections & ~0b00001110; // Chop off all but the first bit (right-most)
-	uint8_t shift = entryDirections >> 1; // Shift 1 bit to the right (we lost the right-most bit)
-	frontBit <<= 3;			// Shift the front bit to the end, wrapping it round
-	uint8_t rotDirs = shift | frontBit; // Combine
+	uint8_t frontBit = entryDirections & ~0b00001110;	// Chop off all but the first bit (right-most)
+	uint8_t shift = entryDirections >> 1;				// Shift 1 bit to the right (we lost the right-most bit)
+	frontBit <<= 3;										// Shift the front bit to the end, wrapping it round
+	uint8_t rotDirs = shift | frontBit;					// Combine
 
-	rotDirs &= 0xF; // 1111 in binary - set all other bits to 0
+	rotDirs &= 0xF;										// 1111 in binary - set all other bits to 0
 	entryDirections = rotDirs;
 }
 
@@ -183,7 +184,10 @@ void GameArea::ValidateEntryDirections(GameAreaObject& ga_obj)
 
 			GameAreaObject* nextObj = GetGameAreaObject({ ga_obj.posx + dir.x, ga_obj.posy + dir.y });
 
-			if (nextObj->id == 4) // single block
+			if (nextObj == nullptr)
+				return;
+
+			if (nextObj->id == SINGLE) // single block
 			{
 				dirs[i] = false;
 			}
@@ -335,6 +339,14 @@ void GameArea::SetGameAreaObjects(GameAreaObject* gameAreaObjects[GRID_WIDTH][GR
 }
 
 GameAreaObject* GameArea::GetGameAreaObject(GridPos pos) {
+	if (pos.x < 0 || pos.x > 16)
+	{
+		return nullptr;
+	}
+	if (pos.y < 0 || pos.y > 13)
+	{
+		return nullptr;
+	}
 	return m_gameAreaObjects[pos.x][pos.y];
 }
 
