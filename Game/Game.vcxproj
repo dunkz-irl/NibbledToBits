@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -24,6 +25,7 @@
     <ClInclude Include="Common.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="GameArea.h" />
+    <ClInclude Include="GameAreaObjects.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectManager.h" />
@@ -36,6 +38,7 @@
     <ClInclude Include="IApplicationState.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="MouseGraphic.h" />
+    <ClInclude Include="MouseHoleEntry.h" />
     <ClInclude Include="MouseSpawner.h" />
     <ClInclude Include="Panel.h" />
     <ClInclude Include="PanelItem.h" />
@@ -44,7 +47,9 @@
     <ClInclude Include="Play.h" />
     <ClInclude Include="MainGameState.h" />
     <ClInclude Include="ReadCSV.h" />
+    <ClInclude Include="RotatingBlock.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="SingleWall.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="SimpleGraphic.h" />
     <ClInclude Include="TitleTextGraphic.h" />
@@ -67,6 +72,7 @@
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="MouseGraphic.cpp" />
+    <ClCompile Include="MouseHoleEntry.cpp" />
     <ClCompile Include="MouseSpawner.cpp" />
     <ClCompile Include="Panel.cpp" />
     <ClCompile Include="PanelItem.cpp" />
@@ -75,10 +81,15 @@
     <ClCompile Include="PlanningState.cpp" />
     <ClCompile Include="ReadCSV.cpp" />
     <ClCompile Include="IGameState.cpp" />
+    <ClCompile Include="RotatingBlock.cpp" />
     <ClCompile Include="Singleton.cpp" />
+    <ClCompile Include="SingleWall.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="SimpleGraphic.cpp" />
     <ClCompile Include="TitleTextGraphic.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -198,5 +209,13 @@
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.targets'))" />
+  </Target>
 </Project>

@@ -8,6 +8,8 @@
 // Singletons
 #include "GameManager.h"
 #include "GameObjectManager.h"
+
+#include "Common.h"
 #include "GameObject.h"
 
 // Other

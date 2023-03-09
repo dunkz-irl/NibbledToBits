@@ -1,5 +1,7 @@
 #pragma once
 
+struct GridVector;
+
 enum class GameObjectType
 {
 	TYPE_MOUSE = 0,
@@ -23,12 +25,15 @@ public:
 	// Getters
 	GameObjectType GetGameObjectType();
 
+	GridVector GetGridPosition();
 protected:
 	int m_spriteID{ -1 };
 	int m_drawLayer{ -1 };
 	int m_animFrame{ 0 };
 	float m_animSpeed{ 1.f };
 	float m_frameTimer{ 0.f };
+
+	GridVector m_currentPosition{ -2, -2 };
 
 	Play::Matrix2D m_matrix{ Play::MatrixIdentity() };
 
@@ -37,5 +42,6 @@ protected:
 private:
 	int m_id{ -1 };
 	GameObjectType m_type{ GameObjectType::COUNT };
+	
 };
 

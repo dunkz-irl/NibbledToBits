@@ -32,7 +32,7 @@ void Debug::DrawGameAreaObjectDebugInfo()
 	{
 		for (int y = 0; y < 16; y++)
 		{
-			GameAreaObject& obj = GM_INST.m_gameArea->m_gameAreaObjects[x][y];
+			GameAreaObject& obj = *GM_INST.m_gameArea->m_gameAreaObjects[x][y];
 
 			if (obj.id == 7) //Rotatey block
 			{

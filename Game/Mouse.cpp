@@ -3,6 +3,7 @@
 #include "Common.h"
 #include "Mouse.h"
 #include <array>
+#include "RotatingBlock.h"
 
 #include "Debug.h"
 #include "GameManager.h"
@@ -61,10 +62,12 @@ void Mouse::Draw()
 		// Draw next grid square
 		Point2f nextSquareWorldPos = GameArea::GameToWorld({ m_currentPosition.x + m_currentDirection.x, m_currentPosition.y + m_currentDirection.y });
 		Play::Graphics::DrawRect(nextSquareWorldPos - Play::Vector2f{ SQUARE_SIZE / 2.f, SQUARE_SIZE / 2.f }, nextSquareWorldPos + Play::Vector2f{ SQUARE_SIZE / 2.f, SQUARE_SIZE / 2.f }, Play::PIX_MAGENTA);
+		if (m_currentGridObj && m_nextGridObj)
+		{
+			Debug::DrawBoldText("This: " + std::to_string(m_currentGridObj->id), currentSquareWorldPos + Point2f{ SQUARE_SIZE, 0.f });
+			Debug::DrawBoldText("Next: " + std::to_string(m_nextGridObj->id), nextSquareWorldPos + Point2f{ SQUARE_SIZE, 0.f });
 
-		Debug::DrawBoldText("This: " + std::to_string(m_currentGridObj->id), currentSquareWorldPos + Point2f{ SQUARE_SIZE, 0.f });
-		Debug::DrawBoldText("Next: " + std::to_string(m_nextGridObj->id), nextSquareWorldPos + Point2f{ SQUARE_SIZE, 0.f });
-
+		}
 	}
 
 	std::string debugText = "{ " + std::to_string(m_currentPosition.x) + ", " + std::to_string(m_currentPosition.y) + " }";
@@ -88,82 +91,37 @@ void Mouse::UpdateGridPosition()
 
 void Mouse::UpdateTrackedGridSquares()
 {
-	m_currentGridObj = &GameArea::GetGameAreaObject({ m_currentPosition.x, m_currentPosition.y });
-	m_nextGridObj = &GameArea::GetGameAreaObject({ m_currentPosition.x + m_currentDirection.x, m_currentPosition.y + m_currentDirection.y });
+	m_currentGridObj = GameArea::GetGameAreaObject({ m_currentPosition.x, m_currentPosition.y });
+	m_nextGridObj = GameArea::GetGameAreaObject({ m_currentPosition.x + m_currentDirection.x, m_currentPosition.y + m_currentDirection.y });
+
+	// Check for entrance and exit squares as they're not in the object array
+	GameAreaObject* pObj = GM_INST.GetEntryObj();
+	if (m_nextPosition.x == pObj->posx && m_nextPosition.y == pObj->posy)
+	{
+		m_nextGridObj = pObj;
+		return;
+	}
+
+	pObj = GM_INST.GetExitObj();
+	if (m_nextPosition.x == pObj->posx && m_nextPosition.y == pObj->posy)
+	{
+		m_nextGridObj = pObj;
+	}
 }
 
 void Mouse::UpdateBehaviour()
 {
-	if (!m_enteredNewSquare)
+	if (!m_enteredNewSquare) // So this function is only called once per square
 		return;	
 
-	// Rotate-y block
-	if (m_currentGridObj->id == 7)
+	if (m_currentGridObj)
 	{
-		std::array<bool, 4> validDirections = GameArea::GetBlockValidDirections(*m_currentGridObj);
-
-		// Mouse can't go back the way it came
-
-		int directionIndex = static_cast<int>(GetCurrentDirectionEnum());
-		directionIndex += 2; // Get opposite direction
-		directionIndex %= 4; // Wrap around
-
-		validDirections[directionIndex] = false;
-
-		for (int i = 0; i < 4; i++)
-		{
-			if (validDirections[i])
-			{
-				m_currentDirection = m_directionVectors[i];
-				m_matrix.row[2] = GameArea::GameToWorld({ m_currentGridObj->posx, m_currentGridObj->posy } ); // Align mouse
-				UpdateTrackedGridSquares();
-				break;
-			}
-		}
-
-		// Valid exit?
-		bool canExit = false;
+		m_currentGridObj->OnCurrentSquare(this);
 	}
 
-	//#TODO: Could make classes for these interactions which might save all the if statements
-
-	// Rotate-y block
-	if (m_nextGridObj->id == 7)
+	if (m_nextGridObj)
 	{
-		bool reversed = false;
-
-		std::array<bool, 4> validEntrances = GameArea::GetBlockValidDirections(*m_nextGridObj);
-
-		// Check entrance mouse is facing to see if valid;
-		GridDirection currentDir = GetCurrentDirectionEnum();
-
-		if (!validEntrances[(static_cast<int>(currentDir) + 2) % 4]) // Get opposite entrance to the direction mouse is facing/travelling
-		{
-			if (!reversed)
-			{
-				ReverseDirection();
-				UpdateTrackedGridSquares();
-				reversed = true;
-			}
-		}
-
-		// If only 1 entrance, reverse direction as mouse can't get out.
-		int count = 0;
-		for (bool entr : validEntrances)
-		{
-			if (entr)
-				count++;
-		}
-
-		if (count == 0 || count == 1)
-		{
-			if (!reversed)
-			{
-				ReverseDirection();
-				UpdateTrackedGridSquares();
-				reversed = true;
-			}
-		}
+		m_nextGridObj->OnNextSquare(this);
 	}
 
 	// Single wall
@@ -178,14 +136,8 @@ void Mouse::UpdateBehaviour()
 	// Exit
 
 	// Check for entrance mouse hole
-	GameAreaObject* pEntryObj = GM_INST.GetEntryObj();
-	if (m_nextPosition.x == pEntryObj->posx && m_nextPosition.y == pEntryObj->posy)
-	{
-		ReverseDirection();
-		UpdateTrackedGridSquares();
-	}
 
-	m_enteredNewSquare = false;
+	m_enteredNewSquare = false; 
 }
 
 void Mouse::UpdateRotation()
@@ -195,11 +147,11 @@ void Mouse::UpdateRotation()
 	if (m_currentDirection == GridVector{ 0, 1 }) // Up
 		rotMatrix = MatrixRotation(0);
 	else if (m_currentDirection == GridVector{ 1, 0 }) // Right
-		rotMatrix = MatrixRotation(PLAY_PI * 0.5f);
+		rotMatrix = MatrixRotation(PLAY_PI * 1.5f);
 	else if (m_currentDirection == GridVector{ 0, -1 }) // Down
 		rotMatrix = MatrixRotation(PLAY_PI);
 	else if (m_currentDirection == GridVector{ -1, 0 }) // Left
-		rotMatrix = MatrixRotation(PLAY_PI * 1.5f);
+		rotMatrix = MatrixRotation(PLAY_PI * 0.5f);
 
 	m_matrix.row[0] = rotMatrix.row[0];
 	m_matrix.row[1] = rotMatrix.row[1];

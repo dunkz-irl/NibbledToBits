@@ -2,6 +2,9 @@
 
 typedef std::pair<std::string, int> InventoryPair;
 
+struct GameAreaObject;
+extern GameAreaObject* g_initObj;
+
 class LevelLoader
 {
 public:
@@ -10,4 +13,5 @@ public:
 
 private:
 	std::vector<InventoryPair> m_vInventoryPairs;
+	GameAreaObject* CreateNewGameAreaObjectOfType(std::vector<std::string> tokens);
 };

@@ -16,6 +16,8 @@ public:
 	void CleanupAllOfType(GameObjectType type);
 	void Register(GameObject* obj) { m_v_pGameObjects.push_back(obj); };
 
+	std::vector<GameObject*> GetGameObjectsOfType(GameObjectType type);
+
 private:
 	std::vector<GameObject*> m_v_pGameObjects;
 };

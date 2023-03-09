@@ -100,4 +100,6 @@ private:
 
 	int m_numLevelMice;
 	float m_mouseSpawnRate;
+public:
+	GameAreaObject* GetExitObj();
 };

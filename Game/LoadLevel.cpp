@@ -1,5 +1,13 @@
 #include "Play.h"
 #include "LoadLevel.h"
+
+// GameAreaObjects
+#include "SingleWall.h"
+#include "RotatingBlock.h"
+#include "MouseHoleEntry.h"
+
+#include "GameAreaObjects.h"
+
 #include "GameArea.h"
 #include "PanelItem.h"
 #include "Panel.h"
@@ -9,6 +17,8 @@
 std::vector<ObjectCSV> g_vObjects;
 std::map<std::string, int> g_idMap;
 std::vector<std::string> g_v_idToStringTable;
+
+GameAreaObject* g_initObj = new GameAreaObject();
 
 std::vector<std::string> LevelLoader::TokeniseStringByComma(std::string line)
 {
@@ -41,8 +51,8 @@ void LevelLoader::LoadLevel(const char* levelName)
 	std::getline(levelFile, line);
 	tokens.clear();
 	tokens = TokeniseStringByComma(line);
-	GM_INST.m_gameArea->m_holeEntry.posx = std::stoi(tokens[0]);
-	GM_INST.m_gameArea->m_holeEntry.posy = std::stoi(tokens[1]);
+	GM_INST.m_gameArea->m_holeEntry->posx = std::stoi(tokens[0]);
+	GM_INST.m_gameArea->m_holeEntry->posy = std::stoi(tokens[1]);
 
 	// Line 2 is exit(?)
 	std::getline(levelFile, line);
@@ -61,7 +71,17 @@ void LevelLoader::LoadLevel(const char* levelName)
 	// Populate objects in the level
 
 	// Temp thingy
-	GameAreaObject gameAreaObjects[16][13]; // To put in m_GameArea
+	GameAreaObject* gameAreaObjects[16][13]; // To put in m_GameArea
+
+	// Initialise GAObjs
+	for (int x = 0; x < 16; x++)
+	{
+		for (int y = 0; y < 13; y++)
+		{
+			gameAreaObjects[x][y] = g_initObj;	// All the "uninitialised" entries are the same, so why not all point to a single placeholder object
+												// rather than creating a new one each time.
+		}
+	}
 
 	while (levelFile)
 	{
@@ -81,25 +101,11 @@ void LevelLoader::LoadLevel(const char* levelName)
 			break;
 		}
 
-		// Make an object out of the current line
-		GameAreaObject obj
-		{
-			g_idMap[tokens[0]],		// String ID -- const char * is a pointer so when obj is destroyed that memory becomes nonsense! Can't take a copy as with string
-			std::stoi(tokens[1]),	// X position
-			std::stoi(tokens[2]),	// Y position
-			std::stoi(tokens[3]),	// Rotation (not an angle but in 90 degrees ness)
-			std::stoi(tokens[4]),	// Misc variable
-		};
+		GameAreaObject* obj = nullptr;
 
-		obj.pickupable = false;		// Level items shouldn't be pickupable
+		obj = CreateNewGameAreaObjectOfType(tokens);
 
-		// Using the misc variable to allow the player to rotate certain level-placed items
-		if (obj.misc != 1) // #TODO: Magic number, maybe make an enum?
-		{
-			obj.rotatable = false;		// or rotatable
-		}
-
-		gameAreaObjects[obj.posx][obj.posy] = obj;
+		gameAreaObjects[obj->posx][obj->posy] = obj;
 		// GameManager::Instance().m_vGameAreaObjects.push_back(obj);
 	}
 
@@ -168,17 +174,10 @@ void LevelLoader::LoadLevel(const char* levelName)
 		{
 			for (int y = 0; y < 13; y++)
 			{
-				GameAreaObject& ga_obj = gameAreaObjects[x][y];
-				if (ga_obj.id == csv_obj.id)
+				GameAreaObject* ga_obj = gameAreaObjects[x][y];
+				if (ga_obj->id == csv_obj.id)
 				{
-					ga_obj.possibleEntryDirections = csv_obj.entryDirections;
-					
-					// Match entryDirections to object rotation value
-					for (int i = 0; i < ga_obj.rot; i++)
-					{
-						GameArea::RotateEntryDirections(ga_obj.possibleEntryDirections);
-						GameArea::ValidateEntryDirections(ga_obj);
-					}
+					ga_obj->possibleEntryDirections = csv_obj.entryDirections;
 				}
 			}
 		}
@@ -187,4 +186,67 @@ void LevelLoader::LoadLevel(const char* levelName)
 	// Add object to GameArea objects (only do this once)
 	GM_INST.m_gameArea->SetGameAreaObjects(gameAreaObjects);
 	GM_INST.m_panel->SetPlayerInventory(v_tempInventory);
+
+
+	// Have to do this after the GameArea member array has been copied into
+	for (int x = 0; x < 16; x++)
+	{
+		for (int y = 0; y < 13; y++)
+		{
+			GameAreaObject& obj = *GameArea::m_gameAreaObjects[x][y];
+
+			// Match entryDirections to object rotation value
+			for (int i = 0; i < obj.rot; i++)
+			{
+				GameArea::RotateEntryDirections(obj.possibleEntryDirections);
+				GameArea::ValidateEntryDirections(obj);
+			}
+		}
+	}
+
+	// #TODO: Memory leak with this approach - not sure how to fix and it breaks if I delete it
+	// Clean memory
+/*	for (int x = 0; x < 16; x++)
+	{
+		for (int y = 0; y < 13; y++)
+		{
+			delete gameAreaObjects[x][y];
+		}
+	}*/
+}
+
+GameAreaObject* LevelLoader::CreateNewGameAreaObjectOfType(std::vector<std::string> tokens)
+{
+	GameAreaObject* pGAObj = nullptr;
+
+	// Create object of correct type
+	switch (g_idMap[tokens[0]])
+	{
+		// #TODO: Surely there's a way of making this more readable than just numbers
+		case SINGLE:
+			pGAObj = new SingleWall();
+			break;
+		case TUBE_TWO_WAY:
+			pGAObj = new RotatingBlock();
+			break;
+		default:
+			pGAObj = new GameAreaObject();
+			break;
+	}
+
+	pGAObj->id = g_idMap[tokens[0]];		// String ID -- const char * is a pointer so when obj is destroyed that memory becomes nonsense! Can't take a copy as with string
+	pGAObj->posx = std::stoi(tokens[1]);	// X position
+	pGAObj->posy = std::stoi(tokens[2]);	// Y position
+	pGAObj->rot = std::stoi(tokens[3]);		// Rotation (not an angle but in 90 degrees ness)
+	pGAObj->misc = std::stoi(tokens[4]);	// Misc variable
+	pGAObj->mouseHole = false;				// mouse hole #Duncan not sure if this is bad
+	pGAObj->pickupable = false;				// Level items shouldn't be pickupable
+
+	// Using the misc variable to allow the player to rotate certain level-placed items
+	if (pGAObj->misc != 1) // #TODO: Magic number, maybe make an enum?
+	{
+		pGAObj->rotatable = false;		// or rotatable
+	}
+
+	return pGAObj;
 }

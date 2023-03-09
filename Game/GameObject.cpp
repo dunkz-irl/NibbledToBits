@@ -1,6 +1,7 @@
 #include "Play.h"
 
 #include "Time.h"
+#include "Common.h"
 #include "GameObject.h"
 
 
@@ -45,4 +46,9 @@ GameObjectType GameObject::GetGameObjectType()
 	// Check for invalid GameObjectType
 	PLAY_ASSERT_MSG(static_cast<int>(m_type) > 0 || static_cast<int>(m_type) < static_cast<int>(GameObjectType::COUNT), "Invalid GameObjectType");
 	return m_type;
+}
+
+GridVector GameObject::GetGridPosition()
+{
+	return m_currentPosition;
 }

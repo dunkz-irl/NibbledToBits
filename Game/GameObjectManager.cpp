@@ -75,3 +75,18 @@ void GameObjectManager::CleanupAllOfType(GameObjectType type)
 		}
 	}
 }
+
+std::vector<GameObject*> GameObjectManager::GetGameObjectsOfType(GameObjectType type)
+{
+	std::vector<GameObject*> v_objs;
+
+	for (GameObject* obj : m_v_pGameObjects)
+	{
+		if (obj->GetGameObjectType() == type)
+		{
+			v_objs.push_back(obj);
+		}
+	}
+
+	return v_objs;
+}

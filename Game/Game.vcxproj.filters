@@ -31,6 +31,9 @@
     <Filter Include="Source Files\User Interface">
       <UniqueIdentifier>{ebf48980-3744-4e24-ab20-8780a55c9597}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game Area Objects">
+      <UniqueIdentifier>{44cce88d-1368-4d73-9841-614a10da4f23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Play.h">
@@ -123,6 +126,18 @@
     <ClInclude Include="Debug.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MouseHoleEntry.h">
+      <Filter>Game Area Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="RotatingBlock.h">
+      <Filter>Game Area Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleWall.h">
+      <Filter>Game Area Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameAreaObjects.h">
+      <Filter>Game Area Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainGame.cpp">
@@ -209,5 +224,17 @@
     <ClCompile Include="Debug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MouseHoleEntry.cpp">
+      <Filter>Game Area Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="RotatingBlock.cpp">
+      <Filter>Game Area Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="SingleWall.cpp">
+      <Filter>Game Area Objects</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

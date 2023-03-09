@@ -1,8 +1,14 @@
 #include "Play.h"
+#include "MouseHoleEntry.h"
 #include "GameArea.h"
 #include "GameManager.h"
-#include <array>
 #include "Common.h"
+#include "GameObject.h"
+#include "GameObjectManager.h"
+#include <array>
+#include "Mouse.h"
+
+
 
 using namespace Play;
 
@@ -26,6 +32,8 @@ GameArea::GameArea() {
 	mouseHoleSpriteIDs[1] = Play::GetSpriteId("mouse_hole_left");
 	mouseHoleSpriteIDs[2] = Play::GetSpriteId("mouse_hole_bottom");
 	mouseHoleSpriteIDs[3] = Play::GetSpriteId("mouse_hole_right");
+
+	m_holeEntry = new MouseHoleEntry(10, 10, -1, -1, -1, false);
 }
 
 void GameArea::Update() {
@@ -52,15 +60,28 @@ void GameArea::Update() {
 			return;
 		}
 
-		GameAreaObject& ga_obj = GetGameAreaObject(mouseGridPos);
+		GameAreaObject* ga_obj = GetGameAreaObject(mouseGridPos);
 
-		if (ga_obj.rotatable)
+		if (ga_obj->rotatable)
 		{
 			// bit shift the valid directions
-			RotateEntryDirections(ga_obj.possibleEntryDirections);
-			ValidateEntryDirections(ga_obj);
+			RotateEntryDirections(ga_obj->possibleEntryDirections);
+			ValidateEntryDirections(*ga_obj);
 
-			int& rotation = ga_obj.rot;
+			// If mice are inside the rotated object, cause them to reverse
+			std::vector<GameObject*> v_mice = GameObjectManager::Instance().GetGameObjectsOfType(GameObjectType::TYPE_MOUSE);
+
+			for (GameObject* obj : v_mice)
+			{
+				if (obj->GetGridPosition() == GridVector{ ga_obj->posx, ga_obj->posy })
+				{
+					Mouse* mouse = static_cast<Mouse*>(obj);
+					mouse->ReverseDirection();
+					mouse->UpdateTrackedGridSquares();
+				}
+			}
+
+			int& rotation = ga_obj->rot;
 			rotation += 1;
 			if (rotation > 3) {
 				rotation = 0;
@@ -73,7 +94,7 @@ void GameArea::DrawGameArea() {
 	// Draw each item in the grid if it has a valid id
 	for (int i = 0; i < GRID_WIDTH; ++i) {
 		for (int j = 0; j < GRID_HEIGHT; ++j) {
-			const GameAreaObject& obj = m_gameAreaObjects[i][j];
+			const GameAreaObject& obj = *m_gameAreaObjects[i][j];
 			if (obj.id != -1) {
 				const Play::Point2D worldPos = GameToWorld({ obj.posx, obj.posy });
 				Play::DrawSprite(GetSpriteIDFromObjectID(obj.id, obj.rot), worldPos, 0);
@@ -90,12 +111,12 @@ void GameArea::DrawGameArea() {
 			Play::DrawFontText("fontui64px", std::string(1, letter), textPos, Play::CENTRE);
 		}
 	};
-	drawHole(m_holeEntry, 'E');
+	drawHole(*m_holeEntry, 'E');
 	drawHole(m_holeExit, 'X');
 
 	// Draw the misc variable above the last selected object
 	if (m_lastSelected.x != -1 && m_lastSelected.y != -1) {
-		const GameAreaObject& lastSelectedObject = GetGameAreaObject(m_lastSelected);
+		const GameAreaObject* lastSelectedObject = GetGameAreaObject(m_lastSelected);
 		const Play::Point2D worldPos = GameToWorld({ m_lastSelected.x, m_lastSelected.y });
 		const Play::Point2D textPos = worldPos + Play::Point2D{ 0, SQUARE_SIZE };
 		// Play::DrawFontText("fontui64px", std::to_string(lastSelectedObject.misc), textPos, Play::CENTRE);
@@ -121,10 +142,10 @@ GridPos GameArea::WorldToGame(Point2f pos) {
 
 GameAreaObject* GameArea::GetObjectAtGridPosition(int x, int y)
 {
-	GameAreaObject& obj = GM_INST.m_gameArea->GetGameAreaObject({x, y});
-	if (obj.id != -1)
+	GameAreaObject* obj = GM_INST.m_gameArea->GetGameAreaObject({x, y});
+	if (obj->id != -1)
 	{
-		return &obj;
+		return obj;
 	}
 
 	return nullptr;
@@ -160,9 +181,9 @@ void GameArea::ValidateEntryDirections(GameAreaObject& ga_obj)
 				case 3: dir = { -1, 0 }; break; // LEFT
 			}
 
-			GameAreaObject nextObj = GetGameAreaObject({ ga_obj.posx + dir.x, ga_obj.posy + dir.y });
+			GameAreaObject* nextObj = GetGameAreaObject({ ga_obj.posx + dir.x, ga_obj.posy + dir.y });
 
-			if (nextObj.id == 4) // single block
+			if (nextObj->id == 4) // single block
 			{
 				dirs[i] = false;
 			}
@@ -233,7 +254,7 @@ void GameArea::PlaceObject(const FloatingObject& obj) {
 			y = std::clamp(y, 0, GRID_HEIGHT - 1);
 		}
 
-		GameAreaObject& hole = (obj.id == 0) ? m_holeEntry : m_holeExit;
+		GameAreaObject& hole = (obj.id == 0) ? *m_holeEntry : m_holeExit;
 		hole.posx = x;
 		hole.posy = y;
 		hole.vis = true;
@@ -248,11 +269,11 @@ void GameArea::PlaceObject(const FloatingObject& obj) {
 
 	// Set the object at the mouse location to be the held item
 	auto& tmpGameAreaObject = m_gameAreaObjects[mouseGridPos.x][mouseGridPos.y];
-	tmpGameAreaObject.id = obj.id;
-	tmpGameAreaObject.rot = obj.rot;
-	tmpGameAreaObject.misc = obj.misc;
-	tmpGameAreaObject.posx = mouseGridPos.x;
-	tmpGameAreaObject.posy = mouseGridPos.y;
+	tmpGameAreaObject->id = obj.id;
+	tmpGameAreaObject->rot = obj.rot;
+	tmpGameAreaObject->misc = obj.misc;
+	tmpGameAreaObject->posx = mouseGridPos.x;
+	tmpGameAreaObject->posy = mouseGridPos.y;
 	m_lastSelected = mouseGridPos;
 }
 
@@ -279,19 +300,19 @@ FloatingObject GameArea::GetObject() {
 	}
 
 	//If within the game area and the grid location contains a valid object return it
-	GameAreaObject tmpGameAreaObject = m_gameAreaObjects[mouseGridPos.x][mouseGridPos.y];
-	if (!tmpGameAreaObject.pickupable)
+	GameAreaObject* tmpGameAreaObject = m_gameAreaObjects[mouseGridPos.x][mouseGridPos.y];
+	if (!tmpGameAreaObject->pickupable)
 	{
 		return { -1, 0 };
 	}
 
-	m_gameAreaObjects[mouseGridPos.x][mouseGridPos.y].id = -1;
+	m_gameAreaObjects[mouseGridPos.x][mouseGridPos.y]->id = -1;
 
-	if (tmpGameAreaObject.id != -1) {
+	if (tmpGameAreaObject->id != -1) {
 		m_lastSelected = { -1, -1 };
 	}
 
-	return { tmpGameAreaObject.id, tmpGameAreaObject.rot, tmpGameAreaObject.misc };
+	return { tmpGameAreaObject->id, tmpGameAreaObject->rot, tmpGameAreaObject->misc };
 }
 
 GridPos GameArea::GetMouseGridPos() {
@@ -301,10 +322,28 @@ GridPos GameArea::GetMouseGridPos() {
 	return mouseSnapPos;
 }
 
-void GameArea::SetGameAreaObjects(GameAreaObject gameAreaObjects[GRID_WIDTH][GRID_HEIGHT]) {
-	std::memcpy(m_gameAreaObjects, gameAreaObjects, sizeof(GameAreaObject) * GRID_WIDTH * GRID_HEIGHT);
+void GameArea::SetGameAreaObjects(GameAreaObject* gameAreaObjects[GRID_WIDTH][GRID_HEIGHT]) {
+	std::memcpy(m_gameAreaObjects, gameAreaObjects, sizeof(GameAreaObject*) * GRID_WIDTH * GRID_HEIGHT);
+	//for (int x = 0; x < 16; x++)
+	//{
+	//	for (int y = 0; y < 13; y++)
+	//	{
+	//		std::memcpy(m_gameAreaObjects[x][y],  )
+	//		// *m_gameAreaObjects[x][y] = *gameAreaObjects[x][y];
+	//	}
+	//}
 }
 
-GameAreaObject& GameArea::GetGameAreaObject(GridPos pos) {
+GameAreaObject* GameArea::GetGameAreaObject(GridPos pos) {
 	return m_gameAreaObjects[pos.x][pos.y];
+}
+
+GameAreaObject::GameAreaObject(int _id, int _posx, int _posy, int _rot, int _misc, bool _mouseHole)
+{
+	id = _id;
+	posx = _posx;
+	posy = _posy;
+	rot = _rot;
+	misc = _misc;
+	mouseHole = _mouseHole;
 }
