@@ -48,35 +48,39 @@ extern int DISPLAY_SCALE;
 class MouseHoleEntry;
 
 class GameArea {
-private:
-	GridPos GetMouseGridPos();
-	inline static GameAreaObject* m_gameAreaObjects[GRID_WIDTH][GRID_HEIGHT];
+
 
 public:
-	MouseHoleEntry* m_holeEntry;
-	GameAreaObject m_holeExit{ 1, GRID_WIDTH - 1, GRID_HEIGHT, 0, 0, true };
-	int mouseHoleSpriteIDs[4]{};
-	GridPos m_lastSelected{ -1,-1 };
 	GameArea();
+	~GameArea();
+
 	void Update();
 	void PlaceObject(const FloatingObject& obj);
-	FloatingObject GetObject();
 	void DrawGameArea();
 	void SetGameAreaObjects(GameAreaObject* gameAreaObjects[GRID_WIDTH][GRID_HEIGHT]);
+
+	static void ValidateEntryDirections(GameAreaObject& ga_obj);
+	static void RotateEntryDirections(uint8_t& entryDirections);
+
+	static std::array<bool, 4> GetBlockPossibleDirections(GameAreaObject& obj);
+	static std::array<bool, 4> GetBlockValidDirections(GameAreaObject& obj);
 	static GameAreaObject* GetGameAreaObject(GridPos pos);
+	static GameAreaObject* GetObjectAtGridPosition(int x, int y);
+	FloatingObject GetObject();
 
 	static Point2f GameToWorld(Point2f pos);
 	static GridPos WorldToGame(Point2f pos);
 
-	static GameAreaObject* GetObjectAtGridPosition(int x, int y);
-	static void RotateEntryDirections(uint8_t& entryDirections);
+public:
+	int mouseHoleSpriteIDs[4]{};
+	MouseHoleEntry* m_holeEntry;
+	GameAreaObject m_holeExit{ 1, GRID_WIDTH - 1, GRID_HEIGHT, 0, 0, true };
+	GridPos m_lastSelected{ -1,-1 };
 
 	friend class Debug;
 	friend class LevelLoader;
-	static void ValidateEntryDirections(GameAreaObject& ga_obj);
-	static std::array<bool, 4> GetBlockPossibleDirections(GameAreaObject& obj);
+
 private:
-	
-public:
-	static std::array<bool, 4> GetBlockValidDirections(GameAreaObject& obj);
+	GridPos GetMouseGridPos();
+	inline static GameAreaObject* m_gameAreaObjects[GRID_WIDTH][GRID_HEIGHT];
 };

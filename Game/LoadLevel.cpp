@@ -207,13 +207,16 @@ void LevelLoader::LoadLevel(const char* levelName)
 
 	// #TODO: Memory leak with this approach - not sure how to fix and it breaks if I delete it
 	// Clean memory
-/*	for (int x = 0; x < 16; x++)
-	{
-		for (int y = 0; y < 13; y++)
-		{
-			delete gameAreaObjects[x][y];
-		}
-	}*/
+
+	// delete[] &gameAreaObjects;
+
+	//for (int x = 0; x < 16; x++)
+	//{
+	//	for (int y = 0; y < 13; y++)
+	//	{
+	//		delete gameAreaObjects[x][y];
+	//	}
+	//}
 }
 
 GameAreaObject* LevelLoader::CreateNewGameAreaObjectOfType(std::vector<std::string> tokens)
@@ -223,7 +226,6 @@ GameAreaObject* LevelLoader::CreateNewGameAreaObjectOfType(std::vector<std::stri
 	// Create object of correct type
 	switch (g_idMap[tokens[0]])
 	{
-		// #TODO: Surely there's a way of making this more readable than just numbers
 		case SINGLE:
 			pGAObj = new SingleWall();
 			break;

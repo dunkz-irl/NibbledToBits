@@ -19,6 +19,8 @@ int GAME_AREA_HEIGHT{ 720 };
 int SQUARE_SIZE{ 50 };
 int BOARDER_PIXELS{ 35 };
 
+extern GameAreaObject* g_initObj;
+
 GridVector g_directionVectors[4]
 {
 	{0, 1},
@@ -35,6 +37,25 @@ GameArea::GameArea() {
 	mouseHoleSpriteIDs[3] = Play::GetSpriteId("mouse_hole_right");
 
 	m_holeEntry = new MouseHoleEntry(10, 10, -1, -1, -1, false);
+}
+
+GameArea::~GameArea()
+{
+	delete m_holeEntry;
+
+	for (int x = 0; x < 16; x++)
+	{
+		for (int y = 0; y < 13; y++)
+		{
+			// If the objects addres is that of the placeholder obj, don't delete it, as we'll delete it once later
+			if (&*m_gameAreaObjects[x][y] == g_initObj)
+				continue;
+			else
+				delete m_gameAreaObjects[x][y];
+		}
+	}
+
+	delete g_initObj; // Defined in LoadLevel.cpp
 }
 
 void GameArea::Update() {
@@ -328,14 +349,6 @@ GridPos GameArea::GetMouseGridPos() {
 
 void GameArea::SetGameAreaObjects(GameAreaObject* gameAreaObjects[GRID_WIDTH][GRID_HEIGHT]) {
 	std::memcpy(m_gameAreaObjects, gameAreaObjects, sizeof(GameAreaObject*) * GRID_WIDTH * GRID_HEIGHT);
-	//for (int x = 0; x < 16; x++)
-	//{
-	//	for (int y = 0; y < 13; y++)
-	//	{
-	//		std::memcpy(m_gameAreaObjects[x][y],  )
-	//		// *m_gameAreaObjects[x][y] = *gameAreaObjects[x][y];
-	//	}
-	//}
 }
 
 GameAreaObject* GameArea::GetGameAreaObject(GridPos pos) {

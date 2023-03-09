@@ -45,5 +45,5 @@ T& Singleton<T>::Instance()
 template <typename T>
 void Singleton<T>::Destroy()
 {
-
+	delete s_pInstance;
 }

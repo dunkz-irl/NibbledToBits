@@ -56,8 +56,7 @@ GameManager& GameManager::Instance()
 
 void GameManager::Destroy()
 {
-	// #TODO: Is this right or necessary?
-	delete g_initObj;
+	GM_INST.m_pGameState->OnExit();
 
 	delete GM_INST.m_pGameState;
 	delete GM_INST.m_panel;
