@@ -24,6 +24,8 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="Debug.h" />
+    <ClInclude Include="Emitter.h" />
+    <ClInclude Include="EmitterTypes.h" />
     <ClInclude Include="GameArea.h" />
     <ClInclude Include="GameAreaObjects.h" />
     <ClInclude Include="GameManager.h" />
@@ -45,10 +47,14 @@
     <ClInclude Include="MouseTrapStates.h" />
     <ClInclude Include="Panel.h" />
     <ClInclude Include="PanelItem.h" />
+    <ClInclude Include="Particle.h" />
+    <ClInclude Include="ParticleManager.h" />
+    <ClInclude Include="ParticlesCommon.h" />
     <ClInclude Include="PauseState.h" />
     <ClInclude Include="PlanningState.h" />
     <ClInclude Include="Play.h" />
     <ClInclude Include="MainGameState.h" />
+    <ClInclude Include="PolygonEmitter.h" />
     <ClInclude Include="ReadCSV.h" />
     <ClInclude Include="RotatingBlock.h" />
     <ClInclude Include="Singleton.h" />
@@ -64,6 +70,8 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="EasingFunctions.cpp" />
+    <ClCompile Include="Emitter.cpp" />
+    <ClCompile Include="EmitterTypes.cpp" />
     <ClCompile Include="GameArea.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -84,8 +92,12 @@
     <ClCompile Include="Panel.cpp" />
     <ClCompile Include="PanelItem.cpp" />
     <ClCompile Include="MainGameState.cpp" />
+    <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="ParticleManager.cpp" />
+    <ClCompile Include="ParticlesCommon.cpp" />
     <ClCompile Include="PauseState.cpp" />
     <ClCompile Include="PlanningState.cpp" />
+    <ClCompile Include="PolygonEmitter.cpp" />
     <ClCompile Include="ReadCSV.cpp" />
     <ClCompile Include="IGameState.cpp" />
     <ClCompile Include="RotatingBlock.cpp" />
