@@ -147,6 +147,9 @@
     <ClInclude Include="MouseHoleExit.h">
       <Filter>Game Area Objects</Filter>
     </ClInclude>
+    <ClInclude Include="WinState.h">
+      <Filter>Game States</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainGame.cpp">
@@ -250,6 +253,9 @@
     </ClCompile>
     <ClCompile Include="MouseHoleExit.cpp">
       <Filter>Game Area Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="WinState.cpp">
+      <Filter>Game States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

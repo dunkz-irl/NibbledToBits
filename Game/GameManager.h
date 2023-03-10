@@ -62,8 +62,10 @@ public:
 	std::pair<int, float> GetMouseSpawnInfo();
 
 	GAMESTATE_ENUM m_currentGameState{GAMESTATE_ENUM::PLANNING};
+	std::string m_previousGameStateString{ "" };
 
 	friend class MainGameState;
+	friend class GoState;
 	friend class LevelLoader;
 	friend class GameObjectManager;
 	friend class Time;
@@ -100,6 +102,8 @@ private:
 
 	int m_numLevelMice;
 	float m_mouseSpawnRate;
+	int m_targetSavedMice;
+
 public:
 	GameAreaObject* GetExitObj();
 };

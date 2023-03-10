@@ -83,6 +83,7 @@ void GameManager::Update()
 		// all the memcpy stuff is me trying to get a copy of the previous gamestate that the next one can refer to if needed (like pause)
 		IGameState* pPrevState = (IGameState*)malloc(sizeof(IGameState));
 		memcpy(pPrevState, m_pGameState, sizeof(IGameState));
+		m_previousGameStateString = pPrevState->m_debugStateName;
 
 		m_pGameState->OnExit();
 		delete m_pGameState;
@@ -103,8 +104,7 @@ void GameManager::Draw()
 
 	GameObjectManager::Instance().DrawAll();
 
-	DrawHeldItem();
-	DrawStartButton();
+	m_pGameState->OnDraw();
 
 	if (Debug::s_active)
 	{

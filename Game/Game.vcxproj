@@ -57,6 +57,7 @@
     <ClInclude Include="SimpleGraphic.h" />
     <ClInclude Include="TitleTextGraphic.h" />
     <ClInclude Include="VirtualKeys.h" />
+    <ClInclude Include="WinState.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationManager.cpp" />
@@ -93,6 +94,7 @@
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="SimpleGraphic.cpp" />
     <ClCompile Include="TitleTextGraphic.cpp" />
+    <ClCompile Include="WinState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

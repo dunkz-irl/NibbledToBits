@@ -35,5 +35,8 @@ IGameState* PlanningState::OnUpdate()
 
 void PlanningState::OnDraw()
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	GM_INST.DrawHeldItem();
+	GM_INST.DrawStartButton();
+
+	// throw std::logic_error("The method or operation is not implemented.");
 }

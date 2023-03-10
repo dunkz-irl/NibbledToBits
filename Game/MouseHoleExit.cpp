@@ -3,6 +3,7 @@
 
 #include "MouseHoleExit.h"
 #include "Mouse.h"
+#include "GoState.h"
 
 void MouseHoleExit::OnCurrentSquare(void* pObj)
 {
@@ -10,5 +11,6 @@ void MouseHoleExit::OnCurrentSquare(void* pObj)
 	pMouse->SetType(GameObjectType::TYPE_CLEANUP);
 
 	// #TODO: Add particle effect
-	// #TODO: Increment mouse counter somewhere
+
+	GoState::IncrementSavedMice();
 }
