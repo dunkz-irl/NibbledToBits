@@ -39,6 +39,15 @@ void GoState::OnExit()
 	GameObjectManager::Instance().CleanupAllOfType(GameObjectType::TYPE_MOUSE);
 	GameObjectManager::Instance().CleanupAllOfType(GameObjectType::TYPE_DESTROYED);
 
+	// Reset all game area objects
+	for (int x = 0; x < 16; x++)
+	{
+		for (int y = 0; y < 13; y++)
+		{
+			GameArea::m_gameAreaObjects[x][y]->Reset();
+		}
+	}
+
 	delete m_mouseSpawner;
 }
 

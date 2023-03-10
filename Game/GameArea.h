@@ -16,6 +16,8 @@ struct FloatingObject {
 struct GameAreaObject {
 
 	GameAreaObject(int id = -1, int posx = 0, int posy = 0, int rot = 0, int misc = 0, bool mouseHole = false);
+	virtual ~GameAreaObject() = default;
+
 	int id{ -1 };
 	int posx{ -2 };
 	int posy{ -2 };
@@ -32,6 +34,7 @@ struct GameAreaObject {
 	virtual void Update() { };
 	virtual void OnCurrentSquare(void* pObj) { };
 	virtual void OnNextSquare(void* pObj) { };
+	virtual void Reset() { };
 
 	Play::Matrix2D m_matrix{ Play::MatrixIdentity() };
 };
@@ -51,7 +54,6 @@ extern int DISPLAY_SCALE;
 class MouseHoleEntry;
 
 class GameArea {
-
 
 public:
 	GameArea();

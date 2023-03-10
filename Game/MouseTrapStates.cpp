@@ -15,7 +15,7 @@ IMouseTrapState* SetState::OnUpdate(MouseTrap* pTrap)
 	// throw std::logic_error("The method or operation is not implemented.");
 	if (pTrap->m_tripped)
 	{
-		return pTrap->m_setState;
+		return pTrap->m_trippedState;
 	}
 	else
 	{
@@ -36,17 +36,21 @@ void TrippedState::OnEnter(MouseTrap* pTrap)
 IMouseTrapState* TrippedState::OnUpdate(MouseTrap* pTrap)
 {
 	m_timer += Time::GetElapsedTime();
-	float scale = 2.f - EaseOutElastic(m_timer * 1.1f / m_resetTime);
+	// float scale = 2.f - EaseOutElastic(m_timer * 1.1f / m_resetTime);
+	float scale = EastOutBounce(2.f, 1.f, m_timer * 1.5f);
+	if (scale < 1.f) { scale = 1.f; };
 
 	// Animation
 	pTrap->m_matrix = MatrixScale(scale, scale); // #TODO: Couldn't get translation working
-	pTrap->m_matrix = pTrap->m_matrix * MatrixRotation(sin((pow(m_resetTime * 2.f - m_timer * 2.f, 3.f))/-1.f) / 3.f);
+	pTrap->m_matrix = pTrap->m_matrix * MatrixRotation(sin((pow(m_resetTime * 1.7f - m_timer * 1.7f, 3.f))/-1.f) / 3.f); // #TODO: Cool formula, should save into a function
+	
+	
 	//pTrap->m_matrix.row[2] = GameArea::GameToWorld({ pTrap->posx, pTrap->posy }) + Play::Point2f{ 0.f, scale * 100.f };
 
 	if (m_timer > m_resetTime)
 	{
 		m_timer = 0.f;
-		return pTrap->m_idleState;
+		return pTrap->m_setState;
 	}
 	else
 	{
@@ -56,5 +60,6 @@ IMouseTrapState* TrippedState::OnUpdate(MouseTrap* pTrap)
 
 void TrippedState::OnExit(MouseTrap* pTrap)
 {
+	m_timer = 0.f;
 	pTrap->m_tripped = false;
 }

@@ -9,16 +9,16 @@
 
 MouseTrap::MouseTrap()
 {
-	m_idleState = new SetState();
-	m_setState = new TrippedState();
+	m_setState = new SetState();
+	m_trippedState = new TrippedState();
 
-	pState = m_idleState;
+	pState = m_setState;
 }
 
 MouseTrap::~MouseTrap()
 {
-	delete m_idleState;
 	delete m_setState;
+	delete m_trippedState;
 }
 
 void MouseTrap::OnCurrentSquare(void* pObj)
@@ -44,4 +44,12 @@ void MouseTrap::Update()
 		pState = pNewState;
 		pState->OnEnter(this);
 	}
+}
+
+void MouseTrap::Reset()
+{
+	m_matrix = MatrixIdentity();
+	m_trippedState->OnExit(this);
+	pState = m_setState;
+	pState->OnEnter(this);
 }

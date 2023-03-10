@@ -12,3 +12,32 @@ float EaseOutElastic(float x)
 		? 1.f
 		: pow(2.f, -10.f * x) * sin((x * 10.f - 0.75f) * c4) + 1.f;
 }
+
+float EastOutBounce(float start, float end, float t)
+{
+	float n1 = 7.5625;
+	float d1 = 2.75;
+
+	if (t < 1 / d1) 
+	{
+		t = n1 * t * t;
+	}
+
+	else if (t < 2 / d1) 
+	{
+	  t = n1 * (t -= 1.5f / d1) * t + 0.75f;
+	}
+
+	else if (t < 2.5 / d1) 
+	{
+	  t = n1 * (t -= 2.25f / d1) * t + 0.9375f;
+	}
+
+	else 
+	{
+	  t = n1 * (t -= 2.625f / d1) * t + 0.984375f;
+	}
+
+	return (start + (end - start) * t);
+
+}

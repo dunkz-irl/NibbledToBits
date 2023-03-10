@@ -13,17 +13,17 @@ public:
 	~MouseTrap();
 
 	void OnCurrentSquare(void* pObj) override;
-
-	virtual void Update() override;
+	void Update() override;
+	void Reset() override;
 
 	friend class TrippedState;
 	friend class SetState;
 
 private:
 	IMouseTrapState* pState;
-	SetState* m_idleState;
-	TrippedState* m_setState;
+	SetState* m_setState;
+	TrippedState* m_trippedState;
 
-	bool m_tripped;
+	bool m_tripped{ false };
 };
 
