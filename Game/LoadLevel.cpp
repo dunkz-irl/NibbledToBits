@@ -5,6 +5,7 @@
 #include "SingleWall.h"
 #include "RotatingBlock.h"
 #include "MouseHoleEntry.h"
+#include "MouseHoleExit.h"
 #include "MouseTrap.h"
 
 #include "GameAreaObjects.h"
@@ -59,8 +60,8 @@ void LevelLoader::LoadLevel(const char* levelName)
 	std::getline(levelFile, line);
 	tokens.clear();
 	tokens = TokeniseStringByComma(line);
-	GM_INST.m_gameArea->m_holeExit.posx = std::stoi(tokens[0]);
-	GM_INST.m_gameArea->m_holeExit.posy = std::stoi(tokens[1]);
+	GM_INST.m_gameArea->m_holeExit->posx = std::stoi(tokens[0]);
+	GM_INST.m_gameArea->m_holeExit->posy = std::stoi(tokens[1]);
 
 	// Line 3 is number of mice, and mouse spawn rate separated by commas
 	std::getline(levelFile, line);
@@ -224,6 +225,7 @@ GameAreaObject* LevelLoader::CreateNewGameAreaObjectOfType(std::vector<std::stri
 {
 	GameAreaObject* pGAObj = nullptr;
 
+	// #NewObjects
 	// Create object of correct type
 	switch (g_idMap[tokens[0]])
 	{

@@ -52,6 +52,7 @@ extern const int DISPLAY_HEIGHT;
 extern int DISPLAY_SCALE;
 
 class MouseHoleEntry;
+class MouseHoleExit;
 
 class GameArea {
 
@@ -79,7 +80,7 @@ public:
 public:
 	int mouseHoleSpriteIDs[4]{};
 	MouseHoleEntry* m_holeEntry;
-	GameAreaObject m_holeExit{ 1, GRID_WIDTH - 1, GRID_HEIGHT, 0, 0, true };
+	MouseHoleExit* m_holeExit;
 	GridPos m_lastSelected{ -1,-1 };
 
 	friend class Debug;

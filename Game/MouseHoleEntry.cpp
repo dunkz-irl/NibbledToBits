@@ -4,7 +4,6 @@
 #include "Mouse.h"
 #include "MouseHoleEntry.h"
 
-
 void MouseHoleEntry::OnCurrentSquare(void* pMouse)
 {
 	throw std::logic_error("The method or operation is not implemented.");

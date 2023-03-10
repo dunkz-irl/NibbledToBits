@@ -56,11 +56,11 @@ void Mouse::Draw()
 	if (Debug::s_active)
 	{
 		// Draw current grid square
-		Point2f currentSquareWorldPos = GameArea::GameToWorld({ m_currentPosition.x, m_currentPosition.y });
+		Point2f currentSquareWorldPos = GameArea::GameToWorld({ m_currentGridPosition.x, m_currentGridPosition.y });
 		Play::Graphics::DrawRect(currentSquareWorldPos - Play::Vector2f{ SQUARE_SIZE / 2.f, SQUARE_SIZE / 2.f }, currentSquareWorldPos + Play::Vector2f{ SQUARE_SIZE / 2.f, SQUARE_SIZE / 2.f }, Play::PIX_BLUE);
 
 		// Draw next grid square
-		Point2f nextSquareWorldPos = GameArea::GameToWorld({ m_currentPosition.x + m_currentDirection.x, m_currentPosition.y + m_currentDirection.y });
+		Point2f nextSquareWorldPos = GameArea::GameToWorld({ m_currentGridPosition.x + m_currentDirection.x, m_currentGridPosition.y + m_currentDirection.y });
 		Play::Graphics::DrawRect(nextSquareWorldPos - Play::Vector2f{ SQUARE_SIZE / 2.f, SQUARE_SIZE / 2.f }, nextSquareWorldPos + Play::Vector2f{ SQUARE_SIZE / 2.f, SQUARE_SIZE / 2.f }, Play::PIX_MAGENTA);
 		if (m_currentGridObj && m_nextGridObj)
 		{
@@ -70,7 +70,7 @@ void Mouse::Draw()
 		}
 	}
 
-	std::string debugText = "{ " + std::to_string(m_currentPosition.x) + ", " + std::to_string(m_currentPosition.y) + " }";
+	std::string debugText = "{ " + std::to_string(m_currentGridPosition.x) + ", " + std::to_string(m_currentGridPosition.y) + " }";
 	Debug::DrawBoldText(debugText, m_matrix.row[2]);
 }
 
@@ -79,9 +79,9 @@ void Mouse::UpdateGridPosition()
 	// #TODO: Could combine GridVector and GridPos maybe? Bit confusing
 	GridPos gridPos = GameArea::WorldToGame({ m_matrix.row[2].x, m_matrix.row[2].y });
 
-	m_currentPosition = { gridPos.x, gridPos.y };
+	m_currentGridPosition = { gridPos.x, gridPos.y };
 
-	if (m_currentPosition == m_nextPosition)
+	if (m_currentGridPosition == m_nextPosition)
 	{
 		m_enteredNewSquare = true;
 	}
@@ -91,8 +91,8 @@ void Mouse::UpdateGridPosition()
 
 void Mouse::UpdateTrackedGridSquares()
 {
-	m_currentGridObj = GameArea::GetGameAreaObject({ m_currentPosition.x, m_currentPosition.y });
-	m_nextGridObj = GameArea::GetGameAreaObject({ m_currentPosition.x + m_currentDirection.x, m_currentPosition.y + m_currentDirection.y });
+	m_currentGridObj = GameArea::GetGameAreaObject({ m_currentGridPosition.x, m_currentGridPosition.y });
+	m_nextGridObj = GameArea::GetGameAreaObject({ m_currentGridPosition.x + m_currentDirection.x, m_currentGridPosition.y + m_currentDirection.y });
 
 	// Check for entrance and exit squares as they're not in the object array
 	GameAreaObject* pObj = GM_INST.GetEntryObj();
@@ -103,9 +103,9 @@ void Mouse::UpdateTrackedGridSquares()
 	}
 
 	pObj = GM_INST.GetExitObj();
-	if (m_nextPosition.x == pObj->posx && m_nextPosition.y == pObj->posy)
+	if (m_currentGridPosition.x == pObj->posx && m_currentGridPosition.y == pObj->posy)
 	{
-		m_nextGridObj = pObj;
+		m_currentGridObj = pObj;
 	}
 }
 

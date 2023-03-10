@@ -39,6 +39,7 @@
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="MouseGraphic.h" />
     <ClInclude Include="MouseHoleEntry.h" />
+    <ClInclude Include="MouseHoleExit.h" />
     <ClInclude Include="MouseSpawner.h" />
     <ClInclude Include="MouseTrap.h" />
     <ClInclude Include="MouseTrapStates.h" />
@@ -75,6 +76,7 @@
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="MouseGraphic.cpp" />
     <ClCompile Include="MouseHoleEntry.cpp" />
+    <ClCompile Include="MouseHoleExit.cpp" />
     <ClCompile Include="MouseSpawner.cpp" />
     <ClCompile Include="MouseTrap.cpp" />
     <ClCompile Include="MouseTrapStates.cpp" />

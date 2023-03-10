@@ -26,6 +26,9 @@ public:
 	GameObjectType GetGameObjectType();
 	GridVector GetGridPosition();
 
+	// Setters
+	void SetType(GameObjectType type);
+
 protected:
 	int m_spriteID{ -1 };
 	int m_drawLayer{ -1 };
@@ -36,7 +39,7 @@ protected:
 	Play::Matrix2D m_matrix{ Play::MatrixIdentity() };
 	Play::Vector2D m_velocity{ 0.f,0.f };
 	GameObjectType m_type{ GameObjectType::COUNT };
-	GridVector m_currentPosition{ -2, -2 };
+	GridVector m_currentGridPosition{ -2, -2 };
 
 private:
 	int m_id{ -1 };

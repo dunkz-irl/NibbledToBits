@@ -3,6 +3,7 @@
 
 #include "GameArea.h"
 #include "MouseHoleEntry.h"
+#include "MouseHoleExit.h"
 
 #include "PanelItem.h"
 #include "Panel.h"
@@ -134,9 +135,9 @@ Play::Point2D GameManager::GetEntrancePosition()
 
 GridPoint GameManager::GetExitPosition()
 {
-	if (!(m_gameArea->m_holeExit.posx < -1) && !(m_gameArea->m_holeExit.posy < -1))
+	if (!(m_gameArea->m_holeExit->posx < -1) && !(m_gameArea->m_holeExit->posy < -1))
 	{
-		return { m_gameArea->m_holeExit.posx, m_gameArea->m_holeExit.posy };
+		return { m_gameArea->m_holeExit->posx, m_gameArea->m_holeExit->posy };
 	}
 	else
 	{
@@ -152,7 +153,7 @@ GameAreaObject* GameManager::GetEntryObj()
 
 GameAreaObject* GameManager::GetExitObj()
 {
-	return &m_gameArea->m_holeExit;
+	return m_gameArea->m_holeExit;
 }
 
 std::pair<int, float> GameManager::GetMouseSpawnInfo()

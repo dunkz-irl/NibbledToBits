@@ -1,5 +1,6 @@
 #include "Play.h"
 #include "MouseHoleEntry.h"
+#include "MouseHoleExit.h"
 #include "GameArea.h"
 #include "GameManager.h"
 #include "Common.h"
@@ -37,11 +38,13 @@ GameArea::GameArea() {
 	mouseHoleSpriteIDs[3] = Play::GetSpriteId("mouse_hole_right");
 
 	m_holeEntry = new MouseHoleEntry(10, 10, -1, -1, -1, false);
+	m_holeExit = new MouseHoleExit(10, 10, -1, -1, -1, false);
 }
 
 GameArea::~GameArea()
 {
 	delete m_holeEntry;
+	delete m_holeExit;
 
 	if (!m_gameAreaObjects)
 	{
@@ -140,7 +143,7 @@ void GameArea::DrawGameArea() {
 		}
 	};
 	drawHole(*m_holeEntry, 'E');
-	drawHole(m_holeExit, 'X');
+	drawHole(*m_holeExit, 'X');
 
 	// Draw the misc variable above the last selected object
 	if (m_lastSelected.x != -1 && m_lastSelected.y != -1) {
@@ -285,10 +288,10 @@ void GameArea::PlaceObject(const FloatingObject& obj) {
 			y = std::clamp(y, 0, GRID_HEIGHT - 1);
 		}
 
-		GameAreaObject& hole = (obj.id == 0) ? *m_holeEntry : m_holeExit;
-		hole.posx = x;
-		hole.posy = y;
-		hole.vis = true;
+		GameAreaObject* hole = (obj.id == 0) ? (GameAreaObject*)m_holeEntry : (GameAreaObject*)m_holeExit;
+		hole->posx = x;
+		hole->posy = y;
+		hole->vis = true;
 
 		return;
 	}

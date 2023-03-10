@@ -144,6 +144,9 @@
     <ClInclude Include="MouseTrapStates.h">
       <Filter>Game Area Objects</Filter>
     </ClInclude>
+    <ClInclude Include="MouseHoleExit.h">
+      <Filter>Game Area Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainGame.cpp">
@@ -243,6 +246,9 @@
       <Filter>Game Area Objects</Filter>
     </ClCompile>
     <ClCompile Include="MouseTrapStates.cpp">
+      <Filter>Game Area Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseHoleExit.cpp">
       <Filter>Game Area Objects</Filter>
     </ClCompile>
   </ItemGroup>

@@ -55,5 +55,16 @@ GameObjectType GameObject::GetGameObjectType()
 
 GridVector GameObject::GetGridPosition()
 {
-	return m_currentPosition;
+	return m_currentGridPosition;
+}
+
+void GameObject::SetType(GameObjectType type)
+{
+	if (type >= GameObjectType::COUNT || type < static_cast<GameObjectType>(0))
+	{
+		PLAY_ASSERT_MSG(false, "Tried to set GameObject to invalid type");
+		return;
+	}
+
+	m_type = type;
 }
