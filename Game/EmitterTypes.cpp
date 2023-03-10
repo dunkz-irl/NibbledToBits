@@ -4,6 +4,56 @@
 #include "PolygonEmitter.h"
 #include "EmitterTypes.h"
 
+Confetti::Confetti(Play::Point2f pos, float lifetime)
+{
+	m_shape = CONFETTI;
+	m_pos = pos;
+	m_lifetime = lifetime;
+
+	SetGravity(true, DOWN, 0.2f);
+	SetSpawnRate(150.f);
+	SetParticleLifetime(0.9f, 1.4f);
+	SetScale(0.25f, 0.4f, 0.f, 0.0f);
+	SetOpacity(1.0f, 0.0f);
+	SetRotation(-0.1f, 0.1f, 0.0f, false);
+	SetVelocity(4.f, 12.f);
+
+	SetColour(Play::cBlack, 100.f, 0.f);
+}
+
+CheeseConfetti::CheeseConfetti(Play::Point2f pos, float lifetime)
+{
+	m_shape = CHEESE;
+	m_pos = pos;
+	m_lifetime = lifetime;
+	
+	SetSpawnRate(150.f);
+	SetParticleLifetime(0.9f, 1.4f);
+	SetScale(0.25f, 0.35f, 0.f, 0.0f);
+	SetOpacity(1.0f, 0.0f);
+	SetRotation(-0.1f, 0.1f, 0.0f, false);
+	SetVelocity(2.f, 4.f);
+
+	SetColour(Play::cWhite, 1.f, 1.f);
+}
+
+SmokePuff::SmokePuff(Play::Point2f pos, float lifetime)
+{
+	m_shape = SMOKE;
+	m_pos = pos;
+	m_lifetime = lifetime;
+
+	SetSpawnRate(300.f);
+	SetParticleLifetime(0.9f, 1.4f);
+	SetScale(0.3f, 0.5f, 0.2f, 0.0f);
+	SetOpacity(1.0f, 0.0f);
+	SetDirection(0.f, 360.f, 0.f, 0.1f);
+	SetGravity(false);
+	SetVelocity(1.1f, 3.2f);
+	SetRotation(-0.1f, 0.1f, 0.0f, false);
+	SetColour(Play::cGrey, 0.f, 10.f);
+}
+
 Smoke::Smoke(Play::Point2f pos, float lifetime)
 {
 	m_shape = SMOKE;

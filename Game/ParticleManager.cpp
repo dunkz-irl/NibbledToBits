@@ -39,6 +39,11 @@ ParticleManager& ParticleManager::Instance(int maxEmitters)
 ParticleManager& ParticleManager::Instance()
 {
 	// Assert if s_pInstance is nullptr
+	if (!s_pInstance)
+	{
+		s_pInstance = new ParticleManager();
+	}
+
 	PLAY_ASSERT_MSG(s_pInstance, "Trying to access ParticleManager without initialising it.");
 	return *s_pInstance;
 }
@@ -85,6 +90,15 @@ int ParticleManager::CreateEmitter(EmitterType type, Play::Point2f pos, float li
 		break;
 	case EmitterType::PORTAL:
 		pEmitter = new Portal(pos, lifetime, scale);
+		break;
+	case EmitterType::SMOKEPUFF:
+		pEmitter = new SmokePuff(pos, lifetime);
+		break;
+	case EmitterType::CHEESE:
+		pEmitter = new CheeseConfetti(pos, lifetime);
+		break;
+	case EmitterType::CONFETTI:
+		pEmitter = new Confetti(pos, lifetime);
 		break;
 	default:
 		PLAY_ASSERT_MSG(false, "Invalid Emitter type (default case).");

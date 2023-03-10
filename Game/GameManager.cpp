@@ -20,6 +20,7 @@
 #include "ApplicationManager.h"
 #include "LoadLevel.h"
 #include "MouseSpawner.h"
+#include "ParticleManager.h"
 
 GameManager* GameManager::s_pInstance = nullptr;
 //extern std::map<std::string, int> g_idMap;
@@ -58,6 +59,7 @@ GameManager& GameManager::Instance()
 void GameManager::Destroy()
 {
 	GM_INST.m_pGameState->OnExit();
+	ParticleManager::Instance().Destroy();
 
 	delete GM_INST.m_pGameState;
 	delete GM_INST.m_panel;
@@ -72,6 +74,7 @@ void GameManager::Update()
 	UpdateStartButton(); // #TODO: Move this somewhere more sensible
 	
 	GameObjectManager::Instance().UpdateAll();
+	ParticleManager::Instance().UpdateEmitters(Time::GetElapsedTime());
 
 	m_pGameState->m_stateTime += Time::GetElapsedTime();
 
@@ -103,6 +106,7 @@ void GameManager::Draw()
 	m_panel->Draw();
 
 	GameObjectManager::Instance().DrawAll();
+	ParticleManager::Instance().DrawParticles();
 
 	m_pGameState->OnDraw();
 

@@ -6,6 +6,7 @@
 #include "MouseTrap.h"
 
 #include "Mouse.h"
+#include "ParticleManager.h"
 
 MouseTrap::MouseTrap()
 {
@@ -28,6 +29,7 @@ void MouseTrap::OnCurrentSquare(void* pObj)
 	if (!m_tripped)
 	{
 		m_tripped = true;
+		ParticleManager::Instance().CreateEmitter(EmitterType::SMOKEPUFF, m_matrix.row[2], 0.1f);
 		pMouse->Thwart();
 	}
 

@@ -1,7 +1,7 @@
 #include "Play.h"
 #include "Particle.h"
 
-const char* ShapeSprites[15]
+const char* ShapeSprites[17]
 {
 	"circle",
 	"cloud",
@@ -17,7 +17,9 @@ const char* ShapeSprites[15]
 	"spark",
 	"sphere",
 	"square",
-	"star"
+	"star",
+	"swiss_panel",
+	"win-text"
 };
 
 Particle::Particle(ParticleShape _shape, Play::Point2f _pos, Play::Point2f _velocity, Play::Point2f _acceleration, float _rotSpeed, Play::Colour _colour)

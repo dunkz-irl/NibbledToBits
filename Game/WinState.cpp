@@ -3,6 +3,7 @@
 #include "Debug.h"
 #include "Button.h"
 #include "EasingFunctions.h"
+#include "ParticleManager.h"
 
 #include "WinState.h"
 
@@ -21,6 +22,11 @@ void WinState::OnEnter()
 	m_continueButton = new Button{ Play::GetSpriteId("continue-unpressed"), m_continueButtonPos, buttonSize };
 
 	// #TODO: Confetti particles
+
+	Play::Point2f offset = { 300.f, 0.f };
+
+	ParticleManager::Instance().CreateEmitter(EmitterType::CONFETTI, Play::Point2f CENTRE_POINT - offset, 0.1f);
+	ParticleManager::Instance().CreateEmitter(EmitterType::CONFETTI, Play::Point2f CENTRE_POINT + offset, 0.1f);
 }
 
 IGameState* WinState::OnUpdate()

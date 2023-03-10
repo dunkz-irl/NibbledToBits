@@ -3,7 +3,10 @@
 enum class EmitterType
 {
 	SMOKE = 0,
-	PORTAL
+	PORTAL,
+	SMOKEPUFF,
+	CHEESE,
+	CONFETTI
 };
 
 class Emitter;

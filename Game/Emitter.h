@@ -93,7 +93,7 @@ public:
 	void SetColour(Play::Colour col, float randStartVariation, float wiggle);
 	void SetSpawnRate(float sr);
 	void SetDirection(float min, float max, float incr, float wiggle);
-	void SetGravity(bool state, GravityDirection dir, float gravityMult);
+	void SetGravity(bool state, GravityDirection dir = GravityDirection::DOWN, float gravityMult = 1.f);
 	void SetOpacity(float start, float end);
 	void SetParticleLifetime(float min, float max);
 	void SetParticleLineProperties(bool state, Play::Vector2f lineVector, Play::Vector2f initPush);

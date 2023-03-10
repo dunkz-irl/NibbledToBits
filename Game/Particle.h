@@ -16,10 +16,12 @@ enum ParticleShape
 	SPARK,
 	SPHERE,
 	SQUARE,
-	STAR
+	STAR,
+	CHEESE,
+	CONFETTI
 };
 
-extern const char* ShapeSprites[15];
+extern const char* ShapeSprites[17];
 
 struct Particle
 {

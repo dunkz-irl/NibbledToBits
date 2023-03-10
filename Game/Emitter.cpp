@@ -141,7 +141,7 @@ void Emitter::SetDirection(float min, float max, float incr, float wiggle)
 	m_directionWiggle = wiggle;
 }
 
-void Emitter::SetGravity(bool state, GravityDirection dir = DOWN, float gravityMult = 1.f)
+void Emitter::SetGravity(bool state, GravityDirection dir, float gravityMult)
 {
 	m_useGravity = state;
 	m_gravityDirection = dir;
