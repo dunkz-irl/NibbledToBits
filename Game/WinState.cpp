@@ -35,18 +35,30 @@ IGameState* WinState::OnUpdate()
 void WinState::OnDraw()
 {
 	float t = GetStateTime();
+	float duration = 1.3f;
+	float scale = 1.3f;
 
-	if (t <= 1.f)
+	if (t <= duration)
 	{
-		Play::DrawSpriteRotated("continue-unpressed", Play::Point2f CENTRE_POINT - Play::Point2f{ 0.f, 100.f }, 0, 0, EaseOutElastic(t));
+		Play::DrawSpriteRotated("win-text", Play::Point2f CENTRE_POINT - Play::Point2f{ 0.f, -35.f }, 0, 0, EaseOutElastic(t / duration) * scale);
 	}
 	else
+	{
+		Play::DrawSpriteRotated("win-text", Play::Point2f CENTRE_POINT - Play::Point2f{ 0.f, -35.f }, 0, 0, scale);
+	}
+
+	t -= 0.1f; // Delay between animations starting
+
+	if (t <= duration && !(t < 0))
+	{
+		Play::DrawSpriteRotated("continue-unpressed", Play::Point2f CENTRE_POINT - Play::Point2f{ 0.f, 100.f }, 0, 0, EaseOutElastic(t / duration));
+	}
+	else if (t > duration)
 	{
 		m_continueButton->Draw();
 	}
 
-	Debug::DrawBoldText("YOU ARE WINNER OMG WELL DONE", CENTRE_POINT);
-	Play::DrawFontText("ABNORMAL40px_10x10", "Continue", Play::Point2f CENTRE_POINT - Play::Point2f{0.f, 100.f}, Play::CENTRE);
+	Play::DrawFontText("ABNORMAL40px_10x10", "Continue", Play::Point2f CENTRE_POINT - Play::Point2f{ 0.f, 100.f }, Play::CENTRE);
 }
 
 void WinState::OnExit()
