@@ -10,13 +10,15 @@ Confetti::Confetti(Play::Point2f pos, float lifetime)
 	m_pos = pos;
 	m_lifetime = lifetime;
 
-	SetGravity(true, DOWN, 0.2f);
+	SetGravity(true, DOWN, 0.4f);
 	SetSpawnRate(150.f);
-	SetParticleLifetime(0.9f, 1.4f);
+	SetParticleLifetime(0.9f, 5.4f);
 	SetScale(0.25f, 0.4f, 0.f, 0.0f);
 	SetOpacity(1.0f, 0.0f);
-	SetRotation(-0.1f, 0.1f, 0.0f, false);
+	SetRotation(-0.2f, 0.2f, 0.0f, false);
+	SetDirection(0, 360, 0.f, 0.1f);
 	SetVelocity(4.f, 12.f);
+	SetParticleFrames(5, false);
 
 	SetColour(Play::cBlack, 100.f, 0.f);
 }

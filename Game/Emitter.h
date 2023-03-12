@@ -72,6 +72,8 @@ protected:
 	Play::Vector2f m_particleLineVector{ 10.f, 10.f };
 	Play::Vector2f m_initialPush{ 1.f, 1.f };
 	bool m_flock{ false };
+	int m_particleFrames{ 0 };
+	bool m_sequentialFrames{ false };
 
 	// TODO: Gravitational point as in Abdullah's system
 
@@ -99,6 +101,7 @@ public:
 	void SetParticleLineProperties(bool state, Play::Vector2f lineVector, Play::Vector2f initPush);
 	void SetRotation(float minSpeed, float maxSpeed, float increment, bool alignToVelocity);
 	void SetPosition(Play::Point2f pos);
+	void SetParticleFrames(int frames, bool sequential);
 	void SetMouseFollow(bool state);
 	void SetEmitContinuously(bool state);
 	bool LifetimeEnded();

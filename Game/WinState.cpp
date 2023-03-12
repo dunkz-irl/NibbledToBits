@@ -23,10 +23,11 @@ void WinState::OnEnter()
 
 	// #TODO: Confetti particles
 
-	Play::Point2f offset = { 300.f, 0.f };
+	float offsetX = 300.f;
+	float offsetY = 150.f;
 
-	ParticleManager::Instance().CreateEmitter(EmitterType::CONFETTI, Play::Point2f CENTRE_POINT - offset, 0.1f);
-	ParticleManager::Instance().CreateEmitter(EmitterType::CONFETTI, Play::Point2f CENTRE_POINT + offset, 0.1f);
+	ParticleManager::Instance().CreateEmitter(EmitterType::CONFETTI, Play::Point2f CENTRE_POINT - Play::Point2f{ offsetX, -offsetY }, 0.3f);
+	ParticleManager::Instance().CreateEmitter(EmitterType::CONFETTI, Play::Point2f CENTRE_POINT + Play::Point2f{ offsetX, offsetY }, 0.3f);
 }
 
 IGameState* WinState::OnUpdate()

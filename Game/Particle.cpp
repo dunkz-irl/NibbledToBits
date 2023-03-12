@@ -1,7 +1,7 @@
 #include "Play.h"
 #include "Particle.h"
 
-const char* ShapeSprites[17]
+const char* ShapeSprites[18]
 {
 	"circle",
 	"cloud",
@@ -19,6 +19,7 @@ const char* ShapeSprites[17]
 	"square",
 	"star",
 	"swiss_panel",
+	"confetti",
 	"win-text"
 };
 

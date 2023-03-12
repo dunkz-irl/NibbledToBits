@@ -104,6 +104,11 @@ void Emitter::CreateParticle()
 	particle.scale = (Play::RandomRollRange(static_cast<int>(m_minScale * 100), static_cast<int>(m_maxScale * 100))) / 100.f;
 	particle.lifetime = RandomFloat(m_minParticleLifetime, m_maxParticleLifetime);
 
+	if (m_particleFrames != 0)
+	{
+		particle.frame = Play::RandomRollRange(0, m_particleFrames - 1);
+	}
+
 	// Push back to the Emitter's own vector
 	v_Particles.push_back(particle);
 }
@@ -310,8 +315,16 @@ void Emitter::Update(float elapsedTime)
 				break;
 			}
 		}
+
+		if (m_sequentialFrames)
+		{
+			p.frame++;
+			p.frame %= m_particleFrames;
+		}
 		
 	}
+
+
 
 	// Check for particles whose lifetime has ended and remove them
 	std::vector<Particle>::iterator it = v_Particles.begin();
@@ -340,7 +353,7 @@ void Emitter::DrawParticles()
 
 			float opacity = std::lerp(m_startOpacity, m_endOpacity, p.currentTime / p.lifetime);
 
-			Play::DrawSpriteRotated(p.spriteName, p.pos, 0, p.rotation, p.scale, opacity, p.colour);
+			Play::DrawSpriteRotated(p.spriteName, p.pos, p.frame, p.rotation, p.scale, opacity, p.colour);
 		}
 
 	}
@@ -391,4 +404,10 @@ bool Emitter::LifetimeEnded()
 void Emitter::SetPosition(Play::Point2f pos)
 {
 	m_pos = pos;
+}
+
+void Emitter::SetParticleFrames(int frames, bool sequential)
+{
+	m_particleFrames = frames;
+	m_sequentialFrames = sequential;
 }

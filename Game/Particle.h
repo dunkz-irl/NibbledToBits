@@ -18,10 +18,11 @@ enum ParticleShape
 	SQUARE,
 	STAR,
 	CHEESE,
-	CONFETTI
+	CONFETTI,
+	WINTEXT
 };
 
-extern const char* ShapeSprites[17];
+extern const char* ShapeSprites[18];
 
 struct Particle
 {
@@ -38,6 +39,7 @@ struct Particle
 	bool isActive = true;
 	float directionWiggle = 0.0f;
 	Play::Colour colour{ 100.f, 100.f, 100.f };
+	int frame{ 0 };
 
 	Particle(ParticleShape _shape, Play::Point2f _pos, Play::Point2f _velocity, Play::Point2f _acceleration, float _rotSpeed, Play::Colour _colour);
 };

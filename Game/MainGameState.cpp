@@ -59,4 +59,6 @@ void MainGameState::OnDraw()
 	Play::DrawBackground();
 	GM_INST.Draw();
 	Debug::DrawGameAreaObjectDebugInfo();
+
+	// Draw Bouncy arrows and manage transitions
 }

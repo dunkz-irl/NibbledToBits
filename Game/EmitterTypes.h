@@ -1,5 +1,11 @@
 #pragma once
 
+class WinText : public Emitter
+{
+public:
+	WinText(Play::Point2f pos, float lifetime);
+};
+
 class Confetti : public Emitter
 {
 public:

@@ -6,7 +6,8 @@ enum class EmitterType
 	PORTAL,
 	SMOKEPUFF,
 	CHEESE,
-	CONFETTI
+	CONFETTI,
+	WINTEXT
 };
 
 class Emitter;
