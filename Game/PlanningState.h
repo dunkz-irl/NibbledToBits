@@ -14,5 +14,9 @@ public:
 	void OnExit() override;
 	IGameState* OnUpdate() override;
 	void OnDraw() override;
+	void DrawMouseHoleArrows();
+
+private:
+
 };
 
