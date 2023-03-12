@@ -257,3 +257,13 @@ GameObject* GameManager::GetGameObject(int id)
 
 	return nullptr;
 }
+
+void GameManager::DrawUI()
+{
+	std::stringstream ss;
+	ss << "Saved: " << m_savedMice << "/" << m_targetSavedMice;
+
+	Play::Point2f pos = { DISPLAY_WIDTH / 9.f, DISPLAY_HEIGHT * 0.8f };
+
+	Play::DrawFontText("ABNORMAL40px_10x10", ss.str(), pos);
+}

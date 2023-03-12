@@ -55,6 +55,8 @@ public:
 
 	GameObject* GetGameObject(int id);
 
+	void DrawUI();
+
 	Play::Point2D GetEntrancePosition();
 	GridPoint GetExitPosition();
 	GameAreaObject* GetEntryObj();
@@ -103,6 +105,7 @@ private:
 	int m_numLevelMice;
 	float m_mouseSpawnRate;
 	int m_targetSavedMice;
+	int m_savedMice; // Follows the variable in GoState.cpp
 
 public:
 	GameAreaObject* GetExitObj();

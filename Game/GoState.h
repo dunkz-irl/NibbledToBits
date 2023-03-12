@@ -18,7 +18,5 @@ public:
 
 private:
 	MouseSpawner* m_mouseSpawner;
-	int m_savedMice;
-	const int m_targetSavedMice;
 };
 

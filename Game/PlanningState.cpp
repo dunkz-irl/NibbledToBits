@@ -37,6 +37,7 @@ void PlanningState::OnDraw()
 {
 	GM_INST.DrawHeldItem();
 	GM_INST.DrawStartButton();
+	GM_INST.DrawUI();
 
 	// throw std::logic_error("The method or operation is not implemented.");
 }

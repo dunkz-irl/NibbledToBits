@@ -59,7 +59,7 @@ void ParticleManager::UpdateEmitters(float elapsedTime)
 	std::vector<Emitter*>::iterator it = m_v_pEmitters.begin();
 	for (Emitter* e : m_v_pEmitters)
 	{
-		if (e->LifetimeEnded())
+		if (it != m_v_pEmitters.end() && e->LifetimeEnded())
 		{
 			DestroyEmitter(it);
 		}

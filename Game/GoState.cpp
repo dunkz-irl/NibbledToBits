@@ -21,7 +21,7 @@
 #include "VirtualKeys.h"
 #include "Common.h"
 
-GoState::GoState() : m_targetSavedMice(GM_INST.m_targetSavedMice)
+GoState::GoState()
 {
 	m_debugStateName = "Go State";
 	std::pair<int, float> mouseInfo = GM_INST.GetMouseSpawnInfo();
@@ -78,7 +78,7 @@ IGameState* GoState::OnUpdate()
 		return new PauseState();
 	}
 
-	if (m_savedMice == m_targetSavedMice)
+	if (GM_INST.m_savedMice == GM_INST.m_targetSavedMice)
 	{
 		GameObjectManager::Instance().CleanupAllOfType(GameObjectType::TYPE_CLEANUP);
 		return new WinState();
@@ -93,6 +93,7 @@ void GoState::OnDraw()
 {
 	GM_INST.DrawHeldItem();
 	GM_INST.DrawStartButton();
+	GM_INST.DrawUI();
 	// throw std::logic_error("The method or operation is not implemented.");
 }
 
@@ -101,9 +102,9 @@ void GoState::IncrementSavedMice()
 	// #TODO: This might be weird if the current state wasn't a GoState, but it should be hopefully??
 	GoState* pInstanceGoState = static_cast<GoState*>(GM_INST.m_pGameState);
 
-	if (!(pInstanceGoState->m_savedMice > pInstanceGoState->m_targetSavedMice))
+	if (!(GM_INST.m_savedMice > GM_INST.m_targetSavedMice))
 	{
-		pInstanceGoState->m_savedMice++;
+		GM_INST.m_savedMice++;
 	}
 	else
 	{
