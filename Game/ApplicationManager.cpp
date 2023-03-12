@@ -18,7 +18,7 @@ ApplicationManager::ApplicationManager()
 
 ApplicationManager::~ApplicationManager()
 {
-	GM_INST.Destroy();
+	m_pApplicationState->OnExit();
 
 	delete m_pApplicationState;
 	s_pInstance = nullptr;
