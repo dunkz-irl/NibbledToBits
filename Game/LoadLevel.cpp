@@ -206,19 +206,6 @@ void LevelLoader::LoadLevel(const char* levelName)
 			}
 		}
 	}
-
-	// #TODO: Memory leak with this approach - not sure how to fix and it breaks if I delete it
-	// Clean memory
-
-	// delete[] &gameAreaObjects;
-
-	//for (int x = 0; x < 16; x++)
-	//{
-	//	for (int y = 0; y < 13; y++)
-	//	{
-	//		delete gameAreaObjects[x][y];
-	//	}
-	//}
 }
 
 GameAreaObject* LevelLoader::CreateNewGameAreaObjectOfType(std::vector<std::string> tokens)

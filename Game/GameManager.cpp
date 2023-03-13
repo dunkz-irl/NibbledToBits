@@ -126,11 +126,14 @@ void GameManager::LoadLevel(const char* levelName)
 
 Play::Point2D GameManager::GetEntrancePosition()
 {
-	// #TODO: This only checks if the entry position is not lower than the minimum, doesn't check for maximum
 	if (!(m_gameArea->m_holeEntry->posx < -1) && !(m_gameArea->m_holeEntry->posy < -1))
 	{
-		Play::Point2D pos = { m_gameArea->m_holeEntry->posx, m_gameArea->m_holeEntry->posy };
-		return GameArea::GameToWorld({ pos });
+		if (!(m_gameArea->m_holeEntry->posx > GRID_WIDTH) && !(m_gameArea->m_holeEntry->posy > GRID_HEIGHT))
+		{
+			Play::Point2D pos = { m_gameArea->m_holeEntry->posx, m_gameArea->m_holeEntry->posy };
+			return GameArea::GameToWorld({ pos });
+		}
+		return { -2, -2 };
 	}
 	else
 	{

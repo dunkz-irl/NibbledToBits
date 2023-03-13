@@ -25,8 +25,6 @@ void WinState::OnEnter()
 
 	m_continueButton = new Button{ Play::GetSpriteId("continue-unpressed"), m_continueButtonPos, buttonSize };
 
-	// #TODO: Confetti particles
-
 	float offsetX = 300.f;
 	float offsetY = 150.f;
 

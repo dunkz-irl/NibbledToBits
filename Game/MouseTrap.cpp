@@ -32,8 +32,6 @@ void MouseTrap::OnCurrentSquare(void* pObj)
 		ParticleManager::Instance().CreateEmitter(EmitterType::SMOKEPUFF, m_matrix.row[2], 0.1f);
 		pMouse->Thwart();
 	}
-
-	// #TODO: Some particle effect, puff of smoke maybe
 }
 
 void MouseTrap::Update()

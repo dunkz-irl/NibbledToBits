@@ -6,7 +6,7 @@
 #include "ApplicationManager.h"
 #include "Time.h"
 
-float Time::GetAppStateTime() // #TODO: Could be confused with GameState Time - separate?
+float Time::GetAppStateTime()
 {
 	m_pCurrentAppState = nullptr;
 	m_pCurrentAppState = ApplicationManager::Instance().m_pApplicationState;

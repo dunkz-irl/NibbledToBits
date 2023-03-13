@@ -67,7 +67,7 @@ void GameObjectManager::CleanupAllOfType(GameObjectType type)
 		if (obj->GetGameObjectType() == type)
 		{
 			delete* it;
-			it = m_v_pGameObjects.erase(it); // #TODO: Does this free memory? Do I need to delete it or not?
+			it = m_v_pGameObjects.erase(it);
 		}
 		else
 		{
