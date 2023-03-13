@@ -6,7 +6,7 @@
 
 void SingleWall::OnCurrentSquare(void* pObj)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	throw std::logic_error("This should never happen.");
 }
 
 void SingleWall::OnNextSquare(void* pObj)

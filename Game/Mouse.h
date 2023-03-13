@@ -38,6 +38,7 @@ private:
 
 	void SetNextPosition(GridVector val) { m_nextPosition = val; }
 	float m_movementSpeed{ 1.f };
+	bool m_reversed{ false };
 
 	GameAreaObject* m_currentGridObj;
 	GameAreaObject* m_nextGridObj;

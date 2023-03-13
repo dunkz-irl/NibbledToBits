@@ -7,6 +7,7 @@
 #include "MouseHoleEntry.h"
 #include "MouseHoleExit.h"
 #include "MouseTrap.h"
+#include "EmptySquare.h"
 
 #include "GameAreaObjects.h"
 
@@ -77,7 +78,10 @@ void LevelLoader::LoadLevel(const char* levelName)
 	GameAreaObject* gameAreaObjects[GRID_WIDTH][GRID_HEIGHT]; // To put in m_GameArea
 
 	// Initialise GAObjs
-	g_initObj = new GameAreaObject();
+	g_initObj = new EmptySquare();
+	GameAreaObject* pEntry = GM_INST.m_gameArea->m_holeEntry;
+	GameAreaObject* pExit = GM_INST.m_gameArea->m_holeExit;
+
 
 	for (int x = 0; x < GRID_WIDTH; x++)
 	{

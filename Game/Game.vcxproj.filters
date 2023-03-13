@@ -171,6 +171,9 @@
     <ClInclude Include="PolygonEmitter.h">
       <Filter>Particle System</Filter>
     </ClInclude>
+    <ClInclude Include="EmptySquare.h">
+      <Filter>Game Area Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainGame.cpp">
@@ -295,6 +298,9 @@
     </ClCompile>
     <ClCompile Include="Particle.cpp">
       <Filter>Particle System</Filter>
+    </ClCompile>
+    <ClCompile Include="EmptySquare.cpp">
+      <Filter>Game Area Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -66,7 +66,6 @@ void Mouse::Draw()
 		{
 			Debug::DrawBoldText("This: " + std::to_string(m_currentGridObj->id), currentSquareWorldPos + Point2f{ SQUARE_SIZE, 0.f });
 			Debug::DrawBoldText("Next: " + std::to_string(m_nextGridObj->id), nextSquareWorldPos + Point2f{ SQUARE_SIZE, 0.f });
-
 		}
 	}
 
@@ -119,6 +118,8 @@ void Mouse::UpdateBehaviour()
 	if (!m_enteredNewSquare) // So this function is only called once per square
 		return;	
 
+	m_reversed = false; // Can only reverse direction once per square
+
 	if (m_currentGridObj)
 	{
 		m_currentGridObj->OnCurrentSquare(this);
@@ -161,7 +162,11 @@ void Mouse::UpdateDirection()
 
 void Mouse::ReverseDirection()
 {
-	m_currentDirection = {m_currentDirection.x * -1, m_currentDirection.y * -1};
+	if (!m_reversed)
+	{
+		m_currentDirection = { m_currentDirection.x * -1, m_currentDirection.y * -1 };
+		m_reversed = true;
+	}
 }
 
 bool Mouse::CheckBlockForValidEntrance(const GameAreaObject& gameAreaObj)
