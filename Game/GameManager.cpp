@@ -178,12 +178,39 @@ void GameManager::ManageInput()
 	{
 		delete m_currentHeld;
 		m_currentHeld = new FloatingObject{ m_panel->GetSelection(), 0, 0 };
+
 		if (m_currentHeld->id == -1)
 		{
-
 			delete m_currentHeld;
 			m_currentHeld = new FloatingObject(m_gameArea->GetObject());
 			GameArea::ManagePickupObjectDeletion();
+		}
+		else // current holding an object
+		{
+			std::vector<std::tuple<int, int>> playerInv = m_panel->GetPlayerInventory();
+
+			for (std::tuple<int, int>& invItem : playerInv)
+			{
+				int id = std::get<0>(invItem);
+				int quantity = std::get<1>(invItem);
+
+				if (quantity == 0)
+				{
+					delete m_currentHeld;
+					m_currentHeld = new FloatingObject(m_gameArea->GetObject());
+					GameArea::ManagePickupObjectDeletion();
+					return;
+				}
+
+				if (id == m_currentHeld->id)
+				{
+					quantity--;
+				}
+
+				std::get<1>(invItem) = quantity;
+			}
+
+			m_panel->SetPlayerInventory(playerInv);
 		}
 	}
 
@@ -192,7 +219,27 @@ void GameManager::ManageInput()
 	{
 		if (m_currentHeld->id >= 0)
 		{
-			m_gameArea->TryPlaceObject(*m_currentHeld);
+			if (!m_gameArea->TryPlaceObject(*m_currentHeld)) // If this fails, item was dropped outside of grid area
+			{
+				int heldID = m_currentHeld->id;
+
+				std::vector<std::tuple<int, int>> playerInv = m_panel->GetPlayerInventory();
+
+				for (std::tuple<int, int>& invItem : playerInv)
+				{
+					int id = std::get<0>(invItem);
+					int quantity = std::get<1>(invItem);
+
+					if (id == m_currentHeld->id)
+					{
+						quantity++;
+					}
+
+					std::get<1>(invItem) = quantity;
+				}
+
+				m_panel->SetPlayerInventory(playerInv);
+			}
 		}
 
 		delete m_currentHeld;
@@ -277,7 +324,7 @@ void GameManager::DrawUI()
 	std::stringstream ss;
 	ss << "Saved: " << m_savedMice << "/" << m_targetSavedMice;
 
-	Play::Point2f pos = { DISPLAY_WIDTH / 9.f, DISPLAY_HEIGHT * 0.85f };
+	Play::Point2f pos = { DISPLAY_WIDTH / 9.f, DISPLAY_HEIGHT * 0.82f };
 
 	Play::DrawFontText("ABNORMAL40px_10x10", ss.str(), pos);
 }

@@ -286,7 +286,7 @@ std::array<bool, 4> GameArea::GetBlockValidDirections(GameAreaObject& obj)
 	return validDirections;
 }
 
-void GameArea::TryPlaceObject(const FloatingObject& obj) {
+bool GameArea::TryPlaceObject(const FloatingObject& obj) {
 	const GridPos mouseGridPos = GetMouseGridPos();
 
 	// Place a mouse hole object, which can't be removed and will snap to the closest valid location
@@ -320,13 +320,13 @@ void GameArea::TryPlaceObject(const FloatingObject& obj) {
 
 	// Check if the object has been dropped within the game area
 	if (mouseGridPos.x < 0 || mouseGridPos.y < 0 || mouseGridPos.x >= GRID_WIDTH || mouseGridPos.y >= GRID_HEIGHT) {
-		return;
+		return false;
 	}
 
 	// Don't place an object if one is already there
 	if (m_gameAreaObjects[mouseGridPos.x][mouseGridPos.y]->id != -1)
 	{
-		return;
+		return false;
 	}
 
 	// Set the object at the mouse location to be the held item
@@ -379,6 +379,7 @@ void GameArea::TryPlaceObject(const FloatingObject& obj) {
 	}
 
 	m_lastSelected = mouseGridPos;
+	return true;
 }
 
 // #GETFLIPPINOBJECT

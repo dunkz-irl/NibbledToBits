@@ -61,7 +61,7 @@ public:
 	~GameArea();
 
 	void Update();
-	void TryPlaceObject(const FloatingObject& obj);
+	bool TryPlaceObject(const FloatingObject& obj);
 	void DrawGameArea();
 	void SetGameAreaObjects(GameAreaObject* gameAreaObjects[GRID_WIDTH][GRID_HEIGHT]);
 	GridPos GetMouseGridPos();

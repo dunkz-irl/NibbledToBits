@@ -79,9 +79,6 @@ void LevelLoader::LoadLevel(const char* levelName)
 
 	// Initialise GAObjs
 	g_initObj = new EmptySquare();
-	GameAreaObject* pEntry = GM_INST.m_gameArea->m_holeEntry;
-	GameAreaObject* pExit = GM_INST.m_gameArea->m_holeExit;
-
 
 	for (int x = 0; x < GRID_WIDTH; x++)
 	{
@@ -153,7 +150,6 @@ void LevelLoader::LoadLevel(const char* levelName)
 			{
 				v_inventory.push_back(object);
 			}
-
 		}
 	}
 
