@@ -85,9 +85,9 @@ void PlanningState::DrawMouseHoleArrows()
 		}
 
 		matrix.row[2] = GameArea::GameToWorld({ pos.x, pos.y });
-		matrix.row[2] += RotateVector(Vector2f(0.f, sin(t) * 4.f) * 2.f, rot);
+		matrix.row[2] += RotateVector(Vector2f(0.f, sin(t) * 4.f) * 1.75f, rot);
 		matrix = matrix * MatrixRotation(rot);
-		matrix = matrix * MatrixScale((sin(t) / 8.f) + 0.8f, (cos(t) / 4.f) + 0.8f);
+		matrix = matrix * MatrixScale((sin(t) / 12.f) + 0.8f, (cos(t) / 6.f) + 0.8f);
 
 		if (i == 1) // Flip sprite
 		{

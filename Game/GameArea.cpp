@@ -142,8 +142,8 @@ void GameArea::DrawGameArea() {
 			Play::DrawFontText("fontui64px", std::string(1, letter), textPos, Play::CENTRE);
 		}
 	};
-	drawHole(*m_holeEntry, 'E');
-	drawHole(*m_holeExit, 'X');
+	drawHole(*m_holeEntry, ' ');
+	drawHole(*m_holeExit, ' ');
 
 	// Draw the misc variable above the last selected object
 	if (m_lastSelected.x != -1 && m_lastSelected.y != -1) {

@@ -44,7 +44,6 @@ IMouseTrapState* TrippedState::OnUpdate(MouseTrap* pTrap)
 	pTrap->m_matrix = MatrixScale(scale, scale); // #TODO: Couldn't get translation working
 	pTrap->m_matrix = pTrap->m_matrix * MatrixRotation(sin((pow(m_resetTime * 1.7f - m_timer * 1.7f, 3.f))/-1.f) / 3.f); // #TODO: Cool formula, should save into a function
 	
-	
 	//pTrap->m_matrix.row[2] = GameArea::GameToWorld({ pTrap->posx, pTrap->posy }) + Play::Point2f{ 0.f, scale * 100.f };
 
 	if (m_timer > m_resetTime)
