@@ -61,9 +61,10 @@ public:
 	~GameArea();
 
 	void Update();
-	void PlaceObject(const FloatingObject& obj);
+	void TryPlaceObject(const FloatingObject& obj);
 	void DrawGameArea();
 	void SetGameAreaObjects(GameAreaObject* gameAreaObjects[GRID_WIDTH][GRID_HEIGHT]);
+	GridPos GetMouseGridPos();
 
 	static void ValidateEntryDirections(GameAreaObject& ga_obj);
 	static void RotateEntryDirections(uint8_t& entryDirections);
@@ -88,6 +89,8 @@ public:
 	friend class GoState;
 
 private:
-	GridPos GetMouseGridPos();
+
 	inline static GameAreaObject* m_gameAreaObjects[GRID_WIDTH][GRID_HEIGHT];
+public:
+	static void ManagePickupObjectDeletion();
 };

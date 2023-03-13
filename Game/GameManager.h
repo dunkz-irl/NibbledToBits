@@ -53,6 +53,8 @@ public:
 
 	void ToNextState();
 
+	void NextLevel();
+
 	GameObject* GetGameObject(int id);
 
 	void DrawUI();
@@ -106,6 +108,9 @@ private:
 	float m_mouseSpawnRate;
 	int m_targetSavedMice;
 	int m_savedMice; // Follows the variable in GoState.cpp
+	int m_level{ 0 };
+
+	const char* m_levelStrings[2]{ "LEVEL1.LEV", "LEVEL2.LEV" };
 
 public:
 	GameAreaObject* GetExitObj();

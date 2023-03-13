@@ -4,8 +4,12 @@
 #include "Button.h"
 #include "EasingFunctions.h"
 #include "ParticleManager.h"
+#include "GameManager.h"
+#include "PlanningState.h"
 
 #include "WinState.h"
+
+
 
 void WinState::OnEnter()
 {
@@ -32,9 +36,11 @@ void WinState::OnEnter()
 
 IGameState* WinState::OnUpdate()
 {
-	if (m_continueButton->Pressed())
+	if (m_continueButton && m_continueButton->Pressed())
 	{
 		m_continueButton->SetSprite("continue-pressed");
+		GM_INST.NextLevel();
+		return new PlanningState();
 	}
 	return nullptr;
 }
@@ -62,7 +68,8 @@ void WinState::OnDraw()
 	}
 	else if (t > duration)
 	{
-		m_continueButton->Draw();
+		if (m_continueButton)
+			m_continueButton->Draw();
 	}
 
 	Play::DrawFontText("ABNORMAL40px_10x10", "Continue", Play::Point2f CENTRE_POINT - Play::Point2f{ 0.f, 100.f }, Play::CENTRE);
@@ -71,4 +78,5 @@ void WinState::OnDraw()
 void WinState::OnExit()
 {
 	delete m_continueButton;
+	m_continueButton = nullptr;
 }

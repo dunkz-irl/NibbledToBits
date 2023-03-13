@@ -1,0 +1,50 @@
+ID, x pos, y pos, rotation, Misc variable
+7,-1
+7,13
+5,2,5
+tube_two_way ,3,3,1,1
+emmental ,3,6,0,0
+trap_01_set ,3,8,0,0
+tube_two_way ,7,3,0,1
+parmesan ,9,7,0,0
+single ,10,3,0,0
+tube_two_way ,10,11,0,1
+trap_01_set ,11,7,3,0
+Inventory
+MiceIn,0
+MiceOut,0
+Rate,0
+Theme,0
+single ,0
+tube ,0
+tube_one_way ,0
+tube_two_way ,3
+tube_three_way ,0
+tube_cross ,0
+tube_end ,0
+corner_cross ,0
+bridge ,0
+leaf ,0
+pen ,0
+timer ,0
+tick ,0
+plus ,0
+minus ,0
+hamsterball ,0
+heart ,0
+brie ,0
+edam ,0
+emmental ,0
+parmesan ,0
+swiss ,0
+carrot ,0
+cherry ,0
+grape ,0
+raspberry ,0
+strawberry ,0
+cornkernel ,0
+sunflowerseed ,0
+trap_01_notset ,0
+trap_01_set ,0
+trap_02_notset ,0
+trap_02_set ,0

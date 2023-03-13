@@ -137,24 +137,23 @@ void LevelLoader::LoadLevel(const char* levelName)
 	std::vector<ObjectCSV> v_CSVobjects = ReadObjectsCSV();
 	std::vector<ObjectCSV> v_inventory;
 
-	// Remove inventory items of which player has none, for constructing the game panel with
-	for (ObjectCSV object : v_CSVobjects)
+	// Check ID (string) of each item in the GM inventory, which has already read from the level file
+	for (InventoryPair invPair : m_vInventoryPairs)
 	{
-		// Check ID (string) of each item in the GM inventory, which has already read from the level file
-		for (InventoryPair invPair : m_vInventoryPairs)
+		// Remove inventory items of which player has none, for constructing the game panel with
+		for (ObjectCSV object : v_CSVobjects)
 		{
-			// First character is capital and needs to be changed
-			std::string str_objNameLower = object.name;        // #TODO ~ What nonsense is this pray tell! ~
-			char c = std::tolower(str_objNameLower[0]);
-			str_objNameLower.front() = c;
-			std::erase(invPair.first, ' ');
+			int invObjID = g_idMap[invPair.first];
 
-			if (invPair.first == str_objNameLower)
+			if (invObjID == object.id)
 			{
 				v_inventory.push_back(object);
 			}
+
 		}
 	}
+
+
 
 	// Make all objects have the category INVENTORY so they appear on the same page
 	for (ObjectCSV& object : v_inventory)

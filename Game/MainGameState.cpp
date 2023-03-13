@@ -26,7 +26,7 @@ void MainGameState::OnEnter()
 
 	// Load level
 	g_vObjects = ReadObjectsCSV();
-	GM_INST.LoadLevel("LEVEL1.lev");
+	GM_INST.LoadLevel("LEVEL2.lev"); // #LOAD1stLEVEL
 }
 
 void MainGameState::OnExit()

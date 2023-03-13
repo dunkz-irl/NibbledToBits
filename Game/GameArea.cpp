@@ -10,7 +10,7 @@
 #include "Mouse.h"
 
 #include "GameAreaObjects.h"
-
+#include "RotatingBlock.h"
 
 using namespace Play;
 
@@ -21,6 +21,7 @@ int SQUARE_SIZE{ 50 };
 int BOARDER_PIXELS{ 35 };
 
 extern GameAreaObject* g_initObj;
+extern std::vector<ObjectCSV> g_vObjects;
 
 GridVector g_directionVectors[4]
 {
@@ -171,6 +172,28 @@ GridPos GameArea::WorldToGame(Point2f pos) {
 	return{ pos.x >= 0 ? int(pos.x / SQUARE_SIZE) : int(pos.x / SQUARE_SIZE) - 1, pos.y >= 0 ? int(pos.y / SQUARE_SIZE) : int(pos.y / SQUARE_SIZE) - 1 };
 }
 
+void GameArea::ManagePickupObjectDeletion()
+{
+	GridPos mouseGridPos = GM_INST.m_gameArea->GetMouseGridPos();
+	if (mouseGridPos.x < 0 || mouseGridPos.x > GRID_WIDTH || mouseGridPos.y < 0 || mouseGridPos.y > GRID_HEIGHT)
+	{
+		return;
+	}
+
+	if (!m_gameAreaObjects[mouseGridPos.x][mouseGridPos.y]->pickupable)
+	{
+		return;
+	}
+
+	// #TODO so verbose, but not sure how to get an alias working here.
+
+	if (m_gameAreaObjects[mouseGridPos.x][mouseGridPos.y] && m_gameAreaObjects[mouseGridPos.x][mouseGridPos.y]->id != -1)
+	{
+		delete m_gameAreaObjects[mouseGridPos.x][mouseGridPos.y];
+		m_gameAreaObjects[mouseGridPos.x][mouseGridPos.y] = g_initObj;
+	}
+}
+
 GameAreaObject* GameArea::GetObjectAtGridPosition(int x, int y)
 {
 	GameAreaObject* obj = GM_INST.m_gameArea->GetGameAreaObject({x, y});
@@ -264,53 +287,102 @@ std::array<bool, 4> GameArea::GetBlockValidDirections(GameAreaObject& obj)
 	return validDirections;
 }
 
-void GameArea::PlaceObject(const FloatingObject& obj) {
+void GameArea::TryPlaceObject(const FloatingObject& obj) {
 	const GridPos mouseGridPos = GetMouseGridPos();
 
 	// Place a mouse hole object, which can't be removed and will snap to the closest valid location
-	if (obj.mouseHole) {
-		int x = std::clamp(mouseGridPos.x, -1, GRID_WIDTH);
-		int y = std::clamp(mouseGridPos.y, -1, GRID_HEIGHT);
+	//if (obj.mouseHole) {
+	//	int x = std::clamp(mouseGridPos.x, -1, GRID_WIDTH);
+	//	int y = std::clamp(mouseGridPos.y, -1, GRID_HEIGHT);
 
-		const int distToLeft = std::abs(-1 - x);
-		const int distToRight = std::abs(GRID_WIDTH - x);
-		const int distToDown = std::abs(-1 - y);
-		const int distToUp = std::abs(GRID_HEIGHT - y);
+	//	const int distToLeft = std::abs(-1 - x);
+	//	const int distToRight = std::abs(GRID_WIDTH - x);
+	//	const int distToDown = std::abs(-1 - y);
+	//	const int distToUp = std::abs(GRID_HEIGHT - y);
 
-		if (std::min(distToLeft, distToRight) < std::min(distToDown, distToUp)) {
-			x = (distToLeft > distToRight) ? GRID_WIDTH : -1;
-		}
-		else {
-			y = (distToDown > distToUp) ? GRID_HEIGHT : -1;
-		}
+	//	if (std::min(distToLeft, distToRight) < std::min(distToDown, distToUp)) {
+	//		x = (distToLeft > distToRight) ? GRID_WIDTH : -1;
+	//	}
+	//	else {
+	//		y = (distToDown > distToUp) ? GRID_HEIGHT : -1;
+	//	}
 
-		if (x == -1 || x == GRID_WIDTH) {
-			y = std::clamp(y, 0, GRID_HEIGHT - 1);
-		}
+	//	if (x == -1 || x == GRID_WIDTH) {
+	//		y = std::clamp(y, 0, GRID_HEIGHT - 1);
+	//	}
 
-		GameAreaObject* hole = (obj.id == 0) ? (GameAreaObject*)m_holeEntry : (GameAreaObject*)m_holeExit;
-		hole->posx = x;
-		hole->posy = y;
-		hole->vis = true;
+	//	GameAreaObject* hole = (obj.id == 0) ? (GameAreaObject*)m_holeEntry : (GameAreaObject*)m_holeExit;
+	//	hole->posx = x;
+	//	hole->posy = y;
+	//	hole->vis = true;
 
-		return;
-	}
+	//	return;
+	//}
 
 	// Check if the object has been dropped within the game area
 	if (mouseGridPos.x < 0 || mouseGridPos.y < 0 || mouseGridPos.x >= GRID_WIDTH || mouseGridPos.y >= GRID_HEIGHT) {
 		return;
 	}
 
+	// Don't place an object if one is already there
+	if (m_gameAreaObjects[mouseGridPos.x][mouseGridPos.y]->id != -1)
+	{
+		return;
+	}
+
 	// Set the object at the mouse location to be the held item
-	auto& tmpGameAreaObject = m_gameAreaObjects[mouseGridPos.x][mouseGridPos.y];
+
+	// Choose the correct type
+	GameAreaObject* tmpGameAreaObject = nullptr;
+	// #PLACE_GAMEAREAOBJECTS_TYPES
+	
+	switch (static_cast<GameAreaObjects>(obj.id))
+	{
+	case GameAreaObjects::TUBE_TWO_WAY:
+		tmpGameAreaObject = new RotatingBlock();
+		tmpGameAreaObject->rotatable = true;
+		break;
+	default:
+		tmpGameAreaObject = new GameAreaObject();
+		break;
+	}
+
+	GameAreaObject& currentObj = *m_gameAreaObjects[mouseGridPos.x][mouseGridPos.y];
+
+	// Don't delete placeholder object!
+	if (currentObj.id != -1)
+	{
+		delete &currentObj;
+	}
+
+	m_gameAreaObjects[mouseGridPos.x][mouseGridPos.y] = tmpGameAreaObject;
 	tmpGameAreaObject->id = obj.id;
 	tmpGameAreaObject->rot = obj.rot;
 	tmpGameAreaObject->misc = obj.misc;
 	tmpGameAreaObject->posx = mouseGridPos.x;
 	tmpGameAreaObject->posy = mouseGridPos.y;
+
+	// Copy valid entry directions (this is in a different array (ObjectCSV one) annoyingly)
+	for (ObjectCSV objCSV : g_vObjects)
+	{
+		if (objCSV.id == tmpGameAreaObject->id)
+		{
+			tmpGameAreaObject->possibleEntryDirections = objCSV.entryDirections;
+			tmpGameAreaObject->validEntryDirections = objCSV.entryDirections;
+		}
+	}
+
+	// Match entryDirections to object rotation value
+	for (int i = 0; i < obj.rot; i++)
+	{
+		GameArea::RotateEntryDirections(tmpGameAreaObject->possibleEntryDirections);
+		GameArea::ValidateEntryDirections(*tmpGameAreaObject);
+	}
+
 	m_lastSelected = mouseGridPos;
 }
 
+// #GETFLIPPINOBJECT
 FloatingObject GameArea::GetObject() {
 	GridPos mouseGridPos = GetMouseGridPos();
 	// #Duncan Player shouldn't be able to move entrance and exit
@@ -339,8 +411,6 @@ FloatingObject GameArea::GetObject() {
 	{
 		return { -1, 0 };
 	}
-
-	m_gameAreaObjects[mouseGridPos.x][mouseGridPos.y]->id = -1;
 
 	if (tmpGameAreaObject->id != -1) {
 		m_lastSelected = { -1, -1 };

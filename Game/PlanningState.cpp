@@ -78,10 +78,10 @@ void PlanningState::DrawMouseHoleArrows()
 			rot = PLAY_PI;
 			pos = { mouseHole->posx, 0 };
 		}
-		else if (mouseHole->posy == 14) // Hole is on top border
+		else if (mouseHole->posy == 13) // Hole is on top border
 		{
 			rot = 0.f;
-			pos = { mouseHole->posx, 13 };
+			pos = { mouseHole->posx, 12 };
 		}
 
 		matrix.row[2] = GameArea::GameToWorld({ pos.x, pos.y });

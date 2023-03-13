@@ -12,6 +12,7 @@
 #include "MenuState.h"
 #include "PlanningState.h"
 #include "PauseState.h"
+#include "WinState.h"
 #include "Debug.h"
 
 #include "Time.h"
@@ -118,6 +119,7 @@ void GameManager::Draw()
 
 void GameManager::LoadLevel(const char* levelName)
 {
+	m_pGameState->OnExit();
 	LevelLoader loader;
 	loader.LoadLevel(levelName);
 }
@@ -175,8 +177,10 @@ void GameManager::ManageInput()
 		m_currentHeld = new FloatingObject{ m_panel->GetSelection(), 0, 0 };
 		if (m_currentHeld->id == -1)
 		{
+
 			delete m_currentHeld;
 			m_currentHeld = new FloatingObject(m_gameArea->GetObject());
+			GameArea::ManagePickupObjectDeletion();
 		}
 	}
 
@@ -185,7 +189,7 @@ void GameManager::ManageInput()
 	{
 		if (m_currentHeld->id >= 0)
 		{
-			m_gameArea->PlaceObject(*m_currentHeld);
+			m_gameArea->TryPlaceObject(*m_currentHeld);
 		}
 
 		delete m_currentHeld;
@@ -239,8 +243,15 @@ void GameManager::ToNextState()
 		break;
 	default:
 		break;
-
 	}
+}
+
+void GameManager::NextLevel()
+{
+	m_level++;
+	m_savedMice = 0;
+	m_goButton->SetSprite("tick_panel");
+	LoadLevel(m_levelStrings[m_level]);
 }
 
 void GameManager::UpdateStartButton()
@@ -263,7 +274,7 @@ void GameManager::DrawUI()
 	std::stringstream ss;
 	ss << "Saved: " << m_savedMice << "/" << m_targetSavedMice;
 
-	Play::Point2f pos = { DISPLAY_WIDTH / 9.f, DISPLAY_HEIGHT * 0.8f };
+	Play::Point2f pos = { DISPLAY_WIDTH / 9.f, DISPLAY_HEIGHT * 0.85f };
 
 	Play::DrawFontText("ABNORMAL40px_10x10", ss.str(), pos);
 }
