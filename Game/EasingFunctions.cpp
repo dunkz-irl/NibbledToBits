@@ -41,3 +41,12 @@ float EastOutBounce(float start, float end, float t)
 	return (start + (end - start) * t);
 
 }
+
+float EaseInOutQuint(float start, float end, float t)
+{
+
+	t =  t < 0.5f ? 16.f * t * t * t * t * t : 1.f - powf(-2.f * t + 2.f, 5.f) / 2.f;
+	
+	//return t;
+	return (start + (end - start) * t);
+}

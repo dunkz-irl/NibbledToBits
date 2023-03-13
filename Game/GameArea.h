@@ -88,6 +88,7 @@ public:
 	friend class GameManager;
 	friend class LevelLoader;
 	friend class GoState;
+	friend class PlanningState;
 
 private:
 

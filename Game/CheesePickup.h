@@ -3,5 +3,6 @@
 class CheesePickup : public GameAreaObject
 {
 	void OnCurrentSquare(void* pObj) override;
+	void Update() override;
 };
 

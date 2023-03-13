@@ -23,6 +23,15 @@ void PlanningState::OnExit()
 
 IGameState* PlanningState::OnUpdate()
 {
+	// Update GameAreaObjects
+	for (int x = 0; x < GRID_WIDTH; x++)
+	{
+		for (int y = 0; y < GRID_HEIGHT; y++)
+		{
+			GameArea::m_gameAreaObjects[x][y]->Update();
+		}
+	}
+
 	if (m_proceedToNextState)
 	{
 		return new GoState();
