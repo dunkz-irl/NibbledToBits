@@ -4,7 +4,7 @@ class Panel
 {
 public:
 	static constexpr int WIDTH = 410;
-	static constexpr int HEIGHT = 720;
+	static constexpr int HEIGHT = 675;
 
 	static constexpr int ROWS = 3;
 	static constexpr int COLUMNS = 2;

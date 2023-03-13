@@ -8,6 +8,7 @@ class IGameState;
 class PauseState;
 struct GameAreaObject;
 
+struct GridVector;
 class GameObject;
 class GameObjectManager;
 
@@ -76,6 +77,7 @@ public:
 	friend class GameArea;
 	friend class Debug;
 	
+	void IncrementCollectedCheese();
 private:
 
 	// Singleton /////	
@@ -112,6 +114,9 @@ private:
 
 	const char* m_levelStrings[2]{ "LEVEL1.LEV", "LEVEL2.LEV" };
 
+	int m_collectedCheese{ 0 };
+	int m_targetCheese{ 0 };
 public:
 	GameAreaObject* GetExitObj();
+	void RemoveGameAreaObject(GridVector gridPos);
 };

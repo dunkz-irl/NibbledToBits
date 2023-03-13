@@ -16,6 +16,7 @@
 #include "Panel.h"
 #include "ReadCSV.h"
 #include "GameManager.h"
+#include "CheesePickup.h"
 
 std::vector<ObjectCSV> g_vObjects;
 std::map<std::string, int> g_idMap;
@@ -224,6 +225,12 @@ GameAreaObject* LevelLoader::CreateNewGameAreaObjectOfType(std::vector<std::stri
 			break;
 		case TRAP_01_SET:
 			pGAObj = new MouseTrap();
+			break;
+		case EMMENTAL:
+		case BRIE:
+		case PARMESAN:
+			GM_INST.m_targetCheese++;
+			pGAObj = new CheesePickup();
 			break;
 		default:
 			pGAObj = new GameAreaObject();

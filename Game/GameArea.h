@@ -85,6 +85,7 @@ public:
 	GridPos m_lastSelected{ -1,-1 };
 
 	friend class Debug;
+	friend class GameManager;
 	friend class LevelLoader;
 	friend class GoState;
 

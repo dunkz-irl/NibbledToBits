@@ -22,6 +22,7 @@
   <ItemGroup>
     <ClInclude Include="ApplicationManager.h" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="CheesePickup.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Emitter.h" />
@@ -69,6 +70,7 @@
   <ItemGroup>
     <ClCompile Include="ApplicationManager.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="CheesePickup.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="EasingFunctions.cpp" />
     <ClCompile Include="Emitter.cpp" />

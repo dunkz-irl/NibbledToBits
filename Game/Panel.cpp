@@ -85,7 +85,7 @@ void Panel::Draw()
 void Panel::Draw(Play::Point2D pos)
 {
 	// heading
-	Play::DrawFontText("font64px_10x10", PanelItem::ItemTypeName(m_type), Play::Point2D(WIDTH / 2, HEIGHT - 55), Play::CENTRE);
+	Play::DrawFontText("font64px_10x10", PanelItem::ItemTypeName(m_type), Play::Point2D(WIDTH / 2, HEIGHT - 15), Play::CENTRE);
 
 	if (!(m_type <= 0))
 	{

@@ -165,9 +165,20 @@ GameAreaObject* GameManager::GetExitObj()
 	return m_gameArea->m_holeExit;
 }
 
+void GameManager::RemoveGameAreaObject(GridVector gridPos)
+{
+	delete m_gameArea->m_gameAreaObjects[gridPos.x][gridPos.y];
+	m_gameArea->m_gameAreaObjects[gridPos.x][gridPos.y] = g_initObj;
+}
+
 std::pair<int, float> GameManager::GetMouseSpawnInfo()
 {
 	return std::pair<int, float>(m_numLevelMice, m_mouseSpawnRate);
+}
+
+void GameManager::IncrementCollectedCheese()
+{
+	m_collectedCheese++;
 }
 
 void GameManager::ManageInput()
@@ -322,9 +333,15 @@ GameObject* GameManager::GetGameObject(int id)
 void GameManager::DrawUI()
 {
 	std::stringstream ss;
-	ss << "Saved: " << m_savedMice << "/" << m_targetSavedMice;
+	ss << "Mice Saved: " << m_savedMice << "/" << m_targetSavedMice;
 
-	Play::Point2f pos = { DISPLAY_WIDTH / 9.f, DISPLAY_HEIGHT * 0.82f };
+	Play::Point2f pos = { DISPLAY_WIDTH / 6.f, DISPLAY_HEIGHT * 0.81f };
 
-	Play::DrawFontText("ABNORMAL40px_10x10", ss.str(), pos);
+	Play::DrawFontText("ABNORMAL40px_10x10", ss.str(), pos, CENTRE);
+
+	ss.str(""); // not .clear() which is something else apparently
+
+	ss << "Cheese:" << m_collectedCheese << "/" << m_targetCheese;
+
+	Play::DrawFontText("ABNORMAL40px_10x10", ss.str(), pos + Play::Point2f{0.f, -42.f}, CENTRE);
 }
