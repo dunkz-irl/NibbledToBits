@@ -52,9 +52,9 @@ GameArea::~GameArea()
 		return;
 	}
 
-	for (int x = 0; x < 16; x++)
+	for (int x = 0; x < GRID_WIDTH; x++)
 	{
-		for (int y = 0; y < 13; y++)
+		for (int y = 0; y < GRID_HEIGHT; y++)
 		{
 			// If the objects address is that of the placeholder obj, don't delete it, as we'll delete it once later
 			if (&*m_gameAreaObjects[x][y] == g_initObj)
@@ -155,7 +155,6 @@ void GameArea::DrawGameArea() {
 	}
 }
 
-
 Point2f GameArea::GameToWorld(Point2f pos) {
 	pos.x = pos.x * static_cast<float>(SQUARE_SIZE) + static_cast<float>(SQUARE_SIZE) / 2.f;
 	pos.y = pos.y * static_cast<float>(SQUARE_SIZE) + static_cast<float>(SQUARE_SIZE) / 2.f;
@@ -175,7 +174,7 @@ GridPos GameArea::WorldToGame(Point2f pos) {
 void GameArea::ManagePickupObjectDeletion()
 {
 	GridPos mouseGridPos = GM_INST.m_gameArea->GetMouseGridPos();
-	if (mouseGridPos.x < 0 || mouseGridPos.x > GRID_WIDTH || mouseGridPos.y < 0 || mouseGridPos.y > GRID_HEIGHT)
+	if (mouseGridPos.x < 0 || mouseGridPos.x > GRID_WIDTH - 1 || mouseGridPos.y < 0 || mouseGridPos.y > GRID_HEIGHT - 1)
 	{
 		return;
 	}

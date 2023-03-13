@@ -45,7 +45,7 @@ extern int GAME_AREA_WIDTH;
 extern int GAME_AREA_HEIGHT;
 extern int SQUARE_SIZE;
 constexpr int GRID_WIDTH{ 16 };
-constexpr int GRID_HEIGHT{ 13 };
+constexpr int GRID_HEIGHT{ 14 };
 extern int BOARDER_PIXELS;
 extern const int DISPLAY_WIDTH;
 extern const int DISPLAY_HEIGHT;

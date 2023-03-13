@@ -2,13 +2,22 @@ ID, x pos, y pos, rotation, Misc variable
 7,-1
 7,13
 5,2,5
+single ,2,3,0,0
 tube_two_way ,3,3,1,1
 emmental ,3,6,0,0
 trap_01_set ,3,8,0,0
-tube_two_way ,7,3,0,1
-parmesan ,9,7,0,0
-single ,10,3,0,0
+single ,6,0,0,0
+single ,6,1,0,0
+single ,6,2,0,0
+tube_two_way ,7,3,2,1
+single ,7,8,0,0
+single ,8,0,0,0
+single ,8,1,0,0
+single ,8,2,0,0
+parmesan ,9,3,0,0
+tube_two_way ,10,3,1,0
 tube_two_way ,10,11,0,1
+single ,11,3,0,0
 trap_01_set ,11,7,3,0
 Inventory
 MiceIn,0

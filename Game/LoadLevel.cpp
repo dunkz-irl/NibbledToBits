@@ -74,14 +74,14 @@ void LevelLoader::LoadLevel(const char* levelName)
 	// Populate objects in the level
 
 	// Temp thingy
-	GameAreaObject* gameAreaObjects[16][13]; // To put in m_GameArea
+	GameAreaObject* gameAreaObjects[GRID_WIDTH][GRID_HEIGHT]; // To put in m_GameArea
 
 	// Initialise GAObjs
 	g_initObj = new GameAreaObject();
 
-	for (int x = 0; x < 16; x++)
+	for (int x = 0; x < GRID_WIDTH; x++)
 	{
-		for (int y = 0; y < 13; y++)
+		for (int y = 0; y < GRID_HEIGHT; y++)
 		{
 			gameAreaObjects[x][y] = g_initObj;	// All the "uninitialised" entries are the same, so why not all point to a single placeholder object
 												// rather than creating a new one each time.
@@ -174,9 +174,9 @@ void LevelLoader::LoadLevel(const char* levelName)
 	// Set entry directions for gameAreaObjects
 	for (ObjectCSV& csv_obj : v_CSVobjects)
 	{
-		for (int x = 0; x < 16; x++)
+		for (int x = 0; x < GRID_WIDTH; x++)
 		{
-			for (int y = 0; y < 13; y++)
+			for (int y = 0; y < GRID_HEIGHT; y++)
 			{
 				GameAreaObject* ga_obj = gameAreaObjects[x][y];
 				if (ga_obj->id == csv_obj.id)
@@ -192,9 +192,9 @@ void LevelLoader::LoadLevel(const char* levelName)
 	GM_INST.m_panel->SetPlayerInventory(v_tempInventory);
 
 	// Have to do this after the GameArea member array has been copied into
-	for (int x = 0; x < 16; x++)
+	for (int x = 0; x < GRID_WIDTH; x++)
 	{
-		for (int y = 0; y < 13; y++)
+		for (int y = 0; y < GRID_HEIGHT; y++)
 		{
 			GameAreaObject& obj = *GameArea::m_gameAreaObjects[x][y];
 

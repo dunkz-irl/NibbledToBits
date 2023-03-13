@@ -41,9 +41,9 @@ void GoState::OnExit()
 	GameObjectManager::Instance().CleanupAllOfType(GameObjectType::TYPE_DESTROYED);
 
 	// Reset all game area objects
-	for (int x = 0; x < 16; x++)
+	for (int x = 0; x < GRID_WIDTH; x++)
 	{
-		for (int y = 0; y < 13; y++)
+		for (int y = 0; y < GRID_HEIGHT; y++)
 		{
 			GameArea::m_gameAreaObjects[x][y]->Reset();
 		}
@@ -60,9 +60,9 @@ IGameState* GoState::OnUpdate()
 	}
 
 	// Update GameAreaObjects
-	for (int x = 0; x < 16; x++)
+	for (int x = 0; x < GRID_WIDTH; x++)
 	{
-		for (int y = 0; y < 13; y++)
+		for (int y = 0; y < GRID_HEIGHT; y++)
 		{
 			GameArea::m_gameAreaObjects[x][y]->Update();
 		}
