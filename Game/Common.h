@@ -23,6 +23,11 @@ struct GridVector
 	{
 		return (rhs.x == lhs.x) && (rhs.y == lhs.y);
 	}
+
+	GridVector operator-(GridVector rhs)
+	{
+		return { rhs.x - x, rhs.y - y };
+	}
 };
 
 extern GridVector g_directionVectors[4];

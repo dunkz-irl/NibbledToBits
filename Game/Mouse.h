@@ -14,6 +14,8 @@ public:
 	void Draw() override;
 
 	void ReverseDirection();
+	void ForceDirection(GridVector direction);
+	void ForcePosition(GridVector current, GridVector next);
 	void UpdateTrackedGridSquares();
 
 	GridVector GetNextPosition() const { return m_nextPosition; }

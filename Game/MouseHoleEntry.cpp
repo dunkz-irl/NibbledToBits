@@ -15,7 +15,8 @@ void MouseHoleEntry::OnNextSquare(void* pObj)
 
 	if (pMouse->GetNextPosition().x == posx && pMouse->GetNextPosition().y == posy)
 	{
-		pMouse->ReverseDirection();
+		GridVector holeToMouse = GridVector{posx, posy} - pMouse->GetGridPosition();
+		pMouse->ForcePosition(GridVector{posx + holeToMouse.x, posy + holeToMouse.y}, GridVector{ posx + holeToMouse.x * 2, posy + holeToMouse.y * 2 });
 		pMouse->UpdateTrackedGridSquares();
 	}
 }

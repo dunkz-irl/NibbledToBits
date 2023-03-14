@@ -169,6 +169,17 @@ void Mouse::ReverseDirection()
 	}
 }
 
+void Mouse::ForceDirection(GridVector direction)
+{
+	m_currentDirection = { direction.x, direction.y };
+}
+
+void Mouse::ForcePosition(GridVector current, GridVector next)
+{
+	m_currentGridPosition = current;
+	m_nextPosition = next;
+}
+
 bool Mouse::CheckBlockForValidEntrance(const GameAreaObject& gameAreaObj)
 {
 	if (gameAreaObj.id == 7)
