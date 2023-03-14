@@ -7,6 +7,8 @@
 
 #include "GameObject.h"
 #include "GameObjectManager.h"
+#include "GameArea.h"
+#include "Bullet.h"
 
 GameObject* GameObjectManager::Create(GameObjectType type, Play::Point2f pos)
 {
@@ -17,7 +19,9 @@ GameObject* GameObjectManager::Create(GameObjectType type, Play::Point2f pos)
 	case GameObjectType::TYPE_MOUSE:
 		pGameObject = new Mouse(pos);
 		break;
-
+	case GameObjectType::TYPE_BULLET:
+		pGameObject = new Bullet(pos);
+		break;
 	case GameObjectType::COUNT:
 		[[fallthrough]];
 	default:

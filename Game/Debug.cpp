@@ -1,6 +1,7 @@
 #include "Play.h"
 #include "Debug.h"
 #include "GameArea.h"
+#include "GameStateTypes.h"
 #include "GameManager.h"
 
 void Debug::DrawBoldText(std::string text, Play::Point2f pos)

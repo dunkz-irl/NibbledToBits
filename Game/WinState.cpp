@@ -15,6 +15,8 @@ void WinState::OnEnter()
 {
 	using namespace Play;
 
+	m_thisState = GAMESTATE_ENUM::WIN;
+
 	m_debugStateName = "Win State";
 	Vector2D buttonSize = { 367.f, 112.f };
 

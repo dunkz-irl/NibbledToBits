@@ -79,8 +79,10 @@ void ParticleManager::DrawParticles()
 	}
 }
 
+// #CreateEmitter
 int ParticleManager::CreateEmitter(EmitterType type, Play::Point2f pos, float lifetime, float scale)
 {
+
 	Emitter* pEmitter = nullptr;
 
 	switch (type)
@@ -99,6 +101,9 @@ int ParticleManager::CreateEmitter(EmitterType type, Play::Point2f pos, float li
 		break;
 	case EmitterType::CONFETTI:
 		pEmitter = new Confetti(pos, lifetime);
+		break;
+	case EmitterType::SMOKEPUFFSMALL:
+		pEmitter = new SmokePuffSmall(pos, lifetime);
 		break;
 	default:
 		PLAY_ASSERT_MSG(false, "Invalid Emitter type (default case).");

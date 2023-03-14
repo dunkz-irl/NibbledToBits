@@ -13,6 +13,7 @@
 
 void PlanningState::OnEnter()
 {
+	m_thisState = GAMESTATE_ENUM::PLANNING;
 	GM_INST.m_currentGameState = GAMESTATE_ENUM::PLANNING;
 }
 
@@ -50,6 +51,15 @@ void PlanningState::OnDraw()
 	GM_INST.DrawHeldItem();
 	GM_INST.DrawStartButton();
 	GM_INST.DrawUI();
+
+	// Draw GameAreaObjects
+	for (int x = 0; x < GRID_WIDTH; x++)
+	{
+		for (int y = 0; y < GRID_HEIGHT; y++)
+		{
+			GameArea::m_gameAreaObjects[x][y]->Draw();
+		}
+	}
 
 	// Draw bouncy direction arrows
 	DrawMouseHoleArrows();

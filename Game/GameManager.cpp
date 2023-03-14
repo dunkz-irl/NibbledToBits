@@ -17,6 +17,7 @@
 
 #include "Time.h"
 #include "GameObjectManager.h"
+#include "GameStateTypes.h"
 #include "GameManager.h"
 #include "ApplicationManager.h"
 #include "LoadLevel.h"

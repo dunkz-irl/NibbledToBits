@@ -6,6 +6,7 @@ enum class GameObjectType
 {
 	TYPE_MOUSE = 0,
 	TYPE_DESTROYED,
+	TYPE_BULLET,
 	TYPE_CLEANUP,
 	COUNT,
 };

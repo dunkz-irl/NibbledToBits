@@ -4,6 +4,8 @@
 #include "PolygonEmitter.h"
 #include "EmitterTypes.h"
 
+// #CreateEmitter
+
 Confetti::Confetti(Play::Point2f pos, float lifetime)
 {
 	m_shape = CONFETTI;
@@ -39,6 +41,23 @@ CheeseConfetti::CheeseConfetti(Play::Point2f pos, float lifetime)
 	SetColour(Play::cWhite, 1.f, 1.f);
 }
 
+SmokePuffSmall::SmokePuffSmall(Play::Point2f pos, float lifetime)
+{
+	m_shape = SMOKE;
+	m_pos = pos;
+	m_lifetime = lifetime;
+
+	SetSpawnRate(75.f);
+	SetParticleLifetime(0.9f, 1.4f);
+	SetScale(0.3f, 0.5f, 0.15f, 0.1f);
+	SetOpacity(0.6f, 0.0f);
+	SetDirection(0.f, 360.f, 0.f, 0.1f);
+	SetGravity(false);
+	SetVelocity(1.1f, 3.2f);
+	SetRotation(-0.1f, 0.1f, 0.0f, false);
+	SetColour(Play::cGrey, 0.f, 10.f);
+}
+
 SmokePuff::SmokePuff(Play::Point2f pos, float lifetime)
 {
 	m_shape = SMOKE;
@@ -51,7 +70,7 @@ SmokePuff::SmokePuff(Play::Point2f pos, float lifetime)
 	SetOpacity(1.0f, 0.0f);
 	SetDirection(0.f, 360.f, 0.f, 0.1f);
 	SetGravity(false);
-	SetVelocity(1.1f, 3.2f);
+	SetVelocity(1.1f, 3.0f);
 	SetRotation(-0.1f, 0.1f, 0.0f, false);
 	SetColour(Play::cGrey, 0.f, 10.f);
 }

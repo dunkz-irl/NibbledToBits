@@ -1,4 +1,5 @@
 #pragma once
+#include "GameStateTypes.h"
 
 class GameArea;
 class Panel;
@@ -16,12 +17,6 @@ struct GridPoint { int x; int y; };
 
 #define GM_INST GameManager::Instance()
 
-enum class GAMESTATE_ENUM
-{
-	PLANNING = 0,
-	GO,
-	PAUSE
-};
 
 struct LevelObject
 {

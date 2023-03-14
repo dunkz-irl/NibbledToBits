@@ -1,5 +1,11 @@
 #pragma once
 
+class SmokePuffSmall : public Emitter
+{
+public:
+	SmokePuffSmall(Play::Point2f pos, float lifetime);
+};
+
 class WinText : public Emitter
 {
 public:

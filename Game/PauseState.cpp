@@ -8,6 +8,7 @@
 
 PauseState::PauseState()
 {
+	m_thisState = GAMESTATE_ENUM::PAUSE;
 	m_debugStateName = "Pause State";
 }
 

@@ -32,6 +32,7 @@ struct GameAreaObject {
 	uint8_t validEntryDirections{ 0x0 };
 
 	virtual void Update() { };
+	virtual void Draw() { };
 	virtual void OnCurrentSquare(void* pObj) { };
 	virtual void OnNextSquare(void* pObj) { };
 	virtual void Reset() { };

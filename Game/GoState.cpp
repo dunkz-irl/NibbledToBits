@@ -24,6 +24,8 @@
 GoState::GoState()
 {
 	m_debugStateName = "Go State";
+	m_thisState = GAMESTATE_ENUM::GO;
+	GM_INST.m_currentGameState = GAMESTATE_ENUM::GO;
 	std::pair<int, float> mouseInfo = GM_INST.GetMouseSpawnInfo();
 	m_mouseSpawner = new MouseSpawner(mouseInfo.first, mouseInfo.second);
 }
@@ -97,6 +99,15 @@ void GoState::OnDraw()
 	GM_INST.DrawStartButton();
 	GM_INST.DrawUI();
 	// throw std::logic_error("The method or operation is not implemented.");
+
+	// Draw GameAreaObjects (most are done somewhere else, but tank has this method)
+	for (int x = 0; x < GRID_WIDTH; x++)
+	{
+		for (int y = 0; y < GRID_HEIGHT; y++)
+		{
+			GameArea::m_gameAreaObjects[x][y]->Draw();
+		}
+	}
 }
 
 void GoState::IncrementSavedMice()

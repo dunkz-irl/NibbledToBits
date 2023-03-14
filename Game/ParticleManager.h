@@ -1,10 +1,12 @@
 #pragma once
 
+// #CreateEmitter
 enum class EmitterType
 {
 	SMOKE = 0,
 	PORTAL,
 	SMOKEPUFF,
+	SMOKEPUFFSMALL,
 	CHEESE,
 	CONFETTI,
 	WINTEXT
