@@ -1,5 +1,6 @@
 #include "Play.h"
 #include "LoadLevel.h"
+#include "Common.h"
 
 // GameAreaObjects
 #include "SingleWall.h"

@@ -49,6 +49,8 @@ void GoState::OnExit()
 		}
 	}
 
+	GM_INST.ResetLevel();
+
 	delete m_mouseSpawner;
 }
 

@@ -171,6 +171,12 @@ void GameManager::RemoveGameAreaObject(GridVector gridPos)
 	m_gameArea->m_gameAreaObjects[gridPos.x][gridPos.y] = g_initObj;
 }
 
+void GameManager::ResetLevel()
+{
+	m_savedMice = 0;
+	m_collectedCheese = 0;
+}
+
 std::pair<int, float> GameManager::GetMouseSpawnInfo()
 {
 	return std::pair<int, float>(m_numLevelMice, m_mouseSpawnRate);
@@ -309,6 +315,7 @@ void GameManager::ToNextState()
 
 void GameManager::NextLevel()
 {
+	m_targetCheese = 0;
 	m_level++;
 	m_savedMice = 0;
 	m_goButton->SetSprite("tick_panel");

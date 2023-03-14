@@ -119,4 +119,5 @@ private:
 public:
 	GameAreaObject* GetExitObj();
 	void RemoveGameAreaObject(GridVector gridPos);
+	void ResetLevel();
 };

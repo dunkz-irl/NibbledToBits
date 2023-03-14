@@ -126,7 +126,7 @@ void GameArea::DrawGameArea() {
 	for (int i = 0; i < GRID_WIDTH; ++i) {
 		for (int j = 0; j < GRID_HEIGHT; ++j) {
 			GameAreaObject& obj = *m_gameAreaObjects[i][j];
-			if (obj.id != -1) {
+			if (obj.id != -1 && obj.vis) {
 				const Play::Point2D worldPos = GameToWorld({ obj.posx, obj.posy });
 				obj.m_matrix.row[2] = Play::Vector3f(worldPos.x, worldPos.y, 0.f);
 				Play::DrawSpriteTransformed(GetSpriteIDFromObjectID(obj.id, obj.rot), obj.m_matrix, 0);
