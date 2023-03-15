@@ -43,11 +43,15 @@ void GoState::OnExit()
 	GameObjectManager::Instance().CleanupAllOfType(GameObjectType::TYPE_DESTROYED);
 
 	// Reset all game area objects
-	for (int x = 0; x < GRID_WIDTH; x++)
+
+	if (GM_INST.m_targetSavedMice != GM_INST.m_savedMice)
 	{
-		for (int y = 0; y < GRID_HEIGHT; y++)
+		for (int x = 0; x < GRID_WIDTH; x++)
 		{
-			GameArea::m_gameAreaObjects[x][y]->Reset();
+			for (int y = 0; y < GRID_HEIGHT; y++)
+			{
+				GameArea::m_gameAreaObjects[x][y]->Reset();
+			}
 		}
 	}
 

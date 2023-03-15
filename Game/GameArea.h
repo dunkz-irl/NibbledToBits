@@ -27,6 +27,7 @@ struct GameAreaObject {
 	bool vis{ true };
 	bool pickupable{ true };
 	bool rotatable{ true };
+	bool active{ true };
 
 	uint8_t possibleEntryDirections{ 0x0 };
 	uint8_t validEntryDirections{ 0x0 };

@@ -8,4 +8,5 @@ public:
 	void OnCurrentSquare(void* pObj) override;
 	void OnNextSquare(void* pObj) override;
 
+	void Reset() override;
 };

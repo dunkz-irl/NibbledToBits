@@ -107,7 +107,7 @@ private:
 	int m_savedMice; // Follows the variable in GoState.cpp
 	int m_level{ 0 };
 
-	const char* m_levelStrings[2]{ "LEVEL1.LEV", "LEVEL2.LEV" };
+	const char* m_levelStrings[3]{ "LEVEL1.LEV", "LEVEL2.LEV", "LEVEL3.LEV"};
 
 	int m_collectedCheese{ 0 };
 	int m_targetCheese{ 0 };

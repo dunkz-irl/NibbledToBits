@@ -6,13 +6,25 @@
 
 void SingleWall::OnCurrentSquare(void* pObj)
 {
-	throw std::logic_error("This should never happen.");
+	if (active || vis)
+	{
+		throw std::logic_error("This should never happen.");
+	}
 }
 
 void SingleWall::OnNextSquare(void* pObj)
 {
-	Mouse* pMouse = static_cast<Mouse*>(pObj);
+	if (active)
+	{
+		Mouse* pMouse = static_cast<Mouse*>(pObj);
 
-	pMouse->ReverseDirection();
-	pMouse->UpdateTrackedGridSquares();
+		pMouse->ReverseDirection();
+		pMouse->UpdateTrackedGridSquares();
+	}
+}
+
+void SingleWall::Reset()
+{
+	vis = true;
+	active = true;
 }

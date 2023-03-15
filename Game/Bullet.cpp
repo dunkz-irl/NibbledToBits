@@ -29,10 +29,12 @@ void Bullet::Update()
 		return;
 	}
 
-	if (obj_gameArea->id == SINGLE)
+	if (obj_gameArea->id == SINGLE && obj_gameArea->active)
 	{
 		ParticleManager::Instance().CreateEmitter(EmitterType::EXPLOSION, m_matrix.row[2], 0.1f);
 		m_type = GameObjectType::TYPE_DESTROYED;
+		obj_gameArea->active = false;
+		obj_gameArea->vis = false;
 	}	
 }
 

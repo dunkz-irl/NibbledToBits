@@ -37,6 +37,9 @@
     <Filter Include="Particle System">
       <UniqueIdentifier>{d03b6383-bfda-429c-9f3f-cfb1210838ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game Objects">
+      <UniqueIdentifier>{d0a0da83-37bb-4914-91f3-b31b54adccc0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Play.h">
@@ -85,9 +88,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameObjectManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Mouse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EasingFunctions.h">
@@ -177,9 +177,6 @@
     <ClInclude Include="CheesePickup.h">
       <Filter>Game Area Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameStateTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -188,6 +185,12 @@
     </ClInclude>
     <ClInclude Include="Tank.h">
       <Filter>Game Area Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouse.h">
+      <Filter>Game Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -225,9 +228,6 @@
       <Filter>Editor Files %28Copied and Edited%29</Filter>
     </ClCompile>
     <ClCompile Include="GameObjectManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Mouse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
@@ -320,14 +320,17 @@
     <ClCompile Include="CheesePickup.cpp">
       <Filter>Game Area Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="AmmoPickup.cpp">
       <Filter>Game Area Objects</Filter>
     </ClCompile>
     <ClCompile Include="Tank.cpp">
       <Filter>Game Area Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Mouse.cpp">
+      <Filter>Game Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

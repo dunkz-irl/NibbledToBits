@@ -241,7 +241,10 @@ void GameArea::ValidateEntryDirections(GameAreaObject& ga_obj)
 
 			if (nextObj->id == SINGLE) // single block
 			{
-				dirs[i] = false;
+				if (nextObj->active)
+				{
+					dirs[i] = false;
+				}
 			}
 		}
 	}
