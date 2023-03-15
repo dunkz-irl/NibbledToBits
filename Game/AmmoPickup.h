@@ -5,6 +5,7 @@ class AmmoPickup : public GameAreaObject
 {
 
 public:
+	void Update() override;
 	void OnCurrentSquare(void* pObj) override;
 	void Reset() override;
 

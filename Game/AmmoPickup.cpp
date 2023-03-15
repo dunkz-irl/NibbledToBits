@@ -3,10 +3,25 @@
 #include <queue>
 #include "Tank.h"
 #include "ParticleManager.h"
+#include "ParticlesCommon.h"
+#include "Time.h"
 
 #include "AmmoPickup.h"
 
 extern std::vector<std::string> g_v_idToStringTable;
+
+void AmmoPickup::Update()
+{
+	if (m_active)
+	{
+		float t = Time::GetOverallTime() + Magnitude({ posx, posy });
+		t *= 8.f;
+
+		m_matrix = MatrixScale(sin(t) / 10.f + 1.f, cos(t) / 10.f + 1.f);
+
+		m_matrix.row[2] = GameArea::GameToWorld({ posx, posy });
+	}
+}
 
 void AmmoPickup::OnCurrentSquare(void* pObj)
 {
