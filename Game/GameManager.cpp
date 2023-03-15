@@ -35,7 +35,7 @@ GameManager::GameManager()
 	m_currentHeld = new FloatingObject;
 
 	// Initialise Start Button
-	m_goButton = new GoButton(Play::GetSpriteId("tick_panel"), {DISPLAY_WIDTH * 0.875f, DISPLAY_HEIGHT * 0.1f}, Play::Vector2f{ 100, 100 });
+	m_goButton = new GoButton(Play::GetSpriteId("tick_panel"), {DISPLAY_WIDTH * 0.125f, DISPLAY_HEIGHT * 0.1f}, Play::Vector2f{ 100, 100 });
 
 	m_pGameState = new PlanningState();
 	m_pGameState->OnEnter();
@@ -314,13 +314,18 @@ void GameManager::ToNextState()
 	}
 }
 
-void GameManager::NextLevel()
+bool GameManager::NextLevel()
 {
 	m_targetCheese = 0;
 	m_level++;
+	if (m_level >= m_totalLevels)
+	{
+		return false;
+	}
 	m_savedMice = 0;
 	m_goButton->SetSprite("tick_panel");
 	LoadLevel(m_levelStrings[m_level]);
+	return true;
 }
 
 void GameManager::UpdateStartButton()

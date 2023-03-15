@@ -237,7 +237,11 @@ void GameArea::ValidateEntryDirections(GameAreaObject& ga_obj)
 			GameAreaObject* nextObj = GetGameAreaObject({ ga_obj.posx + dir.x, ga_obj.posy + dir.y });
 
 			if (nextObj == nullptr)
-				return;
+			{
+				dirs[i] = false;
+				continue;
+			}
+				
 
 			if (nextObj->id == SINGLE) // single block
 			{
@@ -259,6 +263,21 @@ void GameArea::ValidateEntryDirections(GameAreaObject& ga_obj)
 	leftBit <<= 3;
 
 	ga_obj.validEntryDirections = upBit | rightBit | downBit | leftBit;
+}
+
+void GameArea::ValidateAllRotatingBlockEntryDirections()
+{
+	for (int x = 0; x < GRID_WIDTH; x++)
+	{
+		for (int y = 0; y < GRID_HEIGHT; y++)
+		{
+			GameAreaObject& obj = *m_gameAreaObjects[x][y];
+			if (obj.id == TUBE_TWO_WAY) // Rotating block
+			{
+				ValidateEntryDirections(obj);
+			}
+		}
+	}
 }
 
 std::array<bool, 4> GameArea::GetBlockPossibleDirections(GameAreaObject& obj)
@@ -343,6 +362,7 @@ bool GameArea::TryPlaceObject(const FloatingObject& obj) {
 	case GameAreaObjects::TUBE_TWO_WAY:
 		tmpGameAreaObject = new RotatingBlock();
 		tmpGameAreaObject->rotatable = true;
+		tmpGameAreaObject->pickupable = true;
 		break;
 	default:
 		tmpGameAreaObject = new GameAreaObject();
@@ -375,11 +395,16 @@ bool GameArea::TryPlaceObject(const FloatingObject& obj) {
 	}
 
 	// Match entryDirections to object rotation value
-	for (int i = 0; i < obj.rot; i++)
+	int i = 0;
+	do
 	{
-		GameArea::RotateEntryDirections(tmpGameAreaObject->possibleEntryDirections);
+		if (tmpGameAreaObject->rot != 0)
+		{
+			GameArea::RotateEntryDirections(tmpGameAreaObject->possibleEntryDirections);
+		}
 		GameArea::ValidateEntryDirections(*tmpGameAreaObject);
-	}
+		i++;
+	} while (i < tmpGameAreaObject->rot);
 
 	m_lastSelected = mouseGridPos;
 	return true;

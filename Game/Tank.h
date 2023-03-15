@@ -6,10 +6,11 @@ class Tank : public GameAreaObject
 public:
 	void Update() override;
 	void Draw() override;
+	void Reset() override;
 
 	static void AddAmmo(int id);
 	static int UseAmmo();
-
+	
 	void Fire(int bulletSpriteID);
 private:
 	const char* m_turretSprite{ "tank_turret" };

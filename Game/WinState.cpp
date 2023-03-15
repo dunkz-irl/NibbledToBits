@@ -6,6 +6,8 @@
 #include "ParticleManager.h"
 #include "GameManager.h"
 #include "PlanningState.h"
+#include "FlavourTextState.h"
+#include "MainGameState.h"
 
 #include "WinState.h"
 
@@ -39,8 +41,14 @@ IGameState* WinState::OnUpdate()
 	if (m_continueButton && m_continueButton->Pressed())
 	{
 		m_continueButton->SetSprite("continue-pressed");
-		GM_INST.NextLevel();
-		return new PlanningState();
+		if (GM_INST.NextLevel())
+		{
+			return new PlanningState();
+		}
+		else
+		{
+			MainGameState::m_epilogue = true;
+		}
 	}
 	return nullptr;
 }

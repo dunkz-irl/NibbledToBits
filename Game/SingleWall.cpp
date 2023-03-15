@@ -8,7 +8,11 @@ void SingleWall::OnCurrentSquare(void* pObj)
 {
 	if (active || vis)
 	{
-		throw std::logic_error("This should never happen.");
+		Mouse* pMouse = static_cast<Mouse*>(pObj);
+
+		pMouse->ReverseDirection();
+		pMouse->UpdateTrackedGridSquares();
+		// throw std::logic_error("This should never happen.");
 	}
 }
 

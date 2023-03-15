@@ -49,7 +49,7 @@ public:
 
 	void ToNextState();
 
-	void NextLevel();
+	bool NextLevel();
 
 	GameObject* GetGameObject(int id);
 
@@ -71,6 +71,7 @@ public:
 	friend class Time;
 	friend class GameArea;
 	friend class Debug;
+	friend class Tank;
 	
 	void IncrementCollectedCheese();
 private:
@@ -106,8 +107,9 @@ private:
 	int m_targetSavedMice;
 	int m_savedMice; // Follows the variable in GoState.cpp
 	int m_level{ 0 };
+	int m_totalLevels{ 4 };
 
-	const char* m_levelStrings[3]{ "LEVEL1.LEV", "LEVEL2.LEV", "LEVEL3.LEV"};
+	const char* m_levelStrings[4]{ "LEVEL1.LEV", "LEVEL2.LEV", "LEVEL3.LEV", "LEVEL4.LEV"};
 
 	int m_collectedCheese{ 0 };
 	int m_targetCheese{ 0 };

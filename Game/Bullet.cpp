@@ -15,10 +15,7 @@ Bullet::Bullet(Play::Point2f pos) : GameObject::GameObject(GameObjectType::TYPE_
 
 void Bullet::Update()
 {
-
-
 	m_matrix.row[2] += m_velocity;
-	// throw std::logic_error("The method or operation is not implemented.");
 	m_gridPos = GameArea::WorldToGame(m_matrix.row[2]);
 
 	GameAreaObject* obj_gameArea = GameArea::GetGameAreaObject(m_gridPos);
@@ -35,6 +32,8 @@ void Bullet::Update()
 		m_type = GameObjectType::TYPE_DESTROYED;
 		obj_gameArea->active = false;
 		obj_gameArea->vis = false;
+
+		GameArea::ValidateAllRotatingBlockEntryDirections();
 	}	
 }
 
@@ -42,7 +41,6 @@ void Bullet::UpdateDestroyed()
 {
 	ParticleManager::Instance().CreateEmitter(EmitterType::SMOKEPUFFSMALL, m_matrix.row[2], 0.1f);
 	m_matrix.row[2] += m_velocity;
-	// throw std::logic_error("The method or operation is not implemented.");
 	m_gridPos = GameArea::WorldToGame(m_matrix.row[2]);
 
 	GameAreaObject* obj_gameArea = GameArea::GetGameAreaObject(m_gridPos);
@@ -57,6 +55,4 @@ void Bullet::UpdateDestroyed()
 void Bullet::Draw()
 {
 	Play::DrawSpriteTransformed(m_spriteID, m_matrix, 0);
-
-	// throw std::logic_error("The method or operation is not implemented.");
 }

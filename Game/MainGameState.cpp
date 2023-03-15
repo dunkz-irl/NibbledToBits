@@ -5,6 +5,7 @@
 
 #include "MainGameState.h"
 #include "MenuState.h"
+#include "FlavourTextState.h"
 
 #include "ReadCSV.h"
 #include "GameArea.h"
@@ -26,7 +27,7 @@ void MainGameState::OnEnter()
 
 	// Load level
 	g_vObjects = ReadObjectsCSV();
-	GM_INST.LoadLevel("LEVEL3.lev"); // #LOAD1stLEVEL
+	GM_INST.LoadLevel("LEVEL1.lev"); // #LOAD1stLEVEL
 }
 
 void MainGameState::OnExit()
@@ -42,6 +43,12 @@ IApplicationState* MainGameState::OnUpdate()
 		return new MenuState();
 	}
 
+	if (Play::KeyPressed(VK_N))
+	{
+		GM_INST.m_pGameState->OnExit();
+		GM_INST.NextLevel();
+	}
+
 	GM_INST.ManageInput(); // #TODO: Should buttons/UI be in here?
 
 	// Fagin/Abdullah's stuff
@@ -50,6 +57,11 @@ IApplicationState* MainGameState::OnUpdate()
 
 	// My stuff
 	GM_INST.Update();
+
+	if (m_epilogue)
+	{
+		return new FlavourTextState("epilogue.txt");
+	}
 
 	return nullptr;
 }

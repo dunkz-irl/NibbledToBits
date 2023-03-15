@@ -5,7 +5,7 @@
 #include "MenuState.h"
 #include "MainGameState.h"
 #include "MenuState.h"
-#include "IntroState.h"
+#include "FlavourTextState.h"
 
 #include "MouseGraphic.h"
 #include "TitleTextGraphic.h"
@@ -41,7 +41,7 @@ IApplicationState* MenuState::OnUpdate()
 
 	if (Play::KeyPressed(VK_P))
 	{
-		return new IntroState();
+		return new FlavourTextState("intro.txt");
 	}
 
 	m_testCounter++;
@@ -61,3 +61,4 @@ void MenuState::OnDraw()
 	Play::DrawDebugText(CENTRE_POINT, DEBUG_TEXT(m_testCounter), Play::cWhite);
 	Play::DrawDebugText({ DISPLAY_WIDTH / 2.f, DISPLAY_HEIGHT * 0.25f }, "Press P to Play", Play::cWhite);
 }
+

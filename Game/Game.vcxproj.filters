@@ -131,7 +131,7 @@
     <ClInclude Include="Mouse.h">
       <Filter>Game Objects</Filter>
     </ClInclude>
-    <ClInclude Include="IntroState.h">
+    <ClInclude Include="FlavourTextState.h">
       <Filter>Application States</Filter>
     </ClInclude>
     <ClInclude Include="IApplicationState.h">
@@ -328,7 +328,7 @@
     <ClCompile Include="Mouse.cpp">
       <Filter>Game Objects</Filter>
     </ClCompile>
-    <ClCompile Include="IntroState.cpp">
+    <ClCompile Include="FlavourTextState.cpp">
       <Filter>Application States</Filter>
     </ClCompile>
   </ItemGroup>

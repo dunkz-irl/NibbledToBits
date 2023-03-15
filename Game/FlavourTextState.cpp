@@ -4,11 +4,19 @@
 #include "Button.h"
 #include "Time.h"
 #include "MainGameState.h"
+#include "VirtualKeys.h"
 
-#include "IntroState.h"
+#include "FlavourTextState.h"
 
-void IntroState::OnEnter()
+FlavourTextState::FlavourTextState(const char* textFile)
 {
+	m_textFile = textFile;
+	m_debugStateName = "Flavour Text";
+}
+
+void FlavourTextState::OnEnter()
+{
+	Play::PlayAudio("fanfare");
 	// Temp audio (doesn't really work)
 	//Play::PlayAudio("title");
 
@@ -18,8 +26,8 @@ void IntroState::OnEnter()
 	m_vLinePositions.push_back({ DISPLAY_WIDTH * 0.1f, DISPLAY_HEIGHT * 0.9f });
 
 	// Load story text
-	std::ifstream introFile("data/intro.txt");	
-	PLAY_ASSERT_MSG(introFile, "No intro text file!");
+	std::ifstream introFile("data/" + m_textFile);	
+	PLAY_ASSERT_MSG(introFile, "No text file!");
 	std::string line;
 
 	while (introFile)
@@ -34,15 +42,17 @@ void IntroState::OnEnter()
 		m_introText.append(line);
 		m_introText.append("\n");
 	}
+
+	introFile.close();
 }
 
-void IntroState::OnExit()
+void FlavourTextState::OnExit()
 {
 	delete m_continueButton;
 	// delete story text
 }
 
-IApplicationState* IntroState::OnUpdate()
+IApplicationState* FlavourTextState::OnUpdate()
 {
 	if (m_charIndex == m_introText.length())
 	{
@@ -54,11 +64,31 @@ IApplicationState* IntroState::OnUpdate()
 		return nullptr;
 	}
 
+	if (Play::KeyPressed(VK_SPACE))
+	{
+		return new MainGameState();
+	}
+
+
 	m_timer += Time::GetElapsedTime();
 
-	if (m_timer > m_charDelay)
+	float m_offsetCharDelay = m_charDelay + static_cast<float>(Play::RandomRollRange(-100, 100)) / 1000.f;
+
+	if (m_timer > m_offsetCharDelay)
 	{
+		std::string typingSFX = "type-";
+		typingSFX.append(std::to_string(Play::RandomRoll(13)));
+		
 		m_vLines[m_lineIndex].append(m_introText, m_charIndex, 1);
+
+		if (m_introText[m_charIndex] == ' ')
+		{
+			Play::PlayAudio("space");
+		}
+		else
+		{
+			Play::PlayAudio(typingSFX.c_str());
+		}
 
 		m_timer = 0.f;
 		m_charIndex++;
@@ -69,13 +99,15 @@ IApplicationState* IntroState::OnUpdate()
 			m_lineIndex++;
 			m_vLinePositions[m_lineIndex].y -= 75.f;
 			m_charIndex++;
+			Play::PlayAudio("ding");
+			m_timer = -0.5f;
 		}
 	}
 
 	return nullptr;
 }
 
-void IntroState::OnDraw()
+void FlavourTextState::OnDraw()
 {
 	Play::ClearDrawingBuffer(Play::cBlack);
 

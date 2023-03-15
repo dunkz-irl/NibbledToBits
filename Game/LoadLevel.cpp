@@ -158,8 +158,6 @@ void LevelLoader::LoadLevel(const char* levelName)
 		}
 	}
 
-
-
 	// Make all objects have the category INVENTORY so they appear on the same page
 	for (ObjectCSV& object : v_inventory)
 	{
@@ -204,11 +202,17 @@ void LevelLoader::LoadLevel(const char* levelName)
 			GameAreaObject& obj = *GameArea::m_gameAreaObjects[x][y];
 
 			// Match entryDirections to object rotation value
-			for (int i = 0; i < obj.rot; i++)
+			int i = 0;
+
+			do 
 			{
-				GameArea::RotateEntryDirections(obj.possibleEntryDirections);
+				if (obj.rot != 0)
+				{
+					GameArea::RotateEntryDirections(obj.possibleEntryDirections);
+				}
 				GameArea::ValidateEntryDirections(obj);
-			}
+				i++;
+			} while (i < obj.rot);
 		}
 	}
 }

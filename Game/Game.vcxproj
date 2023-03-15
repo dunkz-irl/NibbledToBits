@@ -40,7 +40,7 @@
     <ClInclude Include="GoButton.h" />
     <ClInclude Include="GoState.h" />
     <ClInclude Include="IGameState.h" />
-    <ClInclude Include="IntroState.h" />
+    <ClInclude Include="FlavourTextState.h" />
     <ClInclude Include="LoadLevel.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="IApplicationState.h" />
@@ -90,7 +90,7 @@
     <ClCompile Include="GoButton.cpp" />
     <ClCompile Include="GoState.cpp" />
     <ClCompile Include="IApplicationState.cpp" />
-    <ClCompile Include="IntroState.cpp" />
+    <ClCompile Include="FlavourTextState.cpp" />
     <ClCompile Include="LoadLevel.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="MenuState.cpp" />

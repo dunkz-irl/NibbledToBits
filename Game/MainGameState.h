@@ -10,4 +10,8 @@ public:
 	IApplicationState* OnUpdate();
 	void OnDraw();
 
+	friend class WinState;
+
+private:
+	static inline bool m_epilogue;
 };

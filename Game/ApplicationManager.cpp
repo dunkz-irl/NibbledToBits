@@ -2,7 +2,8 @@
 #include "Time.h"
 #include "Common.h"
 #include "MainGameState.h"
-#include "IntroState.h"
+#include "PlanningState.h"
+#include "FlavourTextState.h"
 #include "MenuState.h"
 #include "ApplicationManager.h"
 #include "GameManager.h"
@@ -15,6 +16,7 @@ ApplicationManager::ApplicationManager()
 	s_pInstance = this;
 
 	m_pApplicationState = new MenuState(); // #TODO: Change to MenuState when finished
+	//m_pApplicationState = new FlavourTextState("intro.txt"); // #TODO: Change to MenuState when finished
 	m_pApplicationState->OnEnter();
 }
 

@@ -25,7 +25,7 @@ struct GameAreaObject {
 	int misc{ 0 };
 	bool mouseHole{ false };
 	bool vis{ true };
-	bool pickupable{ true };
+	bool pickupable{ false };
 	bool rotatable{ true };
 	bool active{ true };
 
@@ -97,4 +97,5 @@ private:
 	inline static GameAreaObject* m_gameAreaObjects[GRID_WIDTH][GRID_HEIGHT];
 public:
 	static void ManagePickupObjectDeletion();
+	static void ValidateAllRotatingBlockEntryDirections();
 };

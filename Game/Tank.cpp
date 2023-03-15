@@ -24,6 +24,20 @@ void Tank::Update()
 
 	if (Play::KeyPressed(VK_LBUTTON))
 	{
+		// Don't fire if clicking on panel
+		if (GameArea::WorldToGame(m_mousePos).x < 0 || GameArea::WorldToGame(m_mousePos).y < 0)
+		{
+			return;
+		}
+
+		// Don't fire if picking up object
+		GameAreaObject* pObj_GA = GameArea::GetGameAreaObject(GameArea::WorldToGame(m_mousePos));
+		
+		if (GM_INST.m_currentHeld->id != -1)
+		{
+			return;
+		}
+
 		int bulletSpriteID = UseAmmo();
 
 		if (bulletSpriteID == -1)
@@ -52,6 +66,10 @@ void Tank::Draw()
 		return;	
 
 	// Crosshair
+	// Don't draw if mouse is over panel
+	if (GameArea::WorldToGame(m_mousePos).x < 0 || GameArea::WorldToGame(m_mousePos).y < 0)
+		return;
+
 	DrawSprite(m_crosshairSprite, m_mousePos, 0);
 }
 
@@ -68,6 +86,11 @@ int Tank::UseAmmo()
 	int type = m_ammunition.front();
 	m_ammunition.pop();
 	return type;
+}
+
+void Tank::Reset()
+{
+	m_ammunition = std::queue<int>();
 }
 
 void Tank::Fire(int bulletSpriteID)
