@@ -5,10 +5,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -21,9 +17,6 @@
     </Filter>
     <Filter Include="Application States">
       <UniqueIdentifier>{da6e1c6c-29b4-420b-9b2e-693c758163ea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application States\Headers">
-      <UniqueIdentifier>{28862c87-0dac-46ed-81b1-3aa10af97fe9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game States">
       <UniqueIdentifier>{8b2feb94-c301-4cb6-bd75-ec9d8af6e2db}</UniqueIdentifier>
@@ -42,27 +35,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Play.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ApplicationManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Common.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VirtualKeys.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IApplicationState.h">
-      <Filter>Application States\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuState.h">
-      <Filter>Application States\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="MainGameState.h">
-      <Filter>Application States\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="GameArea.h">
       <Filter>Editor Files %28Copied and Edited%29</Filter>
     </ClInclude>
@@ -78,26 +50,8 @@
     <ClInclude Include="ReadCSV.h">
       <Filter>Editor Files %28Copied and Edited%29</Filter>
     </ClInclude>
-    <ClInclude Include="GameManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LoadLevel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjectManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EasingFunctions.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MouseGraphic.h">
       <Filter>Source Files\Main Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="Time.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SimpleGraphic.h">
       <Filter>Source Files\Main Menu</Filter>
@@ -116,18 +70,6 @@
     </ClInclude>
     <ClInclude Include="PauseState.h">
       <Filter>Game States</Filter>
-    </ClInclude>
-    <ClInclude Include="GoButton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Singleton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MouseSpawner.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Debug.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MouseHoleEntry.h">
       <Filter>Game Area Objects</Filter>
@@ -177,9 +119,6 @@
     <ClInclude Include="CheesePickup.h">
       <Filter>Game Area Objects</Filter>
     </ClInclude>
-    <ClInclude Include="GameStateTypes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AmmoPickup.h">
       <Filter>Game Area Objects</Filter>
     </ClInclude>
@@ -191,6 +130,63 @@
     </ClInclude>
     <ClInclude Include="Mouse.h">
       <Filter>Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroState.h">
+      <Filter>Application States</Filter>
+    </ClInclude>
+    <ClInclude Include="IApplicationState.h">
+      <Filter>Application States</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGameState.h">
+      <Filter>Application States</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuState.h">
+      <Filter>Application States</Filter>
+    </ClInclude>
+    <ClInclude Include="ApplicationManager.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Common.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EasingFunctions.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectManager.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStateTypes.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GoButton.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadLevel.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseSpawner.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Play.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VirtualKeys.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -331,6 +327,9 @@
     </ClCompile>
     <ClCompile Include="Mouse.cpp">
       <Filter>Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="IntroState.cpp">
+      <Filter>Application States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

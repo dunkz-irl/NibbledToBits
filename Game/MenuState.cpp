@@ -4,6 +4,8 @@
 
 #include "MenuState.h"
 #include "MainGameState.h"
+#include "MenuState.h"
+#include "IntroState.h"
 
 #include "MouseGraphic.h"
 #include "TitleTextGraphic.h"
@@ -39,7 +41,7 @@ IApplicationState* MenuState::OnUpdate()
 
 	if (Play::KeyPressed(VK_P))
 	{
-		return new MainGameState();
+		return new IntroState();
 	}
 
 	m_testCounter++;

@@ -2,6 +2,8 @@
 #include "Time.h"
 #include "Common.h"
 #include "MainGameState.h"
+#include "IntroState.h"
+#include "MenuState.h"
 #include "ApplicationManager.h"
 #include "GameManager.h"
 #include "Debug.h"
@@ -12,7 +14,7 @@ ApplicationManager::ApplicationManager()
 {
 	s_pInstance = this;
 
-	m_pApplicationState = new MainGameState(); // #TODO: Change to MenuState when finished
+	m_pApplicationState = new MenuState(); // #TODO: Change to MenuState when finished
 	m_pApplicationState->OnEnter();
 }
 
