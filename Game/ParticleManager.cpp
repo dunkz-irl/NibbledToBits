@@ -105,6 +105,9 @@ int ParticleManager::CreateEmitter(EmitterType type, Play::Point2f pos, float li
 	case EmitterType::SMOKEPUFFSMALL:
 		pEmitter = new SmokePuffSmall(pos, lifetime);
 		break;
+	case EmitterType::EXPLOSION:
+		pEmitter = new Explosion(pos, lifetime);
+		break;
 	default:
 		PLAY_ASSERT_MSG(false, "Invalid Emitter type (default case).");
 		break;

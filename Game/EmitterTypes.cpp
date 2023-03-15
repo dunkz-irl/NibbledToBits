@@ -6,6 +6,23 @@
 
 // #CreateEmitter
 
+Explosion::Explosion(Play::Point2f pos, float lifetime)
+{
+	m_shape = ParticleShape::EXPLOSION;
+	m_pos = pos;
+	m_lifetime = lifetime;
+	
+	SetSpawnRate(150.f);
+	SetParticleLifetime(0.9f, 1.4f);
+	SetScale(0.3f, 0.3f, -0.1f, 0.0f);
+	SetOpacity(1.0f, 0.0f);
+	SetRotation(-0.2f, 0.2f, 0.0f, false);
+	SetDirection(0, 360, 0.f, 0.0f);
+	SetVelocity(4.f, 5.f);
+
+	SetColour({ 50.f, 20.f, 5.f }, 10.f, 10.f);
+}
+
 Confetti::Confetti(Play::Point2f pos, float lifetime)
 {
 	m_shape = CONFETTI;
@@ -48,8 +65,8 @@ SmokePuffSmall::SmokePuffSmall(Play::Point2f pos, float lifetime)
 	m_lifetime = lifetime;
 
 	SetSpawnRate(75.f);
-	SetParticleLifetime(0.9f, 1.4f);
-	SetScale(0.3f, 0.5f, 0.15f, 0.1f);
+	SetParticleLifetime(0.9f, 1.2f);
+	SetScale(0.3f, 0.5f, 0.1f, 0.05f);
 	SetOpacity(0.6f, 0.0f);
 	SetDirection(0.f, 360.f, 0.f, 0.1f);
 	SetGravity(false);

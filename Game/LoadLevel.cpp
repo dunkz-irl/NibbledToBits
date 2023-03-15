@@ -18,7 +18,9 @@
 #include "ReadCSV.h"
 #include "GameManager.h"
 #include "CheesePickup.h"
+#include <queue>
 #include "Tank.h"
+#include "AmmoPickup.h"
 
 std::vector<ObjectCSV> g_vObjects;
 std::map<std::string, int> g_idMap;
@@ -233,6 +235,12 @@ GameAreaObject* LevelLoader::CreateNewGameAreaObjectOfType(std::vector<std::stri
 		case PARMESAN:
 			GM_INST.m_targetCheese++;
 			pGAObj = new CheesePickup();
+			break;
+		case SUNFLOWERSEED:
+		case CORNKERNEL:
+		case GRAPE:
+		case RASPBERRY:
+			pGAObj = new AmmoPickup();
 			break;
 		case TANK:
 			pGAObj = new Tank();

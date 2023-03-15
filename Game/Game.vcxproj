@@ -20,6 +20,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AmmoPickup.h" />
     <ClInclude Include="ApplicationManager.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Button.h" />
@@ -71,6 +72,7 @@
     <ClInclude Include="WinState.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AmmoPickup.cpp" />
     <ClCompile Include="ApplicationManager.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Button.cpp" />

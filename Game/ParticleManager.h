@@ -9,10 +9,13 @@ enum class EmitterType
 	SMOKEPUFFSMALL,
 	CHEESE,
 	CONFETTI,
-	WINTEXT
+	WINTEXT,
+	EXPLOSION
 };
 
 class Emitter;
+
+#define PM_INST ParticleManager::Instance()
 
 class ParticleManager
 {

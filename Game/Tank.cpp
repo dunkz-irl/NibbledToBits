@@ -2,11 +2,14 @@
 #include "Common.h"
 #include "ParticlesCommon.h"
 
+#include "ParticleManager.h"
 #include "GameManager.h"
 #include "GameObjectManager.h"
 #include "GameObject.h"
 #include "GameArea.h"
 #include "Bullet.h"
+
+#include <queue>
 
 #include "Tank.h"
 
@@ -21,7 +24,15 @@ void Tank::Update()
 
 	if (Play::KeyPressed(VK_LBUTTON))
 	{
-		Fire();
+		int bulletSpriteID = UseAmmo();
+
+		if (bulletSpriteID == -1)
+		{
+			ParticleManager::Instance().CreateEmitter(EmitterType::SMOKEPUFFSMALL, m_matrix.row[2], 0.1f);
+			return;
+		}
+
+		Fire(bulletSpriteID);
 	}
 }
 
@@ -44,17 +55,32 @@ void Tank::Draw()
 	DrawSprite(m_crosshairSprite, m_mousePos, 0);
 }
 
-void Tank::Fire()
+void Tank::AddAmmo(int id)
+{
+	m_ammunition.push(id);
+}
+
+int Tank::UseAmmo()
+{
+	if (m_ammunition.size() == 0)
+		return -1;
+
+	int type = m_ammunition.front();
+	m_ammunition.pop();
+	return type;
+}
+
+void Tank::Fire(int bulletSpriteID)
 {
 	using namespace Play;
 
 	Vector2f normBulletVel = NormaliseVector(m_mousePos - m_worldPos);
-
-	normBulletVel *= m_bulletVelocity;
+	Vector2f bulletVel = normBulletVel * m_bulletVelocity;
 
 	Bullet* newBullet = static_cast<Bullet*>(GameObjectManager::Instance().Create(GameObjectType::TYPE_BULLET, m_worldPos));
 
 	newBullet->m_velocity = normBulletVel * m_bulletVelocity;
 	newBullet->m_matrix = newBullet->m_matrix * MatrixRotation(AngleBetweenTwoVectors({ 0.f, 1.f }, normBulletVel));
-	newBullet->m_matrix.row[2] = m_worldPos;
+	newBullet->m_matrix.row[2] = m_worldPos + normBulletVel * static_cast<float>(SQUARE_SIZE);
+	newBullet->m_spriteID = bulletSpriteID;
 }

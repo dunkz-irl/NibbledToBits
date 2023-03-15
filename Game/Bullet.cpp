@@ -31,7 +31,7 @@ void Bullet::Update()
 
 	if (obj_gameArea->id == SINGLE)
 	{
-		ParticleManager::Instance().CreateEmitter(EmitterType::CONFETTI, m_matrix.row[2], 0.1f);
+		ParticleManager::Instance().CreateEmitter(EmitterType::EXPLOSION, m_matrix.row[2], 0.1f);
 		m_type = GameObjectType::TYPE_DESTROYED;
 	}	
 }
@@ -47,14 +47,14 @@ void Bullet::UpdateDestroyed()
 
 	if (!obj_gameArea) // outside game area
 	{
-		ParticleManager::Instance().CreateEmitter(EmitterType::CONFETTI, m_matrix.row[2], 0.1f);
+		ParticleManager::Instance().CreateEmitter(EmitterType::EXPLOSION, m_matrix.row[2], 0.1f);
 		m_type = GameObjectType::TYPE_CLEANUP;;
 	}
 }
 
 void Bullet::Draw()
 {
-	Play::DrawSpriteTransformed(Play::GetSpriteId("sunflowerseed_RA"), m_matrix, 0);
+	Play::DrawSpriteTransformed(m_spriteID, m_matrix, 0);
 
 	// throw std::logic_error("The method or operation is not implemented.");
 }

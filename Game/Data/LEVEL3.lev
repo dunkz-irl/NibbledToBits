@@ -8,8 +8,8 @@ single ,2,6,0,0
 single ,2,8,0,0
 single ,2,10,0,0
 sunflowerseed ,5,1,0,0
-sunflowerseed ,6,1,0,0
-sunflowerseed ,7,1,0,0
+grape ,6,1,0,0
+raspberry ,7,1,0,0
 tank_base,7,6,0,0
 sunflowerseed ,8,1,0,0
 cornkernel ,9,1,0,0
@@ -21,7 +21,7 @@ Theme,0
 single ,0
 tube ,0
 tube_one_way ,0
-tube_two_way ,0
+tube_two_way ,1
 tube_three_way ,0
 tube_cross ,0
 tube_end ,0

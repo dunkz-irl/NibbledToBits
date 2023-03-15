@@ -1,12 +1,14 @@
 #include "Play.h"
 #include "Particle.h"
 
+// #CreateEmitter
+
 const char* ShapeSprites[18]
 {
 	"circle",
 	"cloud",
 	"disc",
-	"explosion",
+	"explosion_pixel",
 	"flare",
 	"fluid",
 	"line",

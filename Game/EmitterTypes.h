@@ -1,5 +1,11 @@
 #pragma once
 
+class Explosion : public Emitter
+{
+public:
+	Explosion(Play::Point2f pos, float lifetime);
+};
+
 class SmokePuffSmall : public Emitter
 {
 public:

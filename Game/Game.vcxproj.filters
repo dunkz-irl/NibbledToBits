@@ -177,14 +177,17 @@
     <ClInclude Include="CheesePickup.h">
       <Filter>Game Area Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Tank.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameStateTypes.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AmmoPickup.h">
+      <Filter>Game Area Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Tank.h">
+      <Filter>Game Area Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -317,11 +320,14 @@
     <ClCompile Include="CheesePickup.cpp">
       <Filter>Game Area Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Tank.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AmmoPickup.cpp">
+      <Filter>Game Area Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Tank.cpp">
+      <Filter>Game Area Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
