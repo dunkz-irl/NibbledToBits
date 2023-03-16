@@ -67,22 +67,25 @@ GameArea::~GameArea()
 	delete g_initObj; // Defined in LoadLevel.cpp
 }
 
-void GameArea::Update() {
-	// #Duncan Don't want players to be able to do this
-	//
-	//Increase and decrease the misc variable of the last selected object when up and down arrors are pressed
-	/*
-	if (m_lastSelected.x != -1 && m_lastSelected.y != -1) {
-		if (Play::KeyPressed(VK_UP)) {
-			GameAreaObject& gameAreaObject = GetGameAreaObject(m_lastSelected);
-			gameAreaObject.misc += 1;
-		}
-		if (Play::KeyPressed(VK_DOWN)) {
-			GameAreaObject& gameAreaObject = GetGameAreaObject(m_lastSelected);
-			gameAreaObject.misc -= 1;
+void GameArea::CleanupGameAreaObjectsInterLevel()
+{
+	for (int x = 0; x < GRID_WIDTH; x++)
+	{
+		for (int y = 0; y < GRID_HEIGHT; y++)
+		{
+			// If the objects address is that of the placeholder obj, don't delete it, as we'll delete it once later
+			if (&*m_gameAreaObjects[x][y] == g_initObj)
+				continue;
+			else
+			{
+				delete m_gameAreaObjects[x][y];
+				m_gameAreaObjects[x][y] = g_initObj;
+			}
 		}
 	}
-	*/
+}
+
+void GameArea::Update() {
 
 	//Rotate object if the right mouse button is pressed
 	if (Play::KeyPressed(VK_RBUTTON)) {
@@ -311,35 +314,6 @@ std::array<bool, 4> GameArea::GetBlockValidDirections(GameAreaObject& obj)
 bool GameArea::TryPlaceObject(const FloatingObject& obj) {
 	const GridPos mouseGridPos = GetMouseGridPos();
 
-	// Place a mouse hole object, which can't be removed and will snap to the closest valid location
-	//if (obj.mouseHole) {
-	//	int x = std::clamp(mouseGridPos.x, -1, GRID_WIDTH);
-	//	int y = std::clamp(mouseGridPos.y, -1, GRID_HEIGHT);
-
-	//	const int distToLeft = std::abs(-1 - x);
-	//	const int distToRight = std::abs(GRID_WIDTH - x);
-	//	const int distToDown = std::abs(-1 - y);
-	//	const int distToUp = std::abs(GRID_HEIGHT - y);
-
-	//	if (std::min(distToLeft, distToRight) < std::min(distToDown, distToUp)) {
-	//		x = (distToLeft > distToRight) ? GRID_WIDTH : -1;
-	//	}
-	//	else {
-	//		y = (distToDown > distToUp) ? GRID_HEIGHT : -1;
-	//	}
-
-	//	if (x == -1 || x == GRID_WIDTH) {
-	//		y = std::clamp(y, 0, GRID_HEIGHT - 1);
-	//	}
-
-	//	GameAreaObject* hole = (obj.id == 0) ? (GameAreaObject*)m_holeEntry : (GameAreaObject*)m_holeExit;
-	//	hole->posx = x;
-	//	hole->posy = y;
-	//	hole->vis = true;
-
-	//	return;
-	//}
-
 	// Check if the object has been dropped within the game area
 	if (mouseGridPos.x < 0 || mouseGridPos.y < 0 || mouseGridPos.x >= GRID_WIDTH || mouseGridPos.y >= GRID_HEIGHT) {
 		return false;
@@ -413,21 +387,6 @@ bool GameArea::TryPlaceObject(const FloatingObject& obj) {
 // #GETFLIPPINOBJECT
 FloatingObject GameArea::GetObject() {
 	GridPos mouseGridPos = GetMouseGridPos();
-	// #Duncan Player shouldn't be able to move entrance and exit
-	//
-	/*
-	//Return a mouse hole object
-	if (mouseGridPos.x == m_holeEntry.posx && mouseGridPos.y == m_holeEntry.posy) {
-		m_holeEntry.vis = false;
-		m_lastSelected = { -1, -1 };
-		return { m_holeEntry.id, 0, 0, true };
-	}
-	if (mouseGridPos.x == m_holeExit.posx && mouseGridPos.y == m_holeExit.posy) {
-		m_holeExit.vis = false;
-		m_lastSelected = { -1, -1 };
-		return { m_holeExit.id, 0, 0, true };
-	}
-	*/
 
 	if (mouseGridPos.x < 0 || mouseGridPos.y < 0 || mouseGridPos.x >= GRID_WIDTH || mouseGridPos.y >= GRID_HEIGHT) {
 		return { -1, 0 };

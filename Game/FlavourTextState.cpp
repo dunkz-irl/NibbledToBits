@@ -8,17 +8,19 @@
 
 #include "FlavourTextState.h"
 
-FlavourTextState::FlavourTextState(const char* textFile)
+FlavourTextState::FlavourTextState(const char* textFile, const char* musicFileName, bool showContinueButton)
 {
-	m_textFile = textFile;
 	m_debugStateName = "Flavour Text";
+	m_textFile = textFile;
+	m_musicFileName = musicFileName;
+	m_showContinueButton = showContinueButton;
 }
 
 void FlavourTextState::OnEnter()
 {
-	Play::PlayAudio("fanfare");
-	// Temp audio (doesn't really work)
-	//Play::PlayAudio("title");
+	Play::StopAudioLoop("fanfare");
+	Play::StopAudioLoop("fanfare2");
+	Play::StartAudioLoop(m_musicFileName);
 
 	m_continueButton = new Button{ Play::GetSpriteId("tick_panel"), { DISPLAY_WIDTH * 0.85f, DISPLAY_HEIGHT * 0.1f }, {100.f, 100.f} };
 
@@ -49,7 +51,6 @@ void FlavourTextState::OnEnter()
 void FlavourTextState::OnExit()
 {
 	delete m_continueButton;
-	// delete story text
 }
 
 IApplicationState* FlavourTextState::OnUpdate()
@@ -66,7 +67,10 @@ IApplicationState* FlavourTextState::OnUpdate()
 
 	if (Play::KeyPressed(VK_SPACE))
 	{
-		return new MainGameState();
+		if (m_textFile == "intro.txt")
+		{
+			return new MainGameState();
+		}
 	}
 
 
@@ -111,9 +115,12 @@ void FlavourTextState::OnDraw()
 {
 	Play::ClearDrawingBuffer(Play::cBlack);
 
-	if (m_charIndex == m_introText.length())
+	if (m_showContinueButton)
 	{
-		m_continueButton->Draw();
+		if (m_charIndex == m_introText.length())
+		{
+			m_continueButton->Draw();
+		}
 	}
 
 	int count = 0;
@@ -122,5 +129,4 @@ void FlavourTextState::OnDraw()
 		Play::DrawFontText("font64px_10x10", line, m_vLinePositions[count]);
 		count++;
 	}
-	
 }

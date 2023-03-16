@@ -121,6 +121,7 @@ void GameManager::Draw()
 void GameManager::LoadLevel(const char* levelName)
 {
 	m_pGameState->OnExit();
+	m_gameArea->CleanupGameAreaObjectsInterLevel();
 	LevelLoader loader;
 	loader.LoadLevel(levelName);
 }

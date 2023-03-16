@@ -60,7 +60,7 @@ IApplicationState* MainGameState::OnUpdate()
 
 	if (m_epilogue)
 	{
-		return new FlavourTextState("epilogue.txt");
+		return new FlavourTextState("epilogue.txt", "fanfare2", false);
 	}
 
 	return nullptr;

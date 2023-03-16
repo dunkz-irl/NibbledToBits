@@ -9,7 +9,7 @@
 #include "GameManager.h"
 
 Mouse::Mouse(Play::Point2f pos) : GameObject::GameObject(GameObjectType::TYPE_MOUSE)
-{	
+{
 	UpdateTrackedGridSquares();
 
 	m_matrix.row[2].x = pos.x;

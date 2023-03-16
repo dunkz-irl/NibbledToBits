@@ -41,7 +41,7 @@ IApplicationState* MenuState::OnUpdate()
 
 	if (Play::KeyPressed(VK_P))
 	{
-		return new FlavourTextState("intro.txt");
+		return new FlavourTextState("intro.txt", "fanfare", true);
 	}
 
 	m_testCounter++;

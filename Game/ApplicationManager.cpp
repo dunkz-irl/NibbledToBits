@@ -15,8 +15,9 @@ ApplicationManager::ApplicationManager()
 {
 	s_pInstance = this;
 
-	m_pApplicationState = new MenuState(); // #TODO: Change to MenuState when finished
-	//m_pApplicationState = new FlavourTextState("intro.txt"); // #TODO: Change to MenuState when finished
+	m_pApplicationState = new MenuState();
+	// m_pApplicationState = new FlavourTextState("intro.txt", "fanfare", true);
+	// m_pApplicationState = new FlavourTextState("epilogue.txt", "fanfare2", false);
 	m_pApplicationState->OnEnter();
 }
 

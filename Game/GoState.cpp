@@ -102,7 +102,6 @@ void GoState::OnDraw()
 	GM_INST.DrawHeldItem();
 	GM_INST.DrawStartButton();
 	GM_INST.DrawUI();
-	// throw std::logic_error("The method or operation is not implemented.");
 
 	// Draw GameAreaObjects (most are done somewhere else, but tank has this method)
 	for (int x = 0; x < GRID_WIDTH; x++)

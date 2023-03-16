@@ -83,7 +83,10 @@ void LevelLoader::LoadLevel(const char* levelName)
 	GameAreaObject* gameAreaObjects[GRID_WIDTH][GRID_HEIGHT]; // To put in m_GameArea
 
 	// Initialise GAObjs
-	g_initObj = new EmptySquare();
+	if (!g_initObj)
+	{
+		g_initObj = new EmptySquare();
+	}
 
 	for (int x = 0; x < GRID_WIDTH; x++)
 	{
@@ -162,6 +165,11 @@ void LevelLoader::LoadLevel(const char* levelName)
 	for (ObjectCSV& object : v_inventory)
 	{
 		object.group = ItemType::INVENTORY;
+	}
+
+	if (GM_INST.m_panel)
+	{
+		delete GM_INST.m_panel;
 	}
 
 	GM_INST.m_panel = new Panel(v_inventory);

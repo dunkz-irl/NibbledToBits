@@ -62,6 +62,7 @@ public:
 	GameArea();
 	~GameArea();
 
+	void CleanupGameAreaObjectsInterLevel();
 	void Update();
 	bool TryPlaceObject(const FloatingObject& obj);
 	void DrawGameArea();
