@@ -1,6 +1,6 @@
 **Nibbled to Bits** is a puzzle game about helping some brave mice navigate a maze filled with treacherous traps in the pursuit of cheese.
 
-It's a project I worked on by myself to solidify my understanding of C++ during my Games Programming apprenticeship in 2023. It's by no means polished but I learnt a lot while making it, particularly about codebase structure.
+It's a project I worked on by myself to solidify my understanding of C++ during my Games Programming apprenticeship at the Sumo Digital Academy in 2023. It's by no means polished but I learnt a lot while making it, particularly about codebase structure.
 
 It uses [PlayBuffer](https://github.com/sumo-digital-academy/playbuffer) which is an excellent framework for learning C++.
 
